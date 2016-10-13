@@ -18,11 +18,18 @@ from django.contrib import admin
 from splash_screen.views import ver_check
 from otp.views import get_otp
 from otp.views import ver_otp
+from welcome.views import url_send
+from city.views import send_all_city
+from category.views import send_all_category
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^version/', ver_check),
     url(r'^otp/', get_otp),
     url(r'^otp1/', ver_otp),
+    url(r'^url/', url_send),
+    url(r'^city/', send_all_city),
+    url(r'^category/', send_all_category),
+    #url(r'^url1/', run_url),
 
     #url(r'^splash_screen/$',version),
 ]

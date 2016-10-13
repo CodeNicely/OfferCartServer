@@ -52,17 +52,21 @@ def ver_otp(request):
 		name=str(request.POST.get("name"))
 		email=str(request.POST.get("email"))
 		mobile=str(request.POST.get("mobile"))
-		city=str(request.POSTself.get("city"))
 		otp=str(request.POST.get("otp"))
 		#mobile=str(9406277619)
 
 		print "get method successful"
 		print"\n"
 		access_token_str=str(random.randint(1000,9999))+mobile+str(random.randint(1000,9999))
-		#otp=6187
+		#otp=9137
 		otp_list=otp_data.objects.get(mobile=mobile)
 		if otp_list.otp== int(otp):
 			setattr(otp_list,'flag',int(1))
+			#url='http://api.msg91.com/api/sendhttp.php?authkey=120246AC7mrK6PUjd5794d29c&mobiles='
+			#url+=str(mobile)
+			#url+='&message='+' \n '+mobile +' verified user for the app'
+			#url+='&sender=mARPIT&route=4'
+			#result = requests.request('GET', url)
 			otp_list.save()
 			try:
 				user_list=user_data.objects.get(mobile=mobile)

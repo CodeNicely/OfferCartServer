@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'shop',
     'category',
     'city',
+    'welcome',
     
 ]
 
