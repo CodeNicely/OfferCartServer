@@ -10,8 +10,8 @@ def send_all_category(request):
 		response_json={}
 		response_json["success"]=True
 		response_json["category_data"]=[]
-		#for o in category_data.objects.filter(city_id="1"):
-		for o in category_data.objects.all():
+		for o in category_data.objects.filter(city_id="1"):
+		#for o in category_data.objects.all():
 			temp_json={}
 			temp_json["category_id"]=o.category_id
 			temp_json["category_name"]=str(o.category_name)

@@ -23,6 +23,7 @@ from city.views import send_all_city
 from category.views import send_all_category
 from shop.views import send_all_shop
 from subcategory.views import send_all_subcategory
+from offer.views import send_offer
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^version/', ver_check),
@@ -33,6 +34,8 @@ urlpatterns = [
     url(r'^category/', send_all_category),
     url(r'^shop/', send_all_shop),
     url(r'^subcategory/', send_all_subcategory),
+    url(r'^offer/', send_offer),
+
     #url(r'^url1/', run_url),
 
     #url(r'^splash_screen/$',version),
