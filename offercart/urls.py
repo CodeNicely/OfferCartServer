@@ -21,6 +21,8 @@ from otp.views import ver_otp
 from welcome.views import url_send
 from city.views import send_all_city
 from category.views import send_all_category
+from shop.views import send_all_shop
+from subcategory.views import send_all_subcategory
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^version/', ver_check),
@@ -29,6 +31,8 @@ urlpatterns = [
     url(r'^url/', url_send),
     url(r'^city/', send_all_city),
     url(r'^category/', send_all_category),
+    url(r'^shop/', send_all_shop),
+    url(r'^subcategory/', send_all_subcategory),
     #url(r'^url1/', run_url),
 
     #url(r'^splash_screen/$',version),

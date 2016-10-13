@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'category',
     'city',
     'welcome',
+    'subcategory',
     
 ]
 

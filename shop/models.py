@@ -8,3 +8,4 @@ class shop_data(models.Model):
 	city_id = models.SmallIntegerField(default=0)
 	category_id= models.SmallIntegerField(default=0)
 	shop_name= models.CharField(max_length=120, blank=True, null=True)
+	data_type=models.SmallIntegerField(default=3)
