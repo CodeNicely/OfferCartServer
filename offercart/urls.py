@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from splash_screen.views import ver_check
+from splash_screen.views import ver_check,send_fcm
 from otp.views import get_otp
 from otp.views import ver_otp
 from welcome.views import url_send
@@ -26,15 +26,16 @@ from subcategory.views import send_all_subcategory
 from offer.views import send_offer
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/', ver_check),
-    url(r'^otp/', get_otp),
-    url(r'^otp1/', ver_otp),
-    url(r'^url/', url_send),
-    url(r'^city/', send_all_city),
-    url(r'^category/', send_all_category),
-    url(r'^shop/', send_all_shop),
-    url(r'^subcategory/', send_all_subcategory),
-    url(r'^offer/', send_offer),
+    url(r'^version/$', ver_check),
+    url(r'^otp/$', get_otp),
+    url(r'^otp1/$', ver_otp),
+    url(r'^url/$', url_send),
+    url(r'^city/$', send_all_city),
+    url(r'^category/$', send_all_category),
+    url(r'^shop/$', send_all_shop),
+    url(r'^subcategory/$', send_all_subcategory),
+    url(r'^offer/$', send_offer),
+    url(r'^send_fcm/$', send_fcm),
 
     #url(r'^url1/', run_url),
 
