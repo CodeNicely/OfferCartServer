@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def get_otp(request):
 	try:
-		url='http://api.msg91.com/api/sendhttp.php?authkey=120246AC7mrK6PUjd5794d29c&mobiles='
+		url='http://api.msg91.com/api/sendhttp.php?authkey=125195AvX4LUlVf57dcd941&mobiles='
 		mobile=str(request.POST.get("mobile"))
 		#mobile=str(9406277619)
 		#mobile=str(request.POST.get("9406277619"))
