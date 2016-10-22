@@ -16,8 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from splash_screen.views import ver_check,send_fcm
-from otp.views import get_otp
-from otp.views import ver_otp
+from otp.views import send_otp
+from otp.views import verify_otp
 from welcome.views import welcome
 from city.views import send_all_city
 from category.views import send_all_category
@@ -30,8 +30,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^version/$', ver_check),
-    url(r'^otp/$', get_otp),
-    url(r'^otp1/$', ver_otp),
+    url(r'^send_otp/$', send_otp),
+    url(r'^verify_otp/$', verify_otp),
     url(r'^welcome/$', welcome),
     url(r'^city/$', send_all_city),
     url(r'^category/$', send_all_category),
@@ -43,4 +43,3 @@ urlpatterns = [
 
     #url(r'^splash_screen/$',version),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-   
