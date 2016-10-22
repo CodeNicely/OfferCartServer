@@ -18,26 +18,29 @@ from django.contrib import admin
 from splash_screen.views import ver_check,send_fcm
 from otp.views import get_otp
 from otp.views import ver_otp
-from welcome.views import url_send
+from welcome.views import welcome
 from city.views import send_all_city
 from category.views import send_all_category
 from shop.views import send_all_shop
 from subcategory.views import send_all_subcategory
 from offer.views import send_offer
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^version/$', ver_check),
     url(r'^otp/$', get_otp),
     url(r'^otp1/$', ver_otp),
-    url(r'^url/$', url_send),
+    url(r'^welcome/$', welcome),
     url(r'^city/$', send_all_city),
     url(r'^category/$', send_all_category),
     url(r'^shop/$', send_all_shop),
     url(r'^subcategory/$', send_all_subcategory),
     url(r'^offer/$', send_offer),
     url(r'^send_fcm/$', send_fcm),
-
     #url(r'^url1/', run_url),
 
     #url(r'^splash_screen/$',version),
-]
+]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+   

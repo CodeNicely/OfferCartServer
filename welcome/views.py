@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import requests
 from .models import *
 # Create your views here.
-def url_send(request):
+def welcome(request):
 	try:
 		response_json={}
 		response_json["success"]=True
