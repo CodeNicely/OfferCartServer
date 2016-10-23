@@ -3,12 +3,16 @@ from .models import *
 from django.http import HttpResponse 
 import requests
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
-
+import jwt
+from register.models import user_data
 @csrf_exempt
-def send_all_shop(request):
+def shop(request):
 	try:
-		city_id= str(request.POST.get("city_id"))
-		category_id=str(request.POST.get("category_id"))
+		access_token=request.POST.get('access_token')
+		json=jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+		print json['mobile']
+		city_id=user_data.objects.get(mobile=int(json['mobile'])).city
+		category_id=str(request.GET.get("category_id"))
 		response_json={}
 		response_json["success"]=True
 		response_json["shop_data"]=[]

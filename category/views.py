@@ -3,15 +3,12 @@ from .models import  *
 from django.http import HttpResponse
 import requests
 
-def send_all_category(request):
-	city_id= str(request.POST.get("city_id"))
-	#city_id=str(1)
+def category(request):
 	try:
 		response_json={}
 		response_json["success"]=True
 		response_json["category_data"]=[]
-		for o in category_data.objects.filter(city_id="1"):
-		#for o in category_data.objects.all():
+		for o in category_data.objects.all():
 			temp_json={}
 			temp_json["category_id"]=o.category_id
 			temp_json["category_name"]=str(o.category_name)

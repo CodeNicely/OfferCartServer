@@ -44,9 +44,8 @@ INSTALLED_APPS = [
     'category',
     'city',
     'welcome',
-    'sms',
     'offer',
-    
+    'customs',
 ]
 
 MIDDLEWARE_CLASSES = [

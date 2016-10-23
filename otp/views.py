@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import jwt
 # Create your views here.
+from customs.sms import send_sms
+
 @csrf_exempt
 def send_otp(request):
 	if(request.method=='POST'):		
@@ -22,11 +24,13 @@ def send_otp(request):
 			print mobile
 			print email
 			otp=random.randint(100000,999999)
-			url='http://api.msg91.com/api/sendhttp.php?authkey=125195AvX4LUlVf57dcd941&mobiles='
-			url+=mobile
-			url+='&message='
-			url+='Welcome to OfferCart App . You One Time Password is '+str(otp)+'&sender=OfrCrt&route=4'
-			print requests.request('GET', url)
+			# url='http://api.msg91.com/api/sendhttp.php?authkey=125195AvX4LUlVf57dcd941&mobiles='
+			# url+=mobile
+			# url+='&message='
+			# url+='Welcome to OfferCart App . You One Time Password is '+str(otp)+'&sender=OfrCrt&route=4'
+			# print requests.request('GET', url)
+			msg='Welcome to OfferCart App . You One Time Password is '+str(otp)
+			send_sms(mobile,msg)
 			print 'Otp Sent'
 			try:
 				otp_list=otp_data.objects.get(mobile=int(mobile))
