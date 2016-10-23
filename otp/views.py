@@ -80,7 +80,7 @@ def verify_otp(request):
 
 		if otp_list.otp == int(otp):
 			setattr(otp_list,'flag',True)
-			access_token= jwt.encode({}, str(mobile), algorithm='HS256')
+			access_token= jwt.encode({'mobile':str(mobile)}, '999123', algorithm='HS256')
 			
 			try:
 				access_token_data.objects.create(
@@ -89,16 +89,18 @@ def verify_otp(request):
 				otp_list.save()
 				response_json['access_token']=str(access_token)
 				print 'Access Token Created'
-				pass
+				response_json['success']=True
+				response_json['message']='Successful'
 			except Exception,e:
-				print 'Unable to create Access Token'
 				response_json['access_token']='None'
 				print e
-						
+				response_json['success']=False
+				response_json['message']='Unable to create Access Token'
+			
+
 		else:
 			response_json['success']=False
 			response_json['message']='Invalid Otp'
-		pass
 	except Exception,e:
 		response_json['success']=False
 		response_json['message']='Invalid Mobile Number'

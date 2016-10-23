@@ -9,6 +9,3 @@ class user_data(models.Model):
 	email= models.TextField(blank= True, null= True)
 	city= models.CharField(max_length=120, blank=True, null=True)
 	mobile=models.PositiveSmallIntegerField(primary_key=True,default=0)
-
-
-	 
