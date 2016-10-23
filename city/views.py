@@ -31,11 +31,11 @@ def select_city(request):
 		
 		city_id=request.POST.get('city')
 		access_token=request.POST.get('access_token')
-		json=jwt.decode(str(access_token), verify=False)
+		json=jwt.decode(str(access_token), '999123', algorithms=['HS256'])
 		
-		user_list=user_data.objects.get(mobile=int(json['mobile'])
-				setattr(user_list,'city',str(city_id))
-				user_list.save()
+		user_list=user_data.objects.get(mobile=int(json['mobile']))
+		setattr(user_list,'city',str(city_id))
+		user_list.save()
 		response_json['success']=True
 		response_json['message']='Successful'
 		pass

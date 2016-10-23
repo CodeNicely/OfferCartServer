@@ -25,6 +25,7 @@ from shop.views import send_all_shop
 from subcategory.views import send_all_subcategory
 from offer.views import send_offer
 from django.conf import settings
+from city.views import select_city
 from django.conf.urls.static import static
 
 urlpatterns = [

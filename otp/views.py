@@ -37,7 +37,7 @@ def send_otp(request):
 			except Exception,e:
 		 		otp_data.objects.create(mobile=mobile,otp=int(otp))
 				print 'new user'
-				raise e
+				print e
 			try:
 				user_list=user_data.objects.get(mobile=int(mobile))
 				setattr(user_list,'name',name)
@@ -55,14 +55,14 @@ def send_otp(request):
 					city='',
 					)
 				print 'User Created'
-				raise e
+				print e
 			response_json['success']=True
 			response_json['message']="Otp Sent Successfully"
 			pass	
 		except Exception, e:
 			response_json['success']=False
 			response_json['message']='Unable to send otp at this time'
-			raise e
+			print e
 		print str(response_json)
 		return JsonResponse(response_json)
 
@@ -94,6 +94,8 @@ def verify_otp(request):
 				print 'Unable to create Access Token'
 				response_json['access_token']='None'
 				raise e
+			response_json['success']=True
+			response_json['message']='Successful'
 						
 		else:
 			response_json['success']=False
