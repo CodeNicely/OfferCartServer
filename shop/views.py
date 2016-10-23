@@ -2,28 +2,28 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse 
 import requests
+from django.views.decorators.csrf import csrf_protect,csrf_exempt
 
+@csrf_exempt
 def send_all_shop(request):
 	try:
 		city_id= str(request.POST.get("city_id"))
 		category_id=str(request.POST.get("category_id"))
-		#city_id=1
-		#category_id=1
 		response_json={}
 		response_json["success"]=True
 		response_json["shop_data"]=[]
-		for o in shop_data.objects.filter(city_id=city_id).filter(category_id=category_id):
-		#for o in shop_data.objects.all():
+		fields=["shop_id","shop_name","category_id","city_id","data_type"]
+		
+		for o in shop_data.objects.filter(city_id=city_id,category_id=category_id):
 			temp_json={}
-			temp_json["shop_id"]=o.shop_id
-			temp_json["shop_name"]=str(o.shop_name)
-			temp_json["category_id"]=o.category_id
-			temp_json["city_id"]=o.city_id
-			temp_json["data_type"]=o.data_type
+			for f in fields:
+				temp_json[f]=getattr(o,str(f))
 			response_json["shop_data"].append(temp_json)
-	except:
+
+	except Exception,e:
 		response_json["success"]=False
 		response_json["message"]="shop_data not found"
+		print"e@shop=", e
 
 	print str(response_json)
 	return HttpResponse(str(response_json))

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from splash_screen.views import ver_check,send_fcm
+from splash_screen.views import version
 from otp.views import send_otp
 from otp.views import verify_otp
 from welcome.views import welcome
@@ -29,7 +29,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/$', ver_check),
+    url(r'^version/$', version),
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
     url(r'^welcome/$', welcome),
@@ -38,8 +38,11 @@ urlpatterns = [
     url(r'^shop/$', send_all_shop),
     url(r'^subcategory/$', send_all_subcategory),
     url(r'^offer/$', send_offer),
-    url(r'^send_fcm/$', send_fcm),
-    #url(r'^url1/', run_url),
+
 
     #url(r'^splash_screen/$',version),
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]#+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
