@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def version(request):
-	version_row= version_data.objects.get(ver_type='arp')
+	version_row= version_data.objects.get(ver_type='production')
 	version=version_row.version
 	compulsory_update=version_row.compulsory_update
 	response_json={}
@@ -16,7 +16,6 @@ def version(request):
 			fcm=str(request.GET.get("fcm"))
 			print "fcm recieved",fcm
 			if fcm!="None":
-				print "fcm recived:"+fcm
 				try:
 					fcm_list=fcm_data.objects.get(fcm=fcm)
 					response_json["success"]=True

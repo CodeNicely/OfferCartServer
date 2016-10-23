@@ -29,30 +29,25 @@ def send_otp(request):
 			print requests.request('GET', url)
 			print 'Otp Sent'
 			try:
-				otp_list=otp_data.objects.get(mobile=mobile)
+				otp_list=otp_data.objects.get(mobile=int(mobile))
 		 		setattr(otp_list,'otp',int(otp))
+		 		setattr(otp_list,'flag',False)
 		 		otp_list.save()
 				print 'old user'
-				pass
-			except Exception,e:
-		 		otp_data.objects.create(mobile=mobile,otp=int(otp))
-				print 'new user'
-				print e
-			try:
 				user_list=user_data.objects.get(mobile=int(mobile))
 				setattr(user_list,'name',name)
 				setattr(user_list,'email',email)
-				setattr(user_list,'mobile',int(mobile))
-				setattr(user_list,'city',NULL)
+				#setattr(user_list,'mobile',int(mobile))
+				setattr(user_list,'city',"")
 				user_list.save()
 				print 'User Details Updated'
-				pass
-			except Exception, e:
-				user_data.objects.create(
+		
+			except Exception,e:
+		 		otp_data.objects.create(mobile=int(mobile),otp=int(otp))
+		 		user_data.objects.create(
 					name=name,
 					email=email,
-					mobile=int(mobile),
-					city='',
+					mobile=int(mobile)
 					)
 				print 'User Created'
 				print e

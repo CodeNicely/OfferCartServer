@@ -19,13 +19,13 @@ from splash_screen.views import version
 from otp.views import send_otp
 from otp.views import verify_otp
 from welcome.views import welcome
-from city.views import send_all_city
+from city.views import city
 from category.views import send_all_category
 from shop.views import send_all_shop
 from subcategory.views import send_all_subcategory
 from offer.views import send_offer
 from django.conf import settings
-from city.views import select_city
+from city.views import city
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
     url(r'^welcome/$', welcome),
-    url(r'^city/$', send_all_city),
+    url(r'^city/$', city),
     url(r'^category/$', send_all_category),
     url(r'^shop/$', send_all_shop),
     url(r'^subcategory/$', send_all_subcategory),
