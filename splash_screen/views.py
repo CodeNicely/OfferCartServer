@@ -13,7 +13,7 @@ def version(request):
 	response_json['compulsory_update']=compulsory_update
 	if(request.method=='GET'):
 		try:
-			fcm=str(request.GET.get("fcm"))
+			fcm="abcd"#str(request.GET.get("fcm"))
 			print "fcm recieved",fcm
 			if fcm!="None":
 				try:
