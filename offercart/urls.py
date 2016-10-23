@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^subcategory/$', send_all_subcategory),
     url(r'^offer/$', send_offer),
     url(r'^send_fcm/$', send_fcm),
+    url(r'^select_city/$', select_city),
     #url(r'^url1/', run_url),
 
     #url(r'^splash_screen/$',version),

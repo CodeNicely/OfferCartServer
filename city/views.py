@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import *
+from register.models import * 
 from django.http import HttpResponseRedirect, HttpResponse
 import requests
+from django.http import JsonResponse
+import jwt
 
 def send_all_city(request):
 	try:
@@ -19,5 +22,26 @@ def send_all_city(request):
 		response_json["success"]=False
 		response_json["message"]="city data not found"
 	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(str(response_json))
+# Create your views here.
+
+def select_city(request):
+	try:
+		response_json={}
+		
+		city_id=request.POST.get('city')
+		access_token=request.POST.get('access_token')
+		json=jwt.decode(str(access_token), verify=False)
+		
+		user_list=user_data.objects.get(mobile=int(json['mobile'])
+				setattr(user_list,'city',str(city_id))
+				user_list.save()
+		response_json['success']=True
+		response_json['message']='Successful'
+		pass
+	except:
+		response_json["success"]=False
+		response_json["message"]="City data not found"
+	print str(response_json)
+	return JsonResponse(response_json)
 # Create your views here.

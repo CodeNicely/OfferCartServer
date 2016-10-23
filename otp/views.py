@@ -80,7 +80,7 @@ def verify_otp(request):
 
 		if otp_list.otp == int(otp):
 			setattr(otp_list,'flag',True)
-			access_token= jwt.encode({}, str(mobile), algorithm='HS256')
+			access_token= jwt.encode({'mobile':str(mobile)}, '999123', algorithm='HS256')
 			
 			try:
 				access_token_data.objects.create(
