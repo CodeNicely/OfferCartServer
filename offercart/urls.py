@@ -22,7 +22,6 @@ from welcome.views import welcome
 from city.views import city
 from category.views import send_all_category
 from shop.views import send_all_shop
-from subcategory.views import send_all_subcategory
 from offer.views import send_offer
 from django.conf import settings
 from city.views import city
@@ -37,7 +36,6 @@ urlpatterns = [
     url(r'^city/$', city),
     url(r'^category/$', send_all_category),
     url(r'^shop/$', send_all_shop),
-    url(r'^subcategory/$', send_all_subcategory),
     url(r'^offer/$', send_offer)
 
     #url(r'^splash_screen/$',version),

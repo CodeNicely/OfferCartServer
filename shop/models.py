@@ -11,3 +11,5 @@ class shop_data(models.Model):
 	data_type=models.SmallIntegerField(default=3)
 	address= models.CharField(max_length=120, blank=True, null=True)
 	describ= models.CharField(max_length=120, blank=True, null=True)
+	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
+	created= models.DateTimeField(auto_now=False,auto_now_add=True)
