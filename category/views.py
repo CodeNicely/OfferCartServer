@@ -7,13 +7,16 @@ def category(request):
 	try:
 		response_json={}
 		response_json["success"]=True
-		response_json["category_data"]=[]
+		response_json['message']="Successful"
+		response_json["categoryDatas"]=[]
 		for o in category_data.objects.all():
 			temp_json={}
-			temp_json["category_id"]=o.category_id
-			temp_json["category_name"]=str(o.category_name)
+			temp_json["id"]=o.category_id
+			temp_json["name"]=str(o.category_name)
+			temp_json["image"]='https://www.aldi.com.au/typo3temp/pics/ALC6158_KVB_Groceries_1896x720_582e750e6c.jpg'#str(o.image)
+			
 			temp_json["data_type"]=o.data_type
-			response_json["category_data"].append(temp_json)
+			response_json["categoryDatas"].append(temp_json)
 	except:
 		response_json["success"]=False
 		response_json["message"]="category_data not found"

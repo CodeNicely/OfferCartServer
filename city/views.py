@@ -11,7 +11,7 @@ from register.models import user_data
 
 @csrf_exempt
 def city(request):
-	if(request.method==""):
+	if(request.method=="GET"):
 		try:
 			response_json={}
 			response_json["success"]=True
@@ -35,7 +35,7 @@ def city(request):
 		try:
 			response_json={}
 			
-			city_id=request.POST.get('city')
+			city_id=request.POST.get('city_id')
 			print"debuuged 39"
 			access_token=request.POST.get('access_token')
 			print"debuuged 41"
@@ -44,7 +44,7 @@ def city(request):
 			print"debuuged 43"
 			user_list=user_data.objects.get(mobile=int(json['mobile']))
 			print"debuuged 45"
-			setattr(user_list,'city',str(city_id))
+			setattr(user_list,'city',int(city_id))
 			user_list.save()
 			response_json['success']=True
 			response_json['message']='Successful'
