@@ -8,6 +8,7 @@ class offer_data(models.Model):
 	shop_id= models.SmallIntegerField(default=0)
 	image=models.CharField(max_length=120,blank=True,null=True)
 	category_id=models.SmallIntegerField(default=0)
+	price=models.SmallIntegerField(default=0)
 	data_type=models.SmallIntegerField(default=4)
 	describ=models.CharField(max_length=200,blank=True,null=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)

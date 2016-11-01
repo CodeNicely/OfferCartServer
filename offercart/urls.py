@@ -29,7 +29,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/$', version),
+    url(r'^version/$', version),#completed
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
     url(r'^welcome/$', welcome),

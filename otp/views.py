@@ -24,11 +24,6 @@ def send_otp(request):
 			print mobile
 			print email
 			otp=random.randint(100000,999999)
-			# url='http://api.msg91.com/api/sendhttp.php?authkey=125195AvX4LUlVf57dcd941&mobiles='
-			# url+=mobile
-			# url+='&message='
-			# url+='Welcome to OfferCart App . You One Time Password is '+str(otp)+'&sender=OfrCrt&route=4'
-			# print requests.request('GET', url)
 			msg='Welcome to OfferCart App . You One Time Password is '+str(otp)
 			send_sms(mobile,msg)
 			print 'Otp Sent'

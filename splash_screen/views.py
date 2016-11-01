@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 
@@ -12,8 +12,12 @@ def version(request):
 	response_json['version']=version
 	response_json['compulsory_update']=compulsory_update
 	if(request.method=='GET'):
+		for x,y in request.GET.items():
+			print x,":",y
+
 		try:
-			fcm="abcd"#str(request.GET.get("fcm"))
+			fcm=str(request.GET.get("fcm"))
+			#fcm="tmp from server"
 			print "fcm recieved",fcm
 			if fcm!="None":
 				try:
@@ -36,7 +40,7 @@ def version(request):
 		response_json["message"]="not get method"
 				
 	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(response_json)
 
 def initial(request):
 	return HttpResponse("<a href=./login>admin_login</a>")
