@@ -3,6 +3,9 @@ from .models import *
 from django.http import HttpResponse
 import requests
 from shop.models import shop_data
+from django.views.decorators.csrf import csrf_exempt
+# Create your views here.
+@csrf_exempt
 def send_offer(request):
 	response_json={}
 	if request.method=="GET":
@@ -18,7 +21,6 @@ def send_offer(request):
 			response_json["shop_description"]=str(shop_row.description)
 			response_json["shop_image"]=str(shop_row.image)
 			response_json["shop_address"]=str(shop_row.address)
-
 			response_json["offer_list"]=[]
 			for o in offer_data.objects.filter(shop_id=int(shop_id)):
 				if o.active==True:
@@ -30,7 +32,6 @@ def send_offer(request):
 					temp_json["image"]=str(o.image)
 					temp_json["price"]=o.price
 					response_json["offer_list"].append(temp_json)
-
 		except Exception,e:
 			print "e@shop",e
 			response_json["success"]=False

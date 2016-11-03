@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from myoffer.models import *
+from django.http import JsonResponse
+import jwt
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from register.models import user_data
 from offer.models import offer_data
-from myoffers.models import offer_bought_data
 from random import randint
 
 @csrf_exempt
@@ -27,7 +27,7 @@ def buyoffers(request):
 			price=offer.price
 			if(wallet<price):
 				response_json["success"]=False
-				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money23457"
+				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money 23457'
 			else:
 				transaction_id=str(randint(11,99))+str(mobile)[randint(0,5),randint(5,9)]+str(randint(11,99))
 				user_id=str(mobile)
@@ -47,4 +47,4 @@ def buyoffers(request):
 		response_json['success']=False
 		response_json['message']="not POST method"
 	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(response_json)
