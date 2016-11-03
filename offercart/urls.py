@@ -36,7 +36,8 @@ urlpatterns = [
     url(r'^city/$', city),
     url(r'^category/$', category),
     url(r'^shop/$', shop),
-    url(r'^offer/$', send_offer)
+    url(r'^offer/$', send_offer),
+    url(r'^myoffer/$', send_offer),
 
     #url(r'^splash_screen/$',version),
 ]#+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

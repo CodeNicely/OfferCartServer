@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'welcome',
     'offer',
     'customs',
+    'myoffers',
 ]
 
 MIDDLEWARE_CLASSES = [
