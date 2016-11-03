@@ -7,7 +7,6 @@ import jwt
 from register.models import user_data
 @csrf_exempt
 def shop(request):
-
 	response_json={}
 	if request.method=='GET':
 		try:
@@ -18,6 +17,7 @@ def shop(request):
 			print json['mobile']
 			city_id=user_data.objects.get(mobile=int(json['mobile'])).city
 			print "debuuged 20"
+			shop_id=request.GET.get('shop_id')
 			category_id=str(request.GET.get("category_id"))
 			print "debuuged 22"
 			response_json["success"]=True
@@ -25,7 +25,7 @@ def shop(request):
 			response_json["shopDatas"]=[]
 			fields=["shop_id","name","image","address","category_id","city_id"]
 			print "debuuged 27"
-			for o in shop_data.objects.filter(city_id=city_id,category_id=int(category_id)):
+			for o in shop_data.objects.filter(shop_id=shop_id,city_id=city_id,category_id=int(category_id)):
 				print "debuuged 29"
 				temp_json={}
 				for f in fields:
