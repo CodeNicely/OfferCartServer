@@ -16,7 +16,7 @@ def myoffers(request):
 			response_json["message"]='Successful'
 
 			response_json["offer_list"]=[]
-			fields=["price","created"]
+			fields=["price","created","transaction_id"]
 			fields_offer=["name","image","description","validity"]
 			fields_shop=["name","address","image"]
 			for o in offer_bought_data.objects.filter(user_id=str(json['mobile'])):
