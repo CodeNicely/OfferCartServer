@@ -15,6 +15,7 @@ def contact_us(request):
 		response_body['address']="Indore , Bhopal"
 		response_body['facebook']="DiscountStore"
 		#temp_json["image"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
-		response_body['image']=request.scheme+'://'+request.get_host()+"/static/images/about_us/discount_store_logo.png"
+		response_body['image']=request.scheme+'://'+request.get_host()+"/media/about_us/discount_store_logo.png"
 
+		print response_body
 		return JsonResponse(response_body)

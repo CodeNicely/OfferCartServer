@@ -17,7 +17,7 @@ def send_offer(request):
 			print"............................shopid",shop_id
 			shop_row=shop_data.objects.get(shop_id=int(shop_id))
 			response_json["success"]=True
-			response_json["shop_id"]=str(shop_id)
+			response_json["shop_id"]=int(shop_id)
 			response_json["shop_name"]=str(shop_row.name)
 			response_json["shop_description"]=str(shop_row.description)
 			response_json["shop_image"]=request.scheme+'://'+request.get_host()+'/media/'+str(shop_row.image)
@@ -27,12 +27,12 @@ def send_offer(request):
 			for o in offer_data.objects.filter(shop_id=int(shop_id)):
 				if o.active==True:
 					temp_json={}
-					temp_json["offer_id"]=o.offer_id
+					temp_json["offer_id"]=int(o.offer_id)
 					temp_json["name"]=str(o.name)
 					temp_json["description"]=str(o.description)
 					temp_json["validity"]=str(o.validity)
 					temp_json["image"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
-					temp_json["price"]=o.price
+					temp_json["price"]=int(o.price)
 					response_json["offer_list"].append(temp_json)
 		except Exception,e:
 			print "e@offer",e

@@ -20,10 +20,11 @@ def city(request):
 				print o.city_name
 				temp_json["city_id"]=o.city_id
 				temp_json["city_name"]=str(o.city_name)
-				temp_json["data_type"]=o.data_type
+				#temp_json["data_type"]=o.data_type
 				response_json["city_data"].append(temp_json)
 
-		except:
+		except Exception,e:
+			print "error@city get",e
 			response_json["success"]=False
 			response_json["message"]="city data not found"
 		print str(response_json)
@@ -50,7 +51,7 @@ def city(request):
 		except Exception,e:
 			response_json["success"]=False
 			response_json["message"]="City data not found"
-			print e
+			print "error@city post",e
 		print str(response_json)
 		return JsonResponse(response_json)
 # Create your views here.
