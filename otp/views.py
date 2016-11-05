@@ -36,7 +36,6 @@ def send_otp(request):
 				user_list=user_data.objects.get(mobile=str(mobile))
 				setattr(user_list,'name',name)
 				setattr(user_list,'email',email)
-				#setattr(user_list,'mobile',int(mobile))
 				setattr(user_list,'city',"")
 				user_list.save()
 				print 'User Details Updated'

@@ -14,6 +14,7 @@ def send_offer(request):
 				print x,":",y
 			#category_id= str(request.POST.get("category_id"))
 			shop_id=str(request.GET.get("shop_id"))
+			print"............................shopid",shop_id
 			shop_row=shop_data.objects.get(shop_id=int(shop_id))
 			response_json["success"]=True
 			response_json["shop_id"]=str(shop_id)
@@ -22,6 +23,7 @@ def send_offer(request):
 			response_json["shop_image"]=request.scheme+'://'+request.get_host()+'/media/'+str(shop_row.image)
 			response_json["shop_address"]=str(shop_row.address)
 			response_json["offer_list"]=[]
+			print "debuuged 25"
 			for o in offer_data.objects.filter(shop_id=int(shop_id)):
 				if o.active==True:
 					temp_json={}
@@ -33,7 +35,7 @@ def send_offer(request):
 					temp_json["price"]=o.price
 					response_json["offer_list"].append(temp_json)
 		except Exception,e:
-			print "e@shop",e
+			print "e@offer",e
 			response_json["success"]=False
 			response_json["message"]=" offer_data not  found"
 	else:
