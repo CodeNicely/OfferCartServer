@@ -94,27 +94,27 @@ WSGI_APPLICATION = 'offercart.wsgi.application'
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'xendroiders$success',
+        'USER': 'xendroiders',
+        'PASSWORD': 'adityaagr',
+        'HOST': 'xendroiders.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'xendroiders$final',
-#         'USER': 'xendroiders',
-#         'PASSWORD': 'adityaagr',
-#         'HOST': 'xendroiders.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
 #         'PORT': '3306',
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'xendroiders$final',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
 
 
 # Password validation
