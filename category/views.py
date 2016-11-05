@@ -14,8 +14,8 @@ def category(request):
 			temp_json["id"]=o.category_id
 			temp_json["name"]=str(o.category_name)
 #			temp_json["image"]='https://www.aldi.com.au/typo3temp/pics/ALC6158_KVB_Groceries_1896x720_582e750e6c.jpg'#str(o.image)
-			tempp='http://xendroiders.pythonanywhere.com'
-			temp_json["image"]=tempp+str(o.image)[33:]			
+			#tempp='http://xendroiders.pythonanywhere.com'
+			temp_json["image"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)			
 			temp_json["description"]=str(o.describ)			
 			temp_json["data_type"]=o.data_type
 			response_json["categoryDatas"].append(temp_json)

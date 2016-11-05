@@ -14,6 +14,7 @@ def contact_us(request):
 		response_body['mobile']="+91 8109109457"
 		response_body['address']="Indore , Bhopal"
 		response_body['facebook']="DiscountStore"
-		response_body['image']="http://192.168.0.111:8000/static/images/about_us/discount_store_logo.png"
+		#temp_json["image"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
+		response_body['image']=request.scheme+'://'+request.get_host()+"/static/images/about_us/discount_store_logo.png"
 
 		return JsonResponse(response_body)

@@ -23,14 +23,15 @@ def shop(request):
 			response_json["success"]=True
 			response_json["message"]='Successful'
 			response_json["shopDatas"]=[]
-			fields=["shop_id","name","image","address","category_id","city_id"]
+			fields=["shop_id","name","address","category_id","city_id"]
 			print "debuuged 27"
 			for o in shop_data.objects.filter(city_id=city_id,category_id=int(category_id)):
 				print "debuuged 29"
 				temp_json={}
 				for f in fields:
 					print "f=",f
-					temp_json[f]=str(getattr(o,str(f)))
+					temp_json[f]=getattr(o,str(f))
+				temp_json['image']=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
 				response_json["shopDatas"].append(temp_json)
 
 		except Exception,e:

@@ -27,7 +27,7 @@ def buyoffers(request):
 			price=offer.price
 			if(wallet<price):
 				response_json["success"]=False
-				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money 23457'
+				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money'
 			else:
 				transaction_id=str(randint(11,99))+str(mobile)[randint(0,5),randint(5,9)]+str(randint(11,99))
 				user_id=str(mobile)

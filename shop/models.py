@@ -8,7 +8,7 @@ class shop_data(models.Model):
 	city_id= models.SmallIntegerField(default=0)
 	category_id= models.SmallIntegerField(default=0)
 	name= models.CharField(max_length=120, blank=True, null=True)
-	image= models.CharField(max_length=255, blank=True, null=True)
+	image=models.ImageField(upload_to='shop/',default="/media/shop/default.png")
 	address= models.CharField(max_length=120, blank=True, null=True)
 	description= models.CharField(max_length=120, blank=True, null=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
