@@ -17,7 +17,7 @@ def developers(request):
 		company_data['facebook']="http://www.facebook.com/CodeNicely"
 		company_data['contact']="+91 8109109457"
 		company_data['about']="We Code StartUps \n\n CodeNicely is a Raipur based Startup.\n We provide all types of IT Solutions. We are a team of some geeky geeks from NIT Raipur and we Love Coding."
-		company_data['companyImage']=request.scheme+'://'+request.get_host()+"/static/images/developers/codenicely_full_logo.png"
+		company_data['companyImage']=request.scheme+'://'+request.get_host()+"/media/developers/codenicely_full_logo.png"
 		company_data['website']="http://www.codenicely.in"
 		response_body['companyData']=company_data
 
