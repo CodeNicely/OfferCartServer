@@ -30,7 +30,7 @@ def shop(request):
 				temp_json={}
 				for f in fields:
 					print "f=",f
-					temp_json[f]=getattr(o,str(f))
+					temp_json[f]=str(getattr(o,str(f)))
 				temp_json['image']=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
 				response_json["shopDatas"].append(temp_json)
 
