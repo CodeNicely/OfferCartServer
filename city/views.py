@@ -40,7 +40,7 @@ def city(request):
 			print access_token
 			json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 			print"debuuged 43"
-			user_list=user_data.objects.get(mobile=int(json['mobile']))
+			user_list=user_data.objects.get(mobile=str(json['mobile']))
 			print"debuuged 45"
 			setattr(user_list,'city',int(city_id))
 			user_list.save()

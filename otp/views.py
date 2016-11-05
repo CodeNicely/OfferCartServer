@@ -28,12 +28,12 @@ def send_otp(request):
 			send_sms(mobile,msg)
 			print 'Otp Sent'
 			try:
-				otp_list=otp_data.objects.get(mobile=int(mobile))
+				otp_list=otp_data.objects.get(mobile=str(mobile))
 		 		setattr(otp_list,'otp',int(otp))
 		 		setattr(otp_list,'flag',False)
 		 		otp_list.save()
 				print 'old user'
-				user_list=user_data.objects.get(mobile=int(mobile))
+				user_list=user_data.objects.get(mobile=str(mobile))
 				setattr(user_list,'name',name)
 				setattr(user_list,'email',email)
 				#setattr(user_list,'mobile',int(mobile))
@@ -42,11 +42,11 @@ def send_otp(request):
 				print 'User Details Updated'
 		
 			except Exception,e:
-		 		otp_data.objects.create(mobile=int(mobile),otp=int(otp))
+		 		otp_data.objects.create(mobile=str(mobile),otp=int(otp))
 		 		user_data.objects.create(
 					name=name,
 					email=email,
-					mobile=int(mobile)
+					mobile=str(mobile)
 					)
 				print 'User Created'
 				print e

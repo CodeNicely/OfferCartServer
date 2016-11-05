@@ -8,7 +8,7 @@ class user_data(models.Model):
 	name= models.CharField(max_length= 120,blank= True ,null = True)
 	email= models.TextField(blank= True, null= True)
 	city= models.CharField(max_length=120, blank=True, null=True)
-	mobile=models.IntegerField(primary_key=True,default=0)
+	mobile=models.CharField(max_length=120,default='7587485272', blank=True,null=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 	wallet=models.IntegerField(default=0)
