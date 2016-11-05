@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 class otp_data(models.Model):
+	id=models.AutoField(primary_key= True)
 	mobile=models.CharField(max_length=120,default='7587485272', blank=True,null=True)
 	otp= models.PositiveSmallIntegerField(default=0,null=True)
 	flag=models.BooleanField(default=False)
