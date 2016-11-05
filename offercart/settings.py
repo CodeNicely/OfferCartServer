@@ -97,9 +97,9 @@ WSGI_APPLICATION = 'offercart.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'xendroiders$default',
+        'NAME': 'xendroiders$django1',
         'USER': 'xendroiders',
-        'PASSWORD': 'xendroidersdb',
+        'PASSWORD': 'adityaagr',
         'HOST': 'xendroiders.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
