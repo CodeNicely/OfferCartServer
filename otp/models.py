@@ -9,8 +9,3 @@ class otp_data(models.Model):
 	flag=models.BooleanField(default=False)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)	
-class access_token_data(models.Model):
-    id=models.AutoField(primary_key=True)
-    access_token=models.CharField(max_length=500,blank=True,null=True)
-    modified= models.DateTimeField(auto_now=True,auto_now_add=False)
-    created= models.DateTimeField(auto_now=False,auto_now_add=True)

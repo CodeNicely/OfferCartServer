@@ -7,7 +7,7 @@ class offer_data(models.Model):
 	name=models.CharField(max_length=120, blank=True,null=True)
 	shop_id= models.SmallIntegerField(default=0)
 	image=models.ImageField(upload_to='offer/',default="/media/offer/default.png")
-	category_id=models.SmallIntegerField(default=0)
+	#category_id=models.SmallIntegerField(default=0)
 	price=models.SmallIntegerField(default=0)
 	active=models.BooleanField(default=True)
 	description=models.CharField(max_length=200,blank=True,null=True)

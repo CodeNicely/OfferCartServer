@@ -6,6 +6,6 @@ class otp_dataAdmin(admin.ModelAdmin):
 admin.site.register(otp_data,otp_dataAdmin)
 
 
-class access_token_dataAdmin(admin.ModelAdmin):
-    list_display=["id","access_token","created","modified"]
-admin.site.register(access_token_data,access_token_dataAdmin)
+# class access_token_dataAdmin(admin.ModelAdmin):
+#     list_display=["id","access_token","created","modified"]
+# admin.site.register(access_token_data,access_token_dataAdmin)

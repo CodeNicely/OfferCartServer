@@ -7,8 +7,6 @@ from django.http import JsonResponse
 import jwt
 from django.views.decorators.csrf import csrf_exempt
 from register.models import user_data
-
-
 @csrf_exempt
 def city(request):
 	if(request.method=="GET"):
