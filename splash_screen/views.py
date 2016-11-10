@@ -29,7 +29,7 @@ def version(request):
 					response_json["success"]=True
 					response_json["message"]="successfully added"
 			else:
-				response_json["success"]=False
+				response_json["success"]=True
 				response_json["message"]="fcm none recieved"
 
 		except:
