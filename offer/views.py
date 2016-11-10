@@ -27,7 +27,7 @@ def send_offer(request):
 			for o in offer_data.objects.filter(shop_id=int(shop_id)):
 				if o.active==True:
 					temp_json={}
-					temp_json["offer_id"]=int(o.offer_id)
+					temp_json["offer_id"]=int(o.id)
 					temp_json["name"]=str(o.name)
 					temp_json["description"]=str(o.description)
 					temp_json["validity"]=str(o.validity)
