@@ -17,7 +17,7 @@ def city(request):
 			print"debugged"
 			for o in city_data.objects.all():
 				temp_json={}
-				print o.city_name
+				print o.name
 				temp_json["city_id"]=o.id
 				temp_json["city_name"]=str(o.name)
 				#temp_json["data_type"]=o.data_type
