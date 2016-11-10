@@ -15,7 +15,7 @@ def send_offer(request):
 			#category_id= str(request.POST.get("category_id"))
 			shop_id=str(request.GET.get("shop_id"))
 			print"............................shopid",shop_id
-			shop_row=shop_data.objects.get(shop_id=int(shop_id))
+			shop_row=shop_data.objects.get(id=int(shop_id))
 			response_json["success"]=True
 			response_json["shop_id"]=int(shop_id)
 			response_json["shop_name"]=str(shop_row.name)
