@@ -31,7 +31,7 @@ def shop(request):
 				for f in fields:
 					print "f=",f
 					temp_json[f]=str(getattr(o,str(f)))
-				temp_json['shop_id']=int(o.shop_id)
+				temp_json['shop_id']=int(o.id)
 				temp_json['category_id']=int(o.category_id)
 				temp_json['city_id']=int(o.city_id)
 
