@@ -11,8 +11,8 @@ def category(request):
 		response_json["categoryDatas"]=[]
 		for o in category_data.objects.all():
 			temp_json={}
-			temp_json["category_id"]=int(o.category_id)
-			temp_json["name"]=str(o.category_name)
+			temp_json["category_id"]=int(o.id)
+			temp_json["name"]=str(o.name)
 #			temp_json["image"]='https://www.aldi.com.au/typo3temp/pics/ALC6158_KVB_Groceries_1896x720_582e750e6c.jpg'#str(o.image)
 			#tempp='http://xendroiders.pythonanywhere.com'
 			temp_json["image"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)			
