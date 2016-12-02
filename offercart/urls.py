@@ -30,7 +30,7 @@ from contact_us.views import contact_us
 from developers.views import developers
 from buyoffer.views import buyoffers
 from myoffers.views import myoffers
-
+from payment.views import request_payment_hash
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -48,6 +48,8 @@ urlpatterns = [
     url(r'^about_us/$', about_us),
     url(r'^contact_us/$', contact_us),
     url(r'^developers/$', developers),
+    url(r'^payment_hash/$', request_payment_hash),
+
 
     #url(r'^splash_screen/$',version),
 ]#+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

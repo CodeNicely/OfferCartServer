@@ -11,6 +11,8 @@ from django.http import JsonResponse
 import jwt
 # Create your views here.
 from customs.sms import send_sms
+import hashlib
+
 
 @csrf_exempt
 def send_otp(request):
