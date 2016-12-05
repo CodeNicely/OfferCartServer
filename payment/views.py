@@ -55,10 +55,10 @@ def request_payment_hash(request):
 				response_json['transaction_id']=transaction_id
 
 				server_hash_to_encode=key+'|'+transaction_id+'|'+amount+'|'+product_name+'|'+name+'|'+email+'|||||||||||'+merchant_salt
-				
+				print server_hash_to_encode
 				hash_encoded=hashlib.sha512(server_hash_to_encode).hexdigest().lower()
-				
-				response_json['server_hash']=str(hash_encoded)
+				print hash_encoded
+				response_json['server_hash']=hash_encoded
 				response_json['success']=True
 				response_json['message']='Successfully Sent Hash'
 				
