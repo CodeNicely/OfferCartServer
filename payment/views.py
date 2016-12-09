@@ -32,13 +32,13 @@ def request_payment_hash(request):
 			product_name='Wallet'
 		
 
-			# key='t1iq81Kx'
-			# merchant_id='5669435'
-			# merchant_salt='RZHvaXdcuR'
+			key='t1iq81Kx'
+			merchant_id='5669435'
+			merchant_salt='RZHvaXdcuR'
 		
-			key='OPnqOtgp'
-			merchant_id='4943078'
-			merchant_salt='uIBWzo2PAt'
+			# key='OPnqOtgp'
+			# merchant_id='4943078'
+			# merchant_salt='uIBWzo2PAt'
 		
 
 
