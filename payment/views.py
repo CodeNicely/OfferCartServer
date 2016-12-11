@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import jwt
 import hashlib
 from .models import *
+import requests
 
 # Create your views here.
 
@@ -54,7 +55,7 @@ def request_payment_hash(request):
 				response_json['amount']=amount
 				response_json['transaction_id']=transaction_id
 
-				server_hash_to_encode=key+'|'+transaction_id+'|'+amount+'|'+product_name+'|'+name+'|'+email+'|||||||||||'+merchant_salt
+				server_hash_to_encode=key+'|'+transaction_id+'|'+amount+'|'+product_name+'|'+name+'|'+email+'||||||'+merchant_salt
 				print server_hash_to_encode
 				hash_encoded=hashlib.sha512(server_hash_to_encode).hexdigest().lower()
 				print hash_encoded
@@ -85,3 +86,16 @@ def request_payment_hash(request):
 		response_json['message']="This api is not made for GET Requests"
 
 		return JsonResponse(response_json)
+
+@csrf_exempt
+def update_payment_status(request):
+	transaction_id=8223003905122
+	key='t1iq81Kx'
+	head={"Authorization": "0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc="} 
+	url = 'https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey='+key+'&merchantTransactionIds='+str(transaction_id) 
+	resp = requests.post(url,data={},headers=head) 
+	print resp.content;
+	response_json={}
+	response_json['success']=True
+	response_json['message']="This api is not made for GET Requests"
+	return JsonResponse(response_json)

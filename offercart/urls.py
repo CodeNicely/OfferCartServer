@@ -30,7 +30,7 @@ from contact_us.views import contact_us
 from developers.views import developers
 from buyoffer.views import buyoffers
 from myoffers.views import myoffers
-from payment.views import request_payment_hash
+from payment.views import request_payment_hash,update_payment_status
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -49,6 +49,8 @@ urlpatterns = [
     url(r'^contact_us/$', contact_us),
     url(r'^developers/$', developers),
     url(r'^payment_hash/$', request_payment_hash),
+    url(r'^update_payment_status/$', update_payment_status),
+
 
 
     #url(r'^splash_screen/$',version),
