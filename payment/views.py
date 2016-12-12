@@ -86,26 +86,46 @@ def request_payment_hash(request):
 		response_json['message']="This api is not made for GET Requests"
 
 		return JsonResponse(response_json)
+
 import json
 
 @csrf_exempt
 def update_payment_status(request):
-	transaction_id='8223003905122'
-	key='t1iq81Kx'
-	head={"Authorization": "bCskEw6nzrPSSN8W+XMy6QZaAV4aFr1+srsGBk1hmp8="} 
-	url = 'https://www.payumoney.com/payment/op/getPaymentResponse'
-	resp = requests.post(url,data={'merchantKey':key,'merchantTransactionIds':transaction_id},headers=head) 
 	response_json={}
-	message={}
-	response_json['success']=True
+	if request.method=='POST':	
+		transaction_id='8223003905122'
+		key='t1iq81Kx'
+		head={"Authorization": "bCskEw6nzrPSSN8W+XMy6QZaAV4aFr1+srsGBk1hmp8="} 
+		url = 'https://www.payumoney.com/payment/op/getPaymentResponse'
+		resp = requests.post(url,data={'merchantKey':key,'merchantTransactionIds':transaction_id},headers=head) 
+		payu_payment_details=json.loads(resp.text)
+		print "..\n",payu_payment_details
+		for o in payu_payment_details['result']:
+			payment={}
+			payment['txnid']=o['merchantTransactionId']
+			if payment['txnid']==transaction_id:
+				tmp=o['postBackParam']
+				payment['status']=tmp['status']
+				payment['amount']=tmp['net_amount_debit']
+				try:
+    				obj = payment_data.objects.get(transaction_id=transaction_id)
+    				obj.status = True
+    				obj.amount=payment['amount']
+    				obj.save()
+    				response_json['success']=True
+					response_json['payment']=payment
+					response_json['message']='Payment Successful'
+    			except:
+    				response_json['success']=False
+					response_json['message']='Payment Failed'				
+				break;
+			else:	
+				response_json['success']=False
+				response_json['message']='Tansaction id not found'
+				#Do nothing
+		return JsonResponse(response_json,safe=False)
+	else :
+		response_json['success']=False
+		response_json['message']='This api is not made for GET Requests'
 
-	ans=json.loads(resp.text)
-	print "..\n",ans
-	for o in ans['result']:
-		message['txnid']=o['merchantTransactionId']
-		tmp=o['postBackParam']
-		message['status']=tmp['status']
-		message['amount']=tmp['net_amount_debit']
 
-	response_json['message']=message
-	return JsonResponse(response_json,safe=False)
