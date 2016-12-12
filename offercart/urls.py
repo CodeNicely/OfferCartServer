@@ -22,13 +22,13 @@ from welcome.views import welcome
 from city.views import city
 from category.views import category
 from shop.views import shop
-from offer.views import send_offer
+from offer.views import send_offer,buy_offer
 from django.conf import settings
 from city.views import city
 from about_us.views import about_us
 from contact_us.views import contact_us
 from developers.views import developers
-from buyoffer.views import buyoffers
+#from buyoffer.views import buyoffers
 from myoffers.views import myoffers
 from payment.views import request_payment_hash,update_payment_status,wallet
 from django.conf.urls.static import static
@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^shop/$', shop),
     url(r'^offer/$', send_offer),
     url(r'^my_offer/$', myoffers),
-    url(r'^buy_offer/$', buyoffers),
+    url(r'^buy_offer/$', buy_offer),
     url(r'^about_us/$', about_us),
     url(r'^contact_us/$', contact_us),
     url(r'^developers/$', developers),

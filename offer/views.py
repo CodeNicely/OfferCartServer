@@ -4,6 +4,8 @@ from django.http import HttpResponse
 import requests
 from shop.models import shop_data
 from django.views.decorators.csrf import csrf_exempt
+import jwt
+from register.models import user_data
 # Create your views here.
 @csrf_exempt
 def send_offer(request):
@@ -45,7 +47,7 @@ def send_offer(request):
 	return HttpResponse(str(response_json))
 # Create your views here.
 @csrf_exempt
-def buyoffers(request):
+def buy_offer(request):
 	response_json={}
 	if request.method=='POST':
 		try:
@@ -60,7 +62,7 @@ def buyoffers(request):
 			response_json["message"]='Successful'
 			user=user_data.objects.get(mobile=str(json['mobile']))
 			wallet=user.wallet
-			offer=offer_data.objects.get(offer_id=int(offer_id))
+			offer=offer_data.objects.get(id=int(offer_id))
 			price=offer.price
 			if(wallet<price):
 				response_json["success"]=False
@@ -70,7 +72,7 @@ def buyoffers(request):
 				offers_bought.objects.create(mobile=str(mobile),price=price,offer_id=offer_id,avialable=True)
 				user.wallet=wallet-price
 				user.save()
-				response_json["transaction_id"]=transaction_id
+				#response_json["transaction_id"]=transaction_id
 				response_json["offer_name"]=offer.name
 				response_json["price"]=offer.price
 		except Exception,e:
@@ -83,4 +85,4 @@ def buyoffers(request):
 		response_json['success']=False
 		response_json['message']="not POST method"
 	print str(response_json)
-	return JsonResponse(response_json)
+	return HttpResponse(str(response_json))
