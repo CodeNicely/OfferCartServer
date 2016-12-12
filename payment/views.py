@@ -86,16 +86,26 @@ def request_payment_hash(request):
 		response_json['message']="This api is not made for GET Requests"
 
 		return JsonResponse(response_json)
+import json
 
 @csrf_exempt
 def update_payment_status(request):
-	transaction_id=8223003905122
+	transaction_id='8223003905122'
 	key='t1iq81Kx'
-	head={"Authorization": "0SC8FamYqWnwFzVgYKmiCfSsT96xerU8E+WBUh/KDXc="} 
-	url = 'https://www.payumoney.com/payment/op/getPaymentResponse?merchantKey='+key+'&merchantTransactionIds='+str(transaction_id) 
-	resp = requests.post(url,data={},headers=head) 
-	print resp.content;
+	head={"Authorization": "bCskEw6nzrPSSN8W+XMy6QZaAV4aFr1+srsGBk1hmp8="} 
+	url = 'https://www.payumoney.com/payment/op/getPaymentResponse'
+	resp = requests.post(url,data={'merchantKey':key,'merchantTransactionIds':transaction_id},headers=head) 
 	response_json={}
+	message={}
 	response_json['success']=True
-	response_json['message']="This api is not made for GET Requests"
-	return JsonResponse(response_json)
+
+	ans=json.loads(resp.text)
+	print "..\n",ans
+	for o in ans['result']:
+		message['txnid']=o['merchantTransactionId']
+		tmp=o['postBackParam']
+		message['status']=tmp['status']
+		message['amount']=tmp['net_amount_debit']
+
+	response_json['message']=message
+	return JsonResponse(response_json,safe=False)
