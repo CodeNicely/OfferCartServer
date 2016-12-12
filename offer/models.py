@@ -20,3 +20,11 @@ class offer_data(models.Model):
 	def save(self, *args, **kwargs):
 		self.shop_id = self.shop_name.id
 		super(offer_data,self).save(*args, **kwargs)
+
+class offers_bought(models.Model):
+	mobile=models.CharField(max_length=120, blank=True,null=True)
+	offer_id= models.IntegerField(default=0)
+	price=models.IntegerField(default=0)
+	avialable=models.BooleanField(default=True)
+	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
+	created= models.DateTimeField(auto_now=False,auto_now_add=True)

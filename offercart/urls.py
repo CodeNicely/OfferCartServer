@@ -30,7 +30,7 @@ from contact_us.views import contact_us
 from developers.views import developers
 from buyoffer.views import buyoffers
 from myoffers.views import myoffers
-from payment.views import request_payment_hash,update_payment_status
+from payment.views import request_payment_hash,update_payment_status,wallet
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^version/$', version),#completed
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
+    url(r'^wallet/$',wallet),
     url(r'^welcome/$', welcome),
     url(r'^city/$', city),
     url(r'^category/$', category),

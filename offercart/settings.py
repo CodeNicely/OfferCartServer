@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'offer',
     'customs',
     'myoffers',
-    'buyoffer',
     "about_us",
     "contact_us",
     "developers",
