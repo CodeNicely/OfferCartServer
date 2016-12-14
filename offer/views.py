@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 import requests
 from shop.models import shop_data
 from django.views.decorators.csrf import csrf_exempt
@@ -43,8 +43,7 @@ def send_offer(request):
 	else:
 		response_json['success']=False
 		response_json['message']="not get method"
-	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(response_json)
 # Create your views here.
 @csrf_exempt
 def buy_offer(request):
@@ -84,5 +83,4 @@ def buy_offer(request):
 	else:
 		response_json['success']=False
 		response_json['message']="not POST method"
-	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(response_json)
