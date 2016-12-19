@@ -64,7 +64,7 @@ def buy_offer(request):
 			user=user_data.objects.get(mobile=str(json['mobile']))
 			wallet=user.wallet
 			offer_details=offer_data.objects.get(id=int(offer_id))
-			price=offer.price
+			price=offer_details.price
 			if(wallet<price):
 				response_json["success"]=False
 				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money. Please Add some Money in your Wallet'
