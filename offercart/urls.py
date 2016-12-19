@@ -29,7 +29,7 @@ from about_us.views import about_us
 from contact_us.views import contact_us
 from developers.views import developers
 #from buyoffer.views import buyoffers
-from my_offers.views import my_offers
+from myoffers.views import my_offers
 from payment.views import request_payment_hash,update_payment_status,wallet
 from django.conf.urls.static import static
 
