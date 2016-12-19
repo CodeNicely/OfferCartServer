@@ -74,8 +74,8 @@ def buy_offer(request):
 				offers_bought.objects.create(mobile=str(mobile),price=price,offer_id=offer_id,offer_code=offer_code,avialable=True)
 				user.wallet=wallet-price
 				user.save()
-				offer_data=offers_bought.objects.get(mobile=str(mobile),offer_id=offer_id)
-				shop_details=shop_data.objects.get(shop_id=offer_data.shop_id)
+				offer_details=offers_bought.objects.get(mobile=str(mobile),offer_id=offer_id)
+				shop_details=shop_data.objects.get(shop_id=offer_details.shop_id)
 				try:
 					msg=' Thank you for using Discount Store. You have successfully bought the Offer for Shop '+str(shop_details.name)+ '. Your Offer Code is  '+ str(offer_code)+'. To Redeem the offer Please shop this Message and Code During Billing.              Thanks Team Discount Store'
 					send_sms(mobile,msg)
