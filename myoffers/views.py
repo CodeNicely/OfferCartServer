@@ -27,6 +27,7 @@ def my_offers(request):
 				my_offer_details['offer_name']=offer_details.name
 				my_offer_details['offer_validity']=offer_details.validity
 				my_offer_details['offer_price']=offer_details.price
+				my_offer_details['offer_code']=o.offer_code
 				my_offer_details['offer_image']=request.scheme+'://'+request.get_host()+'/media/'+str(offer_details.image)
 				shop_details=shop_data.objects.get(id=offer_details.shop_id)
 				my_offer_details['shop_name']=shop_details.name
