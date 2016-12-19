@@ -8,6 +8,7 @@ import jwt
 import string
 import random
 from register.models import user_data
+from customs.sms import send_sms
 # Create your views here.
 @csrf_exempt
 def send_offer(request):
