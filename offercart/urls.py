@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^category/$', category),
     url(r'^shop/$', shop),
     url(r'^offer/$', send_offer),
-    url(r'^my_offer/$', myoffers),
+    url(r'^my_offers/$', my_offers),
     url(r'^buy_offer/$', buy_offer),
     url(r'^about_us/$', about_us),
     url(r'^contact_us/$', contact_us),
