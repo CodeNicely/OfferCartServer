@@ -19,7 +19,7 @@ def my_offers(request):
 			response_json["success"]=True
 			response_json["message"]='Successful'
 
-			response_json["offer_list"]=[]
+			response_json["my_offer_list"]=[]
 			for o in offers_bought.objects.filter(mobile=str(json['mobile'])):
 				offer_details=offer_data.objects.get(id=o.offer_id)
 				my_offer_details={}
