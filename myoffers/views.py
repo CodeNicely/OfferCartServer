@@ -30,7 +30,7 @@ def my_offers(request):
 				shop_details=shop_data.objects.get(id=offer_details.shop_id)
 				my_offer_details['shop_name']=shop_details.name
 				my_offer_details['shop_address']=shop_details.address
-				response_json["offer_list"].append(temp_json)
+				response_json["offer_list"].append(my_offer_details)
 
 		except Exception,e:
 			response_json["success"]=False
