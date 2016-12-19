@@ -33,7 +33,7 @@ def my_offers(request):
 				for p in fields_offer:
 					temp_json[p]=getattr(offer_row,p)
 				temp_json_shop={}
-				shop_row=shop_data.objects.get(shop_id=offer_row.shop_id)
+				shop_row=shop_data.objects.get(id=offer_row.shop_id)
 				for q in fields_shop:
 					temp_json_shop[q]=getattr(shop_row,q)
 				temp_json['shop_data']=temp_json_shop
