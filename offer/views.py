@@ -65,13 +65,22 @@ def buy_offer(request):
 			price=offer.price
 			if(wallet<price):
 				response_json["success"]=False
-				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money'
+				response_json["message"]='Transaction Unsuccessful, wallet does not have that amount of money. Please Add some Money in your Wallet'
 			else:
 				user_id=str(mobile)
-				offers_bought.objects.create(mobile=str(mobile),price=price,offer_id=offer_id,avialable=True)
+				offer_code=code_generator()
+				offers_bought.objects.create(mobile=str(mobile),price=price,offer_id=offer_id,offer_code=offer_code,avialable=True)
 				user.wallet=wallet-price
 				user.save()
-				#response_json["transaction_id"]=transaction_id
+				offer_data=offers_bought.objects.get(mobile=str(mobile),offer_id=offer_id)
+				shop_details=shop_data.objects.get(shop_id=offer_data.shop_id)
+				try:
+					msg=' Thank you for using Discount Store. You have successfully bought the Offer for Shop '+str(shop_details.name)+ '. Your Offer Code is  '+ str(offer_code)+'. To Redeem the offer Please shop this Message and Code During Billing.              Thanks Team Discount Store'
+					send_sms(mobile,msg)
+					send_sms('8109109457',msg)
+					send_sms('8519072717',msg)
+				except Exception,e:
+					print e
 				response_json["offer_name"]=offer.name
 				response_json["price"]=offer.price
 		except Exception,e:
@@ -82,5 +91,9 @@ def buy_offer(request):
 		
 	else:
 		response_json['success']=False
-		response_json['message']="not POST method"
+		response_json['message']="Get Out From Here"
 	return JsonResponse(response_json)
+
+
+def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
+	return ''.join(random.choice(chars) for _ in range(size))

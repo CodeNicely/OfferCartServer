@@ -22,9 +22,11 @@ class offer_data(models.Model):
 		super(offer_data,self).save(*args, **kwargs)
 
 class offers_bought(models.Model):
+	order_id=models.AutoField(primary_key=True)
 	mobile=models.CharField(max_length=120, blank=True,null=True)
-	offer_id= models.IntegerField(default=0)
-	price=models.IntegerField(default=0)
+	offer_id= models.IntegerField(default=-1)
+	offer_code=models.CharField(max_length=20,blank=True,null=False)
+	price=models.IntegerField(default=-1)
 	avialable=models.BooleanField(default=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)

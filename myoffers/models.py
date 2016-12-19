@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 class offer_bought_data(models.Model):
+	order_id=models.AutoField(primary_key=True)
 	user_id= models.CharField(max_length=120, blank=True, null=True)
 	offer_id= models.IntegerField(default=0)
 	price=models.IntegerField(default=0)
