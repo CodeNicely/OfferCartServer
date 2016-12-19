@@ -21,14 +21,15 @@ def my_offers(request):
 
 			response_json["offer_list"]=[]
 			for o in offers_bought.objects.filter(mobile=str(json['mobile'])):
-				offer_details={}
-				offer_details['offer_id']=o.id
-				offer_details['offer_name']=o.name
-				offer_details['validity']=o.validity
-				offer_details['offer_price']=o.price
+				offer_details=offer_data.objects.get(id=o.offer_id)
+				my_offer_details={}
+				my_offer_details['offer_id']=offer_details.id
+				my_offer_details['offer_name']=offer_details.name
+				my_offer_details['validity']=offer_details.validity
+				my_offer_details['offer_price']=offer_details.price
 				shop_details=shop_data.objects.get(id=offer_details.shop_id)
-				offer_details['shop_name']=shop_details.name
-				offer_details['shop_address']=shop_details.address
+				my_offer_details['shop_name']=shop_details.name
+				my_offer_details['shop_address']=shop_details.address
 				response_json["offer_list"].append(temp_json)
 
 		except Exception,e:
