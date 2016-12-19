@@ -82,8 +82,8 @@ def buy_offer(request):
 					send_sms('8519072717',msg)
 				except Exception,e:
 					print e
-				response_json["offer_name"]=offer.name
-				response_json["price"]=offer.price
+				response_json["offer_name"]=offer_details.name
+				response_json["price"]=offer_details.price
 		except Exception,e:
 			response_json["success"]=False
 			response_json["message"]="error in buyoffers"
