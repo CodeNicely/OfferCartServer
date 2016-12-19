@@ -10,7 +10,6 @@ def welcome(request):
 		response_json["slider_data"]=[]
 		for o in  image_data.objects.all():
 			temp_json={}
-			temp_json["image_id"]=o.image_id
 			temp_json["image_url"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image_url)
 			temp_json["message"]=str(o.message)
 			response_json['slider_data'].append(temp_json)
