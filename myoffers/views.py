@@ -29,7 +29,7 @@ def my_offers(request):
 					print "f=",f
 					temp_json[f]=str(getattr(o,str(f)))
 
-				offer_row=offer_data.objects.get(offer_id=o.offer_id)
+				offer_row=offer_data.objects.get(id=o.offer_id)
 				for p in fields_offer:
 					temp_json[p]=getattr(offer_row,p)
 				temp_json_shop={}
