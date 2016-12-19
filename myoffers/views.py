@@ -20,23 +20,15 @@ def my_offers(request):
 			response_json["message"]='Successful'
 
 			response_json["offer_list"]=[]
-			fields=["price","created"]
-			fields_offer=["name","image","description","validity"]
-			fields_shop=["name","address","image"]
 			for o in offers_bought.objects.filter(mobile=str(json['mobile'])):
-				temp_json={}
-				for f in fields:
-					print "f=",f
-					temp_json[f]=str(getattr(o,str(f)))
-
-				offer_row=offer_data.objects.get(id=o.offer_id)
-				for p in fields_offer:
-					temp_json[p]=getattr(offer_row,p)
-				temp_json_shop={}
-				shop_row=shop_data.objects.get(id=offer_row.shop_id)
-				for q in fields_shop:
-					temp_json_shop[q]=str(getattr(shop_row,q))
-				temp_json['shop_data']=temp_json_shop
+				offer_details={}
+				offer_details['offer_id']=o.id
+				offer_details['offer_name']=o.name
+				offer_details['validity']=o.validity
+				offer_details['offer_price']=o.price
+				shop_details=shop_data.objects.get(id=offer_details.shop_id)
+				offer_details['shop_name']=shop_details.name
+				offer_details['shop_address']=shop_details.address
 				response_json["offer_list"].append(temp_json)
 
 		except Exception,e:
