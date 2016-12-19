@@ -7,6 +7,7 @@ class offer_data(models.Model):
 	shop_name=models.ForeignKey(shop_data,null=True)
 	shop_id= models.IntegerField(default=0,editable=False)
 	image=models.ImageField(upload_to='offer/',default="/media/offer/default.png")
+	#category_id=models.SmallIntegerField(default=0)
 	price=models.IntegerField(default=0)
 	active=models.BooleanField(default=True)
 	description=models.CharField(max_length=200,blank=True,null=True)
