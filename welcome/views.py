@@ -14,7 +14,8 @@ def welcome(request):
 			temp_json["image_url"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image_url)
 			temp_json["message"]=str(o.message)
 			response_json['slider_data'].append(temp_json)
-	except:
+	except Exception,e:
+		print e
 		response_json["success"]=False
 		response_json["message"]='url not sent'
 		
