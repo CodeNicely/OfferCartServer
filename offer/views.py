@@ -5,6 +5,8 @@ import requests
 from shop.models import shop_data
 from django.views.decorators.csrf import csrf_exempt
 import jwt
+import string
+import random
 from register.models import user_data
 # Create your views here.
 @csrf_exempt
@@ -95,5 +97,5 @@ def buy_offer(request):
 	return JsonResponse(response_json)
 
 
-def code_generator(size=6, chars=str.ascii_uppercase + str.digits):
+def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
