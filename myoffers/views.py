@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import *
 from offer.models import *
 from shop.models import *
+import jwt
+from django.http import HttpResponse,JsonResponse
+
 # Create your views here.
 
 def my_offers(request):
@@ -44,9 +47,9 @@ def my_offers(request):
 		
 	else:
 		response_json['success']=False
-		response_json['message']="not get method"
+		response_json['message']="Get Out of here!"
 	print str(response_json)
-	return HttpResponse(str(response_json))
+	return JsonResponse(response_json)
 
 
 # def myoffers(request):
