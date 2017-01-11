@@ -77,7 +77,7 @@ def buy_offer(request):
 				user.save()
 				shop_details=shop_data.objects.get(id=offer_details.shop_id)
 				try:
-					msg=' Thank you for using Discount Store. You have successfully bought the Offer for Shop '+str(shop_details.name)+ '. Your Offer Code is  '+ str(offer_code)+'. To Redeem the offer Please show this Message and Code During Billing.              Thanks Team Discount Store'
+					msg=' Thank you for using Discount Store. You have successfully bought the Offer " '+str(offer_details.name)+' "" for Shop '+str(shop_details.name)+ '. Your Offer Code is  '+ str(offer_code)+'. To Redeem the offer Please show this Message and Code During Billing.%0A %0AThanks Team Discount Store'
 					send_sms(mobile,msg)
 					send_sms('8109109457',msg)
 					send_sms('8519072717',msg)
