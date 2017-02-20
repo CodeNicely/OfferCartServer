@@ -6,4 +6,6 @@ class city_dataAdmin(admin.ModelAdmin):
 
 admin.site.register(city_data,city_dataAdmin)
 
-# Register your models here.
+class city_fcm_dataAdmin(admin.ModelAdmin):
+	list_display=["id","city","mobile"]
+admin.site.register(city_fcm_data,city_dataAdmin)

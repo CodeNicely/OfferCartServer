@@ -10,3 +10,11 @@ class city_data(models.Model):
 	
 	def __unicode__(self):
 		return str(self.name)
+
+class city_fcm_data(models.Model):
+	city=models.IntegerField(default=0)
+	fcm=models.CharField(max_length=100,blank=True,null=True)
+	mobile=models.IntegerField(default=0)
+
+	def __unicode__(self):
+		return str(self.city)

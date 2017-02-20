@@ -39,12 +39,16 @@ def city(request):
 			access_token=request.POST.get('access_token')
 			print"debuuged 41"
 			print access_token
+			fcm_city=request.POST.get('fcm')
+			print fcm
 			json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 			print"debuuged 43"
 			user_list=user_data.objects.get(mobile=str(json['mobile']))
+			city_fcm=city_fcm_data.objects.create(fcm=fcm_city,mobile=str(json['mobile']),city=city_id)
 			print"debuuged 45"
 			setattr(user_list,'city',int(city_id))
 			user_list.save()
+			city_fcm.save()
 			response_json['success']=True
 			response_json['message']='Successful'
 			pass
