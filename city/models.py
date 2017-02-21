@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from register.models import user_data
 
 # Create your models here.
 class city_data(models.Model):
@@ -12,9 +13,14 @@ class city_data(models.Model):
 		return str(self.name)
 
 class city_fcm_data(models.Model):
-	city=models.IntegerField(default=0)
+	city_name=models.ForeignKey(user_data,related_name='user1')
+	city_id=models.CharField(max_length=100,blank=False,null=False)
 	fcm=models.CharField(max_length=100,blank=True,null=True)
-	mobile=models.IntegerField(default=0)
+	user_mobile=models.ForeignKey(user_data,related_name='user2')
+	user_id=models.CharField(max_length=100,blank=False,null=False)
+	
 
-	def __unicode__(self):
-		return str(self.city)
+	def save(self, *args, **kwargs):
+		self.city_id = self.city_name.city
+		self.user_id = self.user_mobile.mobile
+		super(city_fcm_data,self).save(*args, **kwargs)
