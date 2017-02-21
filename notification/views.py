@@ -5,7 +5,7 @@ from .models import *
 import requests
 # Create your views here.
 @csrf_exempt
-def send_notification(requests):
+def send_notification(request):
 	if request.method=='GET':
 		return render(request,"notification.html",{})
 	else:
