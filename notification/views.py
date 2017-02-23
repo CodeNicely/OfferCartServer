@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 import requests
+from city.models import city_fcm_data
+
 # Create your views here.
 @csrf_exempt
 def send_notification(request):
