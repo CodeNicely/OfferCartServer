@@ -40,6 +40,7 @@ def notify_users(fcm,body,title="Discount Store"):
     "notification" : {
       "body" : str(body)+"",
       "title" : str(title),
+      "sound": "default",
     },
     "data" : {
       "Nick" : str(body)+"",
