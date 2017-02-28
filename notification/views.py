@@ -19,7 +19,7 @@ def send_notification(request):
 		#intent_type=int(request.POST['category'])
 		#l=login_data.objects.create(name=name,password=password,gender=gender,email=email,description=description,city=city,mobile=mobile)
 		
-		for o in city_fcm_data.objects.all():
+		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,""+title+""+message)
 		return render(request,"notification.html",{}) 
 
