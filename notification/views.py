@@ -28,11 +28,23 @@ def send_notification(request):
 def notify_users(fcm,body,title="Discount Store"):
 	json= {
 	"to" :str(fcm),
-	"notification":{
-	#"intent_id":int(intent_id),
-	"body" :'"'+str(body)+'"',
-	"title" :'"'+str(title)+'"',
-	}
+	# # "notification":{
+	# # #"intent_id":int(intent_id),
+	# # "body" :'"'+str(body)+'"',
+	# # "title" :'"'+str(title)+'"',
+	# # }
+	# "data":{
+	# "body":'"'+str(body)+'"',
+	# "title":'"'+str(title)+'"',
+	# }
+    "notification" : {
+      "body" : str(body)+"",
+      "title" : str(title),
+    },
+    "data" : {
+      "Nick" : str(body)+"",
+      "Room" : str(title),
+    }
 	}
 	print json
 	url="https://fcm.googleapis.com/fcm/send"
