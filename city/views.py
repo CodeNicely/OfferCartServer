@@ -44,7 +44,7 @@ def city(request):
 			json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 			print"debuuged 43"
 			user_list=user_data.objects.get(mobile=str(json['mobile']))
-			city_fcm=city_fcm_data.objects.create(fcm=fcm_city,city_id=city_id,user_id=str(json['mobile']))
+			city_fcm,created=city_fcm_data.objects.get_or_create(fcm=fcm_city,city_id=city_id,user_id=str(json['mobile']))
 			print"debuuged 45"
 			setattr(user_list,'city',int(city_id))
 			user_list.save()
