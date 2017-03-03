@@ -12,13 +12,6 @@ from shop.models import shop_data
 def send_notification(request):
 	#response_json={}
 	if request.method=='GET':
-		return render(request,"notification.html",{})
-	else:
-		for x,y in request.POST.items():
-			print "key,value",x,":",y
-		message=str(request.POST.get('message'))
-		city=request.POST['city']
-		shop_id=request.POST['shop_id']
 		# shop=category_data.objects.values('id', 'name').exclude(name__isnull=True)
 		# intent_type=int(request.POST['category'])
 		# for o in shop:
@@ -28,10 +21,17 @@ def send_notification(request):
 		# 	shop_list_data["shop_name"]=shop.name;
 		# 	shop_list.append(shop_list_data)
 		# 	response_json["shop_data"]=shop_list
+		# print(response_json)
+		#"obj_as_json":json.dumps(response_json)
+		return render(request,"notification.html",{})
+	else:
+		for x,y in request.POST.items():
+			print "key,value",x,":",y
+		message=str(request.POST.get('message'))
+		city=request.POST['city']
+		shop_id=request.POST['shop_id']
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id)
-		# print(response_json)
-		# #obj_as_json":json.dumps(response_json)
 		return render(request,"notification.html",{}) 
 
 
