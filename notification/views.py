@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
@@ -12,31 +13,24 @@ from shop.models import shop_data
 def send_notification(request):
 	#response_json={}
 	if request.method=='GET':
-		# shop=category_data.objects.values('id', 'name').exclude(name__isnull=True)
-		# intent_type=int(request.POST['category'])
-		# for o in shop:
-		# 	shop_list=[]
-		# 	shop_list_data={}
-		# 	shop_list_data["shop_id"]=shop.id;
-		# 	shop_list_data["shop_name"]=shop.name;
-		# 	shop_list.append(shop_list_data)
-		# 	response_json["shop_data"]=shop_list
-		# print(response_json)
-		#"obj_as_json":json.dumps(response_json)
-		return render(request,"notification.html",{})
+		shops=shop_data.objects.values('id','name');
+		print("yes",shops)
+		return render(request,"notification.html",{"shop_data":shops})
 	else:
 		for x,y in request.POST.items():
 			print "key,value",x,":",y
+		shops=shop_data.objects.values('id','name');
 		message=str(request.POST.get('message'))
 		city=request.POST['city']
-		shop_id=request.POST['shop_id']
+		shop_id=request.POST.get('id')
+		shop_name=str(shop_data.objects.get(id=shop_id).name)
 		for o in city_fcm_data.objects.filter(city_id=city):
-			notify_users(o.fcm,message,shop_id)
-		return render(request,"notification.html",{}) 
+			notify_users(o.fcm,message,shop_id,shop_name)
+		return render(request,"notification.html",{"shop_data":shops}) 
 
 
 @csrf_exempt
-def notify_users(fcm,body,data,title="Discount Store"):
+def notify_users(fcm,body,id,name,title="Discount Store"):
 	json= {
 	"to" :str(fcm),
     "notification" : {
@@ -47,8 +41,8 @@ def notify_users(fcm,body,data,title="Discount Store"):
     "data" : {
       "text":"Click to check new offers",
       "message":str(body),
-      "shop_id":str(shop_id),
-      "shop_name":"Khushee Sarees",
+      "shop_id":str(id),
+      "shop_name":str(name),
     }
 	}
 	print json

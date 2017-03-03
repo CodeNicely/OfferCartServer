@@ -2,6 +2,13 @@
 <html> 
 <head> 
 <title>Notification-Panel</title> 
+<script type="text/javascript">
+	function submitForm()
+	{
+		var form = document.getElementById("myForm");
+		form.reset();
+	}
+</script>
 </head> 
 <center>
 <body id="body-color"> 
@@ -10,7 +17,7 @@
 <legend>
 Enter Notification Details
 </legend> 
-<form method="POST" action="#"> 
+<form method="POST" action="#" autocomplete="off" name="myForm"> 
 Message description: <br><textarea rows="4" cols="50" name="message">
 </textarea>
 
@@ -19,13 +26,18 @@ City:<select name="city">
   <option value="2">Bilaspur</option>
   <option value="3">Pune</option>
 </select>
-Notification For :<select name="shop_name">
-	<option value="2">Khushee Sarees</option>
-	<option value="1">Senhora Sarees</option>
+Notification For:
+<select name="id">
+	{% for shops in shop_data %}
+   <option value="{{shops.id}}">
+       {{shops.name}}
+   </option>
+{% endfor %}
 </select>
+
 <br>
 <br>
-<input id="button" type="submit" name="submit" value="Log-In"> 
+<input id="button" type="submit" name="submit" value="Log-In" onclick="submitForm()"> 
 </form> 
 </fieldset> 
 </div> 
