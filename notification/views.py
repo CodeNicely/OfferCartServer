@@ -37,7 +37,7 @@ def notify_users(fcm,body,id,name,title="Discount Store"):
       "body" : str(body)+"",
       "title" : str(title),
       "sound": "default",
-      "click_action":"open_activity"
+      "click_action":"com.codenicely.dicountstore.home.HomePage"
     },
     "data" : {
       "text":"Click to check new offers",
