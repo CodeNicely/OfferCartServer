@@ -40,7 +40,6 @@ def notify_users(fcm,body,id,name,title="Discount Store"):
       "click_action":"com.codenicely.dicountstore.home.HomePage"
     },
     "data" : {
-      "text":"Click to check new offers",
       "message":str(body),
       "shop_id":str(id),
       "shop_name":str(name),
