@@ -2,6 +2,7 @@
 <html> 
 <head> 
 <title>Notification-Panel</title> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 	function submitForm()
 	{
@@ -20,8 +21,17 @@ Enter Notification Details
 <form method="POST" action="#" autocomplete="off" name="myForm"> 
 Message description: <br><textarea rows="4" cols="50" name="message">
 </textarea>
+<select name="city" id="city-list" onchange="getState(this.value);">
+	<option value="">Select City</option>
+	{% for city_data in cities_data %}
+	<option value="{{city_data.id}}">{{city_data.name}}</option>
+	{% endfor %}
+</select>
+<select name="shops" id="shops-list">
+<option value="">Select Shops</option>
+</select>
 
-City:<select name="city">
+<!-- City:<select name="city">
 {% for city_data in cities_data %}
   <option value="{{city_data.id}}">{{city_data.name}}
   </option>
@@ -34,14 +44,29 @@ Notification For:
        {{shops.name}}
    </option>
 {% endfor %}
-</select>
-
+</select> -->
 <br>
 <br>
 <input id="button" type="submit" name="submit" value="Send" onclick="submitForm()"> 
 </form> 
 </fieldset> 
 </div> 
+<script>
+	function getState(val) {
+	$.ajax({
+	type: "POST",
+	url: "/send_shops/",
+	data:'city_id='+val,
+	success: function(data){
+		 var $el = $("#shops-list");
+                    $el.empty(); // remove old options
+                  	$.each(data.shop_data, function(index, obj){
+                $("#shops-list").append('<option value='+obj.shop_id+'>'+obj.shop_name+'</option>');
+            });			
+	}
+});
+}
+</script>
 </body> 
 </center>
 </html>
