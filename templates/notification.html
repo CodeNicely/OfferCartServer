@@ -22,8 +22,8 @@ Message description: <br><textarea rows="4" cols="50" name="message">
 </textarea>
 
 City:<select name="city">
-{% for city in cities_data %}
-  <option value="{{city.id}}">{{city.name}}
+{% for city_data in cities_data %}
+  <option value="{{city_data.id}}">{{city_data.name}}
   </option>
   {% endfor %}
 </select>
