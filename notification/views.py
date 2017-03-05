@@ -13,7 +13,7 @@ from shop.models import shop_data
 def send_notification(request):
 	#response_json={}
 	if request.method=='GET':
-		shops=shop_data.objects.values('id','name','city_id','city_name');
+		shops=shop_data.objects.values('id','name','city_id','city_name')
 		print("yes",shops)
 		return render(request,"notification.html",{"shop_data":shops})
 	else:
