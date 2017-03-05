@@ -11,13 +11,17 @@ from city.models import city_data
 # Create your views here.
 @csrf_exempt
 def send_notification(request):
-	#response_json={}
 	if request.method=='GET':
-		shops=shop_data.objects.values('id','name')
+		shops=shop_data.objects.values('id','name','city_name')
 		cities=city_data.objects.values('id','name')
 		print("yes",shops)
 		print("yes 1",cities)
-		return render(request,"notification.html",{"shop_data":shops,"cities_data":cities})
+		shop_all_data = shop_data.objects.all()
+		print (shop_all_data)
+		for r in shop_all_data:
+			print r.city_name.name
+			print r.city_name.id
+		return render(request,"notification.html",{"shop_data":shops,"cities_data":cities,"city":shop_all_data})
 	else:
 		
 		for x,y in request.POST.items():
