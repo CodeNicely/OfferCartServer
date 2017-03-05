@@ -31,10 +31,11 @@ def send_notification(request):
 		message=str(request.POST.get('message'))
 		city=request.POST['city']
 		shop_id=request.POST.get('shops')
+		cities=city_data.objects.values('id','name')
 		shop_name=str(shop_data.objects.get(id=shop_id).name)
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
-		return render(request,"notification.html",{}) 
+		return render(request,"notification.html",{"cities_data":cities}) 
 
 
 @csrf_exempt
