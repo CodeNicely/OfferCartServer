@@ -22,9 +22,10 @@ Message description: <br><textarea rows="4" cols="50" name="message">
 </textarea>
 
 City:<select name="city">
-  <option value="1">Raipur</option>
-  <option value="2">Bilaspur</option>
-  <option value="3">Pune</option>
+{% for shops in shop_data %}
+  <option value="{{shops.city_id}}">{{shops.city_name}}
+  </option>
+  {% endfor %}
 </select>
 Notification For:
 <select name="id">
