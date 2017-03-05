@@ -7,23 +7,17 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 import requests
 import json
+from django.contrib.auth.decorators import login_required
 from city.models import city_fcm_data
 from shop.models import shop_data
 from city.models import city_data
 # Create your views here.
-@csrf_exempt
+@login_required(login_url='/admin/')
 def send_notification(request):
 	if request.method=='GET':
-		shops=shop_data.objects.values('id','name','city_name')
 		cities=city_data.objects.values('id','name')
-		print("yes",shops)
 		print("yes 1",cities)
-		shop_all_data = shop_data.objects.all()
-		print (shop_all_data)
-		for r in shop_all_data:
-			print r.city_name.name
-			print r.city_name.id
-		return render(request,"notification.html",{"shop_data":shops,"cities_data":cities,"city":shop_all_data})
+		return render(request,"notification.html",{"cities_data":cities})
 	else:
 		
 		for x,y in request.POST.items():
@@ -33,6 +27,7 @@ def send_notification(request):
 		shop_id=request.POST.get('shops')
 		cities=city_data.objects.values('id','name')
 		shop_name=str(shop_data.objects.get(id=shop_id).name)
+		print shop_name
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
 		return render(request,"notification.html",{"cities_data":cities}) 
@@ -75,7 +70,7 @@ def send_shops(request):
 		response_json["shop_data"]=[]
 		if(shop_names.count()==0):
 			temp_json={}
-			temp_json["shop_id"]=""
+			temp_json["shop_id"]=str("")
 			temp_json["shop_name"]="No shop available"
 			response_json["shop_data"].append(temp_json)
 			print"debugged"
