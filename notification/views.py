@@ -79,16 +79,15 @@ def send_shops(request):
 			temp_json["shop_name"]="No shop available"
 			response_json["shop_data"].append(temp_json)
 			print"debugged"
-		print"debugged"
 		for o in shop_names:
+			print"debugged"
 			temp_json={}
 			print o.name
 			temp_json["shop_id"]=o.id
 			temp_json["shop_name"]=str(o.name)
 			response_json["shop_data"].append(temp_json)
-		print ("hmm",shop_names)
-		if(city_id!=0):
-			print ("ok",city_id)
+		print ("shop_names",shop_names)
+		print ("city_id",city_id)
 		print str(response_json)
 		return JsonResponse(response_json)
 
