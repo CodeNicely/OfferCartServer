@@ -31,6 +31,7 @@ from developers.views import developers
 from myoffers.views import my_offers
 from payment.views import request_payment_hash,update_payment_status,wallet
 from django.conf.urls.static import static
+from notification.views import send_notification,send_shops
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -50,6 +51,8 @@ urlpatterns = [
     url(r'^developers/$', developers),
     url(r'^payment_hash/$', request_payment_hash),
     url(r'^update_payment_status/$', update_payment_status),
+    url(r'^send_notification/$',send_notification),
+    url(r'^send_shops/$',send_shops),
 
 
 

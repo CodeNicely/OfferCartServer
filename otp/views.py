@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from register.models import user_data
+from city.models import city_fcm_data
 from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -76,6 +77,11 @@ def verify_otp(request):
 			otp_list.save()
 			response_json['access_token']=str(access_token)
 			print 'Access Token Created'
+			json=jwt.decode(str(access_token),'999123',algorithms='HS256')
+			user=city_fcm_data.objects.filter(user_id=str(json['mobile']))
+			if(user.exists()):
+				for u in user:
+					u.delete()
 			response_json['success']=True
 			response_json['message']='Successful'
 		else:

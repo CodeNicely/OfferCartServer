@@ -25,7 +25,7 @@ SECRET_KEY = '*iq*02wx*+earq5kj^bf4+@)syllfa0iz&p88!)x5-+ic9=rar'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['172.16.8.152','127.0.0.1']
 
 
 # Application definition
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "contact_us",
     "developers",
     "payment",
+    "notification",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -68,7 +69,8 @@ ROOT_URLCONF = 'offercart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['offercart/template'],
+        #'DIRS': ['offercart/template'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,6 +106,12 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

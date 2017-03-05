@@ -15,6 +15,7 @@ class shop_data(models.Model):
 	description= models.CharField(max_length=120, blank=True, null=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+	password=models.CharField(max_length=55,blank=False,null=False,default=0)
 
 	def __unicode__(self):
 		return str(self.name)
