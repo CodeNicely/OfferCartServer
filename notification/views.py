@@ -30,8 +30,8 @@ def send_notification(request):
 		print shop_name
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
-		#return render(request,"notification.html",{"cities_data":cities}) 
-		return render_to_response("notification.html",{"cities_data":cities},RequestContext(request))
+		return render(request,"notification.html",{"cities_data":cities}) 
+		#return render_to_response("notification.html",{"cities_data":cities},RequestContext(request))
 
 @csrf_exempt
 def notify_users(fcm,body,id,name,title="Discount Store"):
