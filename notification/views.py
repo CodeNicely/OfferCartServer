@@ -14,7 +14,6 @@ from city.models import city_data
 # Create your views here.
 @login_required(login_url='/admin/')
 def send_notification(request):
-	csrfContext = RequestContext(request)
 	if request.method=='GET':
 		cities=city_data.objects.values('id','name')
 		print("yes 1",cities)
@@ -32,9 +31,7 @@ def send_notification(request):
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
 		#return render(request,"notification.html",{"cities_data":cities}) 
-		return render_to_response("notification.html",{"cities_data":cities},csrfContext)
-
-
+		return render_to_response("notification.html",{"cities_data":cities},RequestContext(request))
 
 @csrf_exempt
 def notify_users(fcm,body,id,name,title="Discount Store"):
