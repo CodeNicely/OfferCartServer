@@ -32,7 +32,7 @@ def send_notification(request):
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
 		#return render(request,"notification.html",{"cities_data":cities}) 
-		return render_to_response("notification.html",{"cities_data:cities"},csrfContext)
+		return render_to_response("notification.html",{"cities_data":cities},csrfContext)
 
 
 
