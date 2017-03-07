@@ -32,6 +32,7 @@ else
 Enter Notification Details
 </legend> 
 <form method="POST" action="#" autocomplete="off" name="myForm" onsubmit="required()"> 
+ {% csrf_token %}
 Message description: <br><textarea rows="4" cols="50" name="message">
 </textarea>
 <select name="city" id="city-list" onchange="getState(this.value);">

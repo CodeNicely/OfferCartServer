@@ -13,7 +13,7 @@ class city_data(models.Model):
 class city_fcm_data(models.Model):
 	#city_name=models.ForeignKey(city_data,related_name='user1',null=True)
 	city_id=models.CharField(max_length=100,blank=True,null=True)
-	fcm=models.CharField(max_length=100,blank=True,null=True)
+	fcm=models.CharField(max_length=512,blank=True,null=True)
 	user_id=models.CharField(max_length=100,blank=True,null=True)
 	#user_mobile=models.ForeignKey(user_data,related_name='user2',null=True)
 	#user_id=models.CharField(max_length=100,blank=False,null=False)
