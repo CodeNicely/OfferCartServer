@@ -33,7 +33,6 @@ def city(request):
 	if(request.method=="POST"):
 		try:
 			response_json={}
-			
 			city_id=request.POST.get('city_id')
 			print"debuuged 39"
 			access_token=request.POST.get('access_token')
@@ -61,17 +60,23 @@ def city(request):
 # Create your views here.
 @csrf_exempt
 def update_fcm(request):
+	response_json={}
 	try:
-		response_json={}
-		if(request.method=="POST"):
-			for x,y in request.POST.items():
-				print "key,value",x,":",y
-			access_token=str(request.POST.get('access_token'))
-			fcm=str(request.POST.get('fcm'))
-			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
-			for d in data:
-				setattr(city_fcm_data,'fcm',fcm)
-			data.save()
-			response_json['success']=True
-			response_json['message']="fcm updated successfully"
+		for x,y in request.POST.items():
+			print "key,value",x,":",y
+		access_token=str(request.POST.get('access_token'))
+		fcm=str(request.POST.get('fcm'))
+		data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
+		for d in data:
+			setattr(city_fcm_data,'fcm',fcm)
+		data.save()
+		response_json['success']=True
+		response_json['message']="fcm updated successfully"
+		pass
+	except Exception,e:
+		response_json['success']=False
+		response_json['message']="fcm cannot be updated"
+		print "error@city_fcm  post",e
+	print str(response_json)
+	return JsonResponse(response_json)
 
