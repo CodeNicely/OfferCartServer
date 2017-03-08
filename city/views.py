@@ -67,7 +67,8 @@ def update_fcm(request):
 		access_token=str(request.POST.get('access_token'))
 		json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 		fcm=str(request.POST.get('fcm'))
-		if fcm!=null:
+		print fcm
+		if fcm!=:
 			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
 			for d in data:
 				setattr(city_fcm_data,'fcm',fcm)
