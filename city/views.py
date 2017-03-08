@@ -65,6 +65,7 @@ def update_fcm(request):
 		for x,y in request.POST.items():
 			print "key,value",x,":",y
 		access_token=str(request.POST.get('access_token'))
+		json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 		fcm=str(request.POST.get('fcm'))
 		data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
 		for d in data:
