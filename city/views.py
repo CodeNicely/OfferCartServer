@@ -70,8 +70,10 @@ def update_fcm(request):
 		print fcm
 		if fcm!=None:
 			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
+			i=0
 			for d in data:
 				setattr(city_fcm_data,'fcm',fcm)
+				print "Fcm Updated ",str(i)
 				d.save()
 			# data.save()
 			response_json['success']=True
