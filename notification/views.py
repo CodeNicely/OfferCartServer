@@ -36,12 +36,12 @@ def send_notification(request):
 def notify_users(fcm,body,id,name,title="Discount Store"):
 	json= {
 	"to" :str(fcm),
-    "notification" : {
-      "body" : str(body)+"",
-      "title" : str(title),
-      "sound": "default",
-      "click_action":"com.codenicely.dicountstore.home.HomePage"
-    },
+    # "notification" : {
+    #   "body" : str(body)+"",
+    #   "title" : str(title),
+    #   "sound": "default",
+    #   "click_action":"com.codenicely.dicountstore.home.HomePage"
+    # },
     "data" : {
       "message":str(body),
       "shop_id":str(id),
