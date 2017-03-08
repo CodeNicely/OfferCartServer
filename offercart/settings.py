@@ -106,21 +106,11 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'xendroiders$final',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
 #     }
 # }
 

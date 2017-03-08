@@ -16,7 +16,7 @@ from city.models import city_data
 def send_notification(request):
 	if request.method=='GET':
 		cities=city_data.objects.values('id','name')
-		print("yes 1",cities)
+		print("yes",cities)
 		return render(request,"notification.html",{"cities_data":cities})
 	else:
 		
@@ -31,18 +31,17 @@ def send_notification(request):
 		for o in city_fcm_data.objects.filter(city_id=city):
 			notify_users(o.fcm,message,shop_id,shop_name)
 		return render(request,"notification.html",{"cities_data":cities}) 
-		#return render_to_response("notification.html",{"cities_data":cities},RequestContext(request))
 
 @csrf_exempt
 def notify_users(fcm,body,id,name,title="Discount Store"):
 	json= {
 	"to" :str(fcm),
-    "notification" : {
-      "body" : str(body)+"",
-      "title" : str(title),
-      "sound": "default",
-      "click_action":"com.codenicely.dicountstore.home.HomePage"
-    },
+    # "notification" : {
+    #   "body" : str(body)+"",
+    #   "title" : str(title),
+    #   "sound": "default",
+    #   "click_action":"com.codenicely.dicountstore.home.HomePage"
+    # },
     "data" : {
       "message":str(body),
       "shop_id":str(id),

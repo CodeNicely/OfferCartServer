@@ -19,7 +19,7 @@ from splash_screen.views import version
 from otp.views import send_otp
 from otp.views import verify_otp
 from welcome.views import welcome
-from city.views import city
+from city.views import city,update_fcm
 from category.views import category
 from shop.views import shop
 from offer.views import send_offer,buy_offer
@@ -53,6 +53,7 @@ urlpatterns = [
     url(r'^update_payment_status/$', update_payment_status),
     url(r'^send_notification/$',send_notification),
     url(r'^send_shops/$',send_shops),
+    url(r'^update_fcm/$',update_fcm),
 
 
 
