@@ -70,7 +70,8 @@ def update_fcm(request):
 		data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
 		for d in data:
 			setattr(city_fcm_data,'fcm',fcm)
-		data.save()
+			d.save()
+		# data.save()
 		response_json['success']=True
 		response_json['message']="fcm updated successfully"
 		pass
