@@ -68,14 +68,17 @@ def update_fcm(request):
 		json=jwt.decode(str(access_token),'999123',algorithms='HS256')
 		fcm=str(request.POST.get('fcm'))
 		print fcm
-		data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
-		for d in data:
-			setattr(city_fcm_data,'fcm',fcm)
-			d.save()
-		# data.save()
-		response_json['success']=True
-		response_json['message']="fcm updated successfully"
-		pass
+		if fcm!=None:
+			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
+			for d in data:
+				setattr(city_fcm_data,'fcm',fcm)
+				d.save()
+			# data.save()
+			response_json['success']=True
+			response_json['message']="fcm updated successfully"
+		else:
+			response_json['success']=False
+			response_json['message']="fcm is null so it cannot be updated"	
 	except Exception,e:
 		response_json['success']=False
 		response_json['message']="fcm cannot be updated"
