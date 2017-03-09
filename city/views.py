@@ -75,7 +75,7 @@ def update_fcm(request):
 				city_fcm_data.objects.get(user_id=str(json['mobile']),city_id=current_city_id)
 				print "Fcm already exists just replace it"
 			except Exception,e:
-				city_fcm_data.objects.create(user_id=str(json['mobile']),fcm=fcm,city_id=user_data.objects.get(user_id=str(json['mobile'])).city)
+				city_fcm_data.objects.create(user_id=str(json['mobile']),fcm=fcm,city_id=current_city_id)
 				print "Added Fcm Entry - It was not there in city fcm data table"
 			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
 			if data.count()>0:
