@@ -69,7 +69,7 @@ def update_fcm(request):
 		fcm=str(request.POST.get('fcm'))
 		print fcm
 		if fcm!=None:
-			current_city_id=user_data.objects.get(user_id=str(json['mobile'])).city
+			current_city_id=user_data.objects.get(mobile=str(json['mobile'])).city
 
 			if(city_fcm_data.objects.get(user_id=str(json['mobile']),city_id=current_city_id).count()>0):
 				print "Fcm already exists just replace it"
