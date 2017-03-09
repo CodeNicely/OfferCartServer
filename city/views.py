@@ -69,13 +69,21 @@ def update_fcm(request):
 		fcm=str(request.POST.get('fcm'))
 		print fcm
 		if fcm!=None:
+			current_city_id=user_data.objects.get(user_id=str(json['mobile'])).city
+
+			if(city_fcm_data.objects.get(user_id=str(json['mobile']),city_id=current_city_id).count()>0):
+				print "Fcm already exists just replace it"
+			else:
+				city_fcm_data.objects.create(user_id=str(json['mobile']),fcm=fcm,city_id=user_data.objects.get(user_id=str(json['mobile'])).city)
+				print "Added Fcm Entry - It was not there in city fcm data table"
 			data=city_fcm_data.objects.filter(user_id=str(json['mobile']))
-			for d in data:
-				setattr(d,'fcm',fcm)
-				d.save()
-			# data.save()
-			response_json['success']=True
-			response_json['message']="fcm updated successfully"
+			if data.count()>0
+				for d in data:
+					setattr(d,'fcm',fcm)
+					d.save()
+				# data.save()
+				response_json['success']=True
+				response_json['message']="fcm updated successfully"
 		else:
 			response_json['success']=False
 			response_json['message']="fcm is null so it cannot be updated"	
