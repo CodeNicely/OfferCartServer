@@ -30,7 +30,7 @@ def my_offers(request):
                 my_offer_details['offer_code'] = o.offer_code
                 my_offer_details['offer_image'] = request.scheme + '://' + request.get_host() + '/media/' + str(
                     offer_details.image)
-                shop_details = ShopData.objects.get(id=offer_details.shop_id)
+                shop_details = ShopData.objects.get(name=offer_details.shop_id)
                 my_offer_details['shop_name'] = shop_details.name
                 my_offer_details['shop_address'] = shop_details.address
                 response_json["my_offer_list"].append(my_offer_details)

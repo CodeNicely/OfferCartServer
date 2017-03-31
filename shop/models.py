@@ -9,7 +9,7 @@ from city.models import CityData
 class ShopData(models.Model):
     city_id = models.ForeignKey(CityData, db_column="CityData.id")
     category_id = models.ForeignKey(CategoryData, db_column="CategoryData.id")
-    name = models.CharField(max_length=120, blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True, blank=True, null=True)
     image = models.ImageField(upload_to='shop/', default="/media/shop/default.png")
     address = models.CharField(max_length=120, blank=True, null=True)
     description = models.CharField(max_length=120, blank=True, null=True)
