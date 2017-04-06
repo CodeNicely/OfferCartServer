@@ -1,49 +1,41 @@
-from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
-from .models import *
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from customs.models import KeysData
+
+
 @csrf_exempt
-def version(request):
-	version_row= version_data.objects.get(ver_type='production')
-	version=version_row.version
-	compulsory_update=version_row.compulsory_update
-	response_json={}
-	response_json['version']=version
-	response_json['compulsory_update']=compulsory_update
-	if(request.method=='GET'):
-		for x,y in request.GET.items():
-			print x,":",y
+def splash_screen(request):
+    # version_row = VersionData.objects.get(version_type='production')
+    if request.method == 'GET':
 
-		try:
-			fcm=str(request.GET.get("fcm"))
-			#fcm="tmp from server"
-			print "fcm recieved",fcm
-			if fcm!="None":
-				try:
-					fcm_list=fcm_data.objects.get(fcm=fcm)
-					response_json["success"]=True
-					response_json["message"]="already added"
-				except:
-					fcm_list=fcm_data.objects.create(fcm=fcm)
-					response_json["success"]=True
-					response_json["message"]="successfully added"
-			else:
-				response_json["success"]=True
-				response_json["message"]="fcm none recieved"
+        try:
 
-		except:
-			response_json["success"]=False
-			response_json["message"]="send fcm : invalid parameters"
-	else:
-		response_json["success"]=False
-		response_json["message"]="not get method"
-				
-	print str(response_json)
-	return JsonResponse(response_json)
+            version = int(KeysData.objects.get(key='version').value)
+            compulsory_update = int(KeysData.objects.get(key='compulsory_update').value)
+            # version = version_row.version
+            # compulsory_update = version_row.compulsory_update
+            response_json = dict(
+                version_code=version,
+                compulsory_update=compulsory_update,
+                success=True,
+                message="Version data successful"
+            )
 
-def initial(request):
-	return HttpResponse("<a href=./login>admin_login</a>")
+        except Exception, e:
+            print e
+            response_json = dict(
+                success=False,
+                message='Unable to get version data'
+            )
+    else:
+        response_json = dict(
+            success=False,
+            message='Invalid server request'
+        )
+    print str(response_json)
+    return JsonResponse(response_json)
 
 
-
+def initial():
+    return HttpResponse("<a href=./login>admin_login</a>")

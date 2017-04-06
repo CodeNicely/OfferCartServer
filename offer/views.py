@@ -2,12 +2,12 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse,JsonResponse
 import requests
-from shop.models import shop_data
+from shop.models import ShopData
 from django.views.decorators.csrf import csrf_exempt
 import jwt
 import string
 import random
-from register.models import user_data
+from register.models import UserData
 from customs.sms import send_sms
 # Create your views here.
 @csrf_exempt
@@ -20,7 +20,7 @@ def send_offer(request):
 			#category_id= str(request.POST.get("category_id"))
 			shop_id=str(request.GET.get("shop_id"))
 			print"............................shopid",shop_id
-			shop_row=shop_data.objects.get(id=int(shop_id))
+			shop_row=ShopData.objects.get(id=int(shop_id))
 			response_json["success"]=True
 			response_json["shop_id"]=int(shop_id)
 			response_json["shop_name"]=str(shop_row.name)
@@ -29,7 +29,7 @@ def send_offer(request):
 			response_json["shop_address"]=str(shop_row.address)
 			response_json["offer_list"]=[]
 			print "debuuged 25"
-			for o in offer_data.objects.filter(shop_id=int(shop_id)):
+			for o in OfferData.objects.filter(shop_id=int(shop_id)):
 				if o.active==True:
 					temp_json={}
 					temp_json["offer_id"]=int(o.id)
@@ -62,9 +62,9 @@ def buy_offer(request):
 			mobile=json['mobile']
 			response_json["success"]=True
 			response_json["message"]='Successful'
-			user=user_data.objects.get(mobile=str(json['mobile']))
+			user=UserData.objects.get(mobile=str(json['mobile']))
 			wallet=user.wallet
-			offer_details=offer_data.objects.get(id=int(offer_id))
+			offer_details=OfferData.objects.get(id=int(offer_id))
 			price=offer_details.price
 			if(wallet<price):
 				response_json["success"]=False
@@ -72,10 +72,10 @@ def buy_offer(request):
 			else:
 				user_id=str(mobile)
 				offer_code=code_generator()
-				offers_bought.objects.create(mobile=str(mobile),price=price,offer_id=offer_id,offer_code=offer_code,avialable=True)
+				OfferBoughtData.objects.create(mobile=str(mobile), price=price, offer_id=offer_id, offer_code=offer_code, avialable=True)
 				user.wallet=wallet-price
 				user.save()
-				shop_details=shop_data.objects.get(id=offer_details.shop_id)
+				shop_details=ShopData.objects.get(id=offer_details.shop_id)
 				try:
 					msg=' Thank you for using Discount Store. You have successfully bought the Offer " '+str(offer_details.name)+' "" for Shop '+str(shop_details.name)+ '. Your Offer Code is  '+ str(offer_code)+'. To Redeem the offer Please show this Message and Code During Billing.%0A %0AThanks Team Discount Store'
 					send_sms(mobile,msg)

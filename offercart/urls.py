@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from splash_screen.views import version
+from splash_screen.views import splash_screen
 from otp.views import send_otp
 from otp.views import verify_otp
 from welcome.views import welcome
@@ -35,7 +35,7 @@ from notification.views import send_notification,send_shops
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/$', version),#completed
+    url(r'^version/$', splash_screen),#completed
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
     url(r'^wallet/$',wallet),

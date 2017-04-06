@@ -1,55 +1,54 @@
-from django.shortcuts import render
-from .models import *
-from django.http import HttpResponse 
-import requests
-from django.views.decorators.csrf import csrf_protect,csrf_exempt
 import jwt
-from register.models import user_data
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+from city.models import UserCityData
+from .models import *
+
+
 @csrf_exempt
 def shop(request):
-	print "shop_fun"
-	response_json={}
-	if request.method=='GET':
-		try:
-			for x,y in request.GET.items():
-				print x,":",y
-			access_token=request.GET.get('access_token')
-			json=jwt.decode(str(access_token), '999123', algorithms=['HS256'])
-			print json['mobile']
-			city_id=user_data.objects.get(mobile=int(json['mobile'])).city
-			print "debuuged 20"
-			category_id=str(request.GET.get("category_id"))
-			print "debuuged 22"
-			response_json["success"]=True
-			response_json["message"]='Successful'
-			response_json["shopDatas"]=[]
-			fields=["name","address"]
-			print "debuuged 27"
-			for o in shop_data.objects.filter(city_id=city_id,category_id=int(category_id)):
-				print "debuuged 29"
-				temp_json={}
-				for f in fields:
-					print "f=",f
-					temp_json[f]=str(getattr(o,str(f)))
-				temp_json['shop_id']=int(o.id)
-				temp_json['category_id']=int(o.category_id)
-				temp_json['city_id']=int(o.city_id)
+    response_json = {}
+    if request.method == 'GET':
+        try:
+            for x, y in request.GET.items():
+                print x, ":", y
+            access_token = request.GET.get('access_token')
+            json = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+            user_id = str(json['mobile'])
+            category_id = str(request.GET.get("category_id"))
 
-				temp_json['image']=request.scheme+'://'+request.get_host()+'/media/'+str(o.image)
-				response_json["shopDatas"].append(temp_json)
+            city_id = UserCityData.objects.get(user_id=user_id).city_id
 
-		except Exception,e:
-			response_json={}
-			
-			response_json["success"]=False
-			response_json["message"]="shop_data not found"
-			print"e@shop=", e
+            # print "City id",city_id
 
-		print str(response_json)
-	else:
-		response_json['success']=False
-		response_json['message']="not get method"
+            response_json["success"] = True
+            response_json["message"] = 'Successful'
+            response_json["shopDatas"] = []
+            fields = ["name", "address"]
+            for o in ShopData.objects.filter(city_id=city_id, category_id=category_id):
 
-	return HttpResponse(str(response_json))
+                temp_json = {}
+                for f in fields:
+                    print "f=", f
+                    temp_json[f] = str(getattr(o, str(f)))
+                temp_json['shop_id'] = int(o.id)
+                temp_json['category_id'] = int(o.category_id.id)
+                temp_json['city_id'] = int(o.city_id.id)
+
+                temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(o.image)
+                response_json["shopDatas"].append(temp_json)
+
+        except Exception, e:
+            response_json = {"success": False, "message": "shop_data not found"}
+
+            print"e@shop=", e
+
+        print str(response_json)
+    else:
+        response_json['success'] = False
+        response_json['message'] = "Invalid request"
+
+    return HttpResponse(str(response_json))
 
 # Create your views here.

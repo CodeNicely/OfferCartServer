@@ -8,7 +8,7 @@ def welcome(request):
 		response_json={}
 		response_json["success"]=True
 		response_json["slider_data"]=[]
-		for o in  image_data.objects.all():
+		for o in  WelcomeData.objects.all():
 			temp_json={}
 			temp_json["image_url"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image_url)
 			temp_json["message"]=str(o.message)

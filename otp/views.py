@@ -4,8 +4,8 @@ import requests
 from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
-from register.models import user_data
-from city.models import city_fcm_data
+from register.models import UserData
+from city.models import CityFcmData
 from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -30,12 +30,12 @@ def send_otp(request):
 			send_sms(mobile,msg)
 			print 'Otp Sent'
 			try:
-				otp_list=otp_data.objects.get(mobile=str(mobile))
+				otp_list=OtpData.objects.get(mobile=str(mobile))
 		 		setattr(otp_list,'otp',int(otp))
 		 		setattr(otp_list,'flag',False)
 		 		otp_list.save()
 				print 'old user'
-				user_list=user_data.objects.get(mobile=str(mobile))
+				user_list=UserData.objects.get(mobile=str(mobile))
 				setattr(user_list,'name',name)
 				setattr(user_list,'email',email)
 				setattr(user_list,'city',"")
@@ -43,8 +43,8 @@ def send_otp(request):
 				print 'User Details Updated'
 		
 			except Exception,e:
-		 		otp_data.objects.create(mobile=str(mobile),otp=int(otp))
-		 		user_data.objects.create(
+		 		OtpData.objects.create(mobile=str(mobile), otp=int(otp))
+		 		UserData.objects.create(
 					name=name,
 					email=email,
 					mobile=str(mobile)
@@ -70,7 +70,7 @@ def verify_otp(request):
 		mobile=str(request.POST.get("mobile"))
 		otp=str(request.POST.get("otp"))
 		access_token='No Access Token'
-		otp_list=otp_data.objects.get(mobile=mobile)
+		otp_list=OtpData.objects.get(mobile=mobile)
 		if otp_list.otp == int(otp):
 			setattr(otp_list,'flag',True)
 			access_token= jwt.encode({'mobile':str(mobile)}, '999123', algorithm='HS256')
@@ -78,7 +78,7 @@ def verify_otp(request):
 			response_json['access_token']=str(access_token)
 			print 'Access Token Created'
 			json=jwt.decode(str(access_token),'999123',algorithms='HS256')
-			user=city_fcm_data.objects.filter(user_id=str(json['mobile']))
+			user=CityFcmData.objects.filter(user_id=str(json['mobile']))
 			if(user.exists()):
 				for u in user:
 					u.delete()

@@ -1,9 +1,14 @@
 from django.contrib import admin
+
 from .models import *
+
+
 # Register your models here.
-class otp_dataAdmin(admin.ModelAdmin):
-    list_display=["mobile","otp","flag","created","modified"]
-admin.site.register(otp_data,otp_dataAdmin)
+class OtpDataAdmin(admin.ModelAdmin):
+    list_display = ["mobile", "otp", "flag", "created", "modified"]
+
+
+admin.site.register(OtpData, OtpDataAdmin)
 
 
 # class access_token_dataAdmin(admin.ModelAdmin):
