@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "developers",
     "payment",
     "notification",
+    "shop_otp"
 ]
 
 MIDDLEWARE_CLASSES = [

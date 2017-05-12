@@ -8,6 +8,8 @@ from shop.models import *
 # Create your views here.
 
 def my_offers(request):
+
+
     response_json = {}
     if request.method == 'GET':
         try:
@@ -39,8 +41,6 @@ def my_offers(request):
             response_json["success"] = False
             response_json["message"] = "error in my offers"
             print"e@myoffer=", e
-
-
     else:
         response_json['success'] = False
         response_json['message'] = "Get Out of here!"

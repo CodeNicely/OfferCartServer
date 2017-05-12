@@ -1,3 +1,13 @@
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
+from __future__ import print_function
 import hashlib
 import random
 
@@ -19,7 +29,7 @@ transaction_type['debit'] = "debit"
 def request_payment_hash(request):
     if (request.method == 'POST'):
         for x, y in request.POST.items():
-            print x, ":", y
+            print(x, ":", y)
         access_token = request.POST.get('access_token')
         response_json = {}
 
@@ -57,27 +67,26 @@ def request_payment_hash(request):
                 response_json['transaction_id'] = transaction_id
 
                 server_hash_to_encode = key + '|' + transaction_id + '|' + amount + '|' + product_name + '|' + name + '|' + email + '||||||' + merchant_salt
-                print server_hash_to_encode
+                print(server_hash_to_encode)
                 hash_encoded = hashlib.sha512(server_hash_to_encode).hexdigest().lower()
-                print hash_encoded
+                print(hash_encoded)
                 response_json['server_hash'] = hash_encoded
                 response_json['success'] = True
                 response_json['message'] = 'Successfully Sent Hash'
 
                 PaymentData.objects.create(transaction_id=transaction_id, amount=amount, mobile=mobile)
 
-            except Exception, e:
+            except Exception as e:
 
                 response_json['success'] = False
                 response_json['message'] = str(e)
 
-                print e
+                print(e)
 
-
-        except Exception, e:
+        except Exception as e:
             response_json['success'] = False
             response_json['message'] = str(e)
-            print e
+            print(e)
 
         return JsonResponse(response_json)
 
@@ -100,7 +109,7 @@ def update_payment_status(request):
         json_mobile = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
         mobile = str(json_mobile['mobile'])
         for x, y in request.POST.items():
-            print x, ":", y
+            print(x, ":", y)
         # transaction_id='8223003905122'
         transaction_id = request.POST.get('transaction_id')
         key = 't1iq81Kx'
@@ -108,7 +117,7 @@ def update_payment_status(request):
         url = 'https://www.payumoney.com/payment/op/getPaymentResponse'
         resp = requests.post(url, data={'merchantKey': key, 'merchantTransactionIds': transaction_id}, headers=head)
         payu_payment_details = json.loads(resp.text)
-        print "..\n", payu_payment_details
+        print("..\n", payu_payment_details)
         for o in payu_payment_details['result']:
             payment = {}
             payment['txnid'] = o['merchantTransactionId']
@@ -129,8 +138,8 @@ def update_payment_status(request):
                             response_json['success'] = True
                             response_json['payment'] = payment
                             response_json['message'] = 'Payment Successful'
-                        except Exception, e:
-                            print "error at 126 ", e
+                        except Exception as e:
+                            print("error at 126 ", e)
                             response_json['success'] = False
                             response_json['payment'] = "payment succesful but could not add to wallet"
 
@@ -143,7 +152,7 @@ def update_payment_status(request):
             else:
                 response_json['success'] = False
                 response_json['message'] = 'Tansaction id not found'
-            # Do nothing
+                # Do nothing
 
         return JsonResponse(response_json, safe=False)
     else:
@@ -161,9 +170,9 @@ def wallet(request):
         response_json['balance'] = user.wallet
         response_json['success'] = True
         response_json['message'] = "succesfull"
-    except Exception, e:
-        print "error at 163 ", e
+    except Exception as e:
+        print("error at 163 ", e)
         response_json['success'] = False
         response_json['message'] = "some error occoured"
-    print response_json
+    print(response_json)
     return JsonResponse(response_json)
