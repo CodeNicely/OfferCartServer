@@ -1,6 +1,7 @@
 from __future__ import print_function
 from __future__ import print_function
 import json
+import os
 import random
 
 import jwt
@@ -76,10 +77,26 @@ def create_shop(request):
             address = str(request.POST.get('address'))
             category = str(request.POST.get('category'))
             city = str(request.POST.get('city'))
-            myfile = request.FILES['image']
 
-            print("Hashed password is:", make_password(password))
-            print(name, mobile, type(myfile), myfile)
+            try:
+                image = request.FILES.get('image').name
+                folder = 'media/' + 'shop/'
+                full_filename = os.path.join(folder, image)
+                print ("full name", full_filename)
+                # fout = open(folder+image, 'wb+')
+                print ("image=", image)
+                fout = open(folder + image, 'w')
+                file_content = request.FILES.get('image').read()
+                # for chunk in file_content.chunks():
+                fout.write(file_content)
+                fout.close()
+            except Exception as e:
+                image = 'image'
+                print (e)
+            image = request.FILES['image']
+
+            #print("Hashed password is:", make_password(password))
+            print(name, mobile, type(image), image)
 
             otp = random.randint(100000, 999999)
             msg = 'Welcome to Discount-Store. You One Time Password is ' + str(otp)
@@ -107,11 +124,12 @@ def create_shop(request):
                 ShopData.objects.create(
                     name=name,
                     mobile=str(mobile),
-                    password=make_password(password),
+                    password=str(password),
                     description=description,
                     address=address,
                     category_id=category_instance,
-                    city_id=city_instance
+                    city_id=city_instance,
+                    image=image
                 )
                 print('User Created')
                 print(e)
