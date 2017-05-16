@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from city.models import UserCityData
 from customs.sms import send_sms
-from shop_otp.models import ShopOtpData
+from shop.models import ShopOtpData
 from .models import *
 
 
@@ -103,22 +103,14 @@ def create_shop(request):
             send_sms(mobile, msg)
 
             try:
+                category_instance = CategoryData.objects.get(name=category)
+                city_instance = CityData.objects.get(name=city)
+
                 otp_list = ShopOtpData.objects.get(mobile=str(mobile))
                 setattr(otp_list, 'otp', int(otp))
                 setattr(otp_list, 'flag', False)
                 otp_list.save()
                 print('old user')
-                shop_list = ShopData.objects.get(mobile=str(mobile))
-                setattr(shop_list, 'name', name)
-                setattr(shop_list, 'description', description)
-                setattr(shop_list, 'address', address)
-                setattr(shop_list, 'category', category)
-                setattr(shop_list, 'city', city)
-                shop_list.save()
-                print('Shop Details Updated')
-            except Exception as e:
-                category_instance = CategoryData.objects.get(name=category)
-                city_instance = CityData.objects.get(name=city)
 
                 ShopOtpData.objects.create(mobile=str(mobile), otp=int(otp))
                 ShopData.objects.create(
@@ -133,14 +125,17 @@ def create_shop(request):
                 )
                 print('User Created')
                 print(e)
-            response_json['success'] = True
-            response_json['message'] = "Otp Sent Successfully"
-            pass
+                response_json['success'] = True
+                response_json['message'] = "Otp Sent Successfully"
+            except Exception as e:
+                response_json['success'] = False
+                response_json['message'] = 'Unable to send otp at this time'
+                print(e)
+            print(str(response_json))
         except Exception as e:
             response_json['success'] = False
             response_json['message'] = 'Unable to send otp at this time'
             print(e)
-        print(str(response_json))
     else:
         response_json['success'] = False
         response_json['message'] = "Invalid request"

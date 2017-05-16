@@ -9,7 +9,7 @@ def get_uplaod_file_name(userpic,filename):
 
 class ShopData(models.Model):
 
-    name = models.CharField(max_length=255, unique=True, blank=True, null=True)
+    name = models.CharField(max_length=255)
     mobile = models.CharField(max_length=15,unique=True,blank=True,null=True)
     password = models.CharField(max_length=55, blank=False, null=False, default=0)
     description = models.CharField(max_length=120, blank=True, null=True)
@@ -22,9 +22,16 @@ class ShopData(models.Model):
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __unicode__(self):
-        return str(self.name)
+        return str(self.id)
         #
         # def save(self, *args, **kwargs):
         #     self.city_id = self.city_name.id
         #     self.category_id = self.category_name.id
         #     super(ShopData, self).save(*args, **kwargs)
+
+class ShopOtpData(models.Model):
+    shop_name = models.ForeignKey(ShopData)
+    otp = models.IntegerField(default=0, null=True)
+    flag = models.BooleanField(default=False)
+    modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+    created = models.DateTimeField(auto_now=False, auto_now_add=True)
