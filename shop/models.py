@@ -30,7 +30,7 @@ class ShopData(models.Model):
         #     super(ShopData, self).save(*args, **kwargs)
 
 class ShopOtpData(models.Model):
-    shop_name = models.ForeignKey(ShopData)
+    shop_id = models.ForeignKey(ShopData)
     otp = models.IntegerField(default=0, null=True)
     flag = models.BooleanField(default=False)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)

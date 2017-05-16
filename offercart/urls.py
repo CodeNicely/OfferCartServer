@@ -21,7 +21,7 @@ from otp.views import verify_otp
 from welcome.views import welcome
 from city.views import city,update_fcm
 from category.views import category
-from shop.views import shop, city_category, create_shop
+from shop.views import shop, city_category, create_shop , verify_shop_otp
 from offer.views import send_offer,buy_offer
 from django.conf import settings
 from city.views import city
@@ -56,6 +56,9 @@ urlpatterns = [
     url(r'^update_fcm/$',update_fcm),
     url(r'^city_category/$',city_category),
     url(r'^create_shop/$', create_shop),
+    url(r'^verify_shop_otp/$', verify_shop_otp),
+
+
 
     #url(r'^splash_screen/$',version),
 ]#+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

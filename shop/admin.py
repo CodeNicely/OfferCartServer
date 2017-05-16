@@ -11,4 +11,10 @@ class ShopDataAdmin(admin.ModelAdmin):
 
 admin.site.register(ShopData, ShopDataAdmin)
 
-# Register your models here.
+
+class ShopOtpDataAdmin(admin.ModelAdmin):
+    list_display = ["shop_id","otp","flag"]
+
+
+admin.site.register(ShopOtpData, ShopOtpDataAdmin)
+
