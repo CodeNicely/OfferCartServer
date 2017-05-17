@@ -15,30 +15,29 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from splash_screen.views import splash_screen
-from otp.views import send_otp
-from otp.views import verify_otp
-from welcome.views import welcome
-from city.views import city,update_fcm
-from category.views import category
-from shop.views import shop, city_category, create_shop , verify_shop_otp
-from offer.views import send_offer,buy_offer
-from django.conf import settings
-from city.views import city
+
 from about_us.views import about_us
+from category.views import category
+from city.views import city
+from city.views import update_fcm
 from contact_us.views import contact_us
 from developers.views import developers
 from myoffers.views import my_offers
-from payment.views import request_payment_hash,update_payment_status,wallet
-from django.conf.urls.static import static
-from notification.views import send_notification,send_shops
+from notification.views import send_notification, send_shops
+from offer.views import send_offer, buy_offer
+from otp.views import send_otp
+from otp.views import verify_otp
+from payment.views import request_payment_hash, update_payment_status, wallet
+from shop.views import shop, city_category, create_shop, verify_shop_otp, verify_shop_login
+from splash_screen.views import splash_screen
+from welcome.views import welcome
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/$', splash_screen),#completed
+    url(r'^version/$', splash_screen),  # completed
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
-    url(r'^wallet/$',wallet),
+    url(r'^wallet/$', wallet),
     url(r'^welcome/$', welcome),
     url(r'^city/$', city),
     url(r'^category/$', category),
@@ -51,18 +50,18 @@ urlpatterns = [
     url(r'^developers/$', developers),
     url(r'^payment_hash/$', request_payment_hash),
     url(r'^update_payment_status/$', update_payment_status),
-    url(r'^send_notification/$',send_notification),
-    url(r'^send_shops/$',send_shops),
-    url(r'^update_fcm/$',update_fcm),
-    url(r'^city_category/$',city_category),
+    url(r'^send_notification/$', send_notification),
+    url(r'^send_shops/$', send_shops),
+    url(r'^update_fcm/$', update_fcm),
+    url(r'^city_category/$', city_category),
     url(r'^create_shop/$', create_shop),
     url(r'^verify_shop_otp/$', verify_shop_otp),
+    url(r'^verify_shop_login/$', verify_shop_login),
 
-
-
-    #url(r'^splash_screen/$',version),
-]#+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # url(r'^splash_screen/$',version),
+]  # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 from django.conf import settings
 from django.conf.urls.static import static
-urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
