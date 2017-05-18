@@ -274,7 +274,7 @@ def my_shop_profile(request):
             response['address'] = shop_instance.address
             response['category'] = str(shop_instance.category_id)
             response['city'] = str(shop_instance.city_id)
-            response['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(shop_instance.image)
+            response['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(shop_instance.image)
             response['success'] = True
             response['message'] = "Successful"
 
@@ -330,7 +330,7 @@ def edit_shop_profile(request):
             shop_instance.address = address
             shop_instance.category_id = CategoryData.objects.get(name=category)
             shop_instance.city_id = CityData.objects.get(name=city)
-            shop_instance.image = 'shop/'+image
+            shop_instance.image = image
             shop_instance.save()
             response['success'] = True
             response['message'] = "Successful"
