@@ -108,10 +108,11 @@ def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
 
 
 ####################### Shop Admin Modules #############################
+import datetime
 
 
 @csrf_exempt
-def create_offer(request):
+def offer_add(request):
     response_json = {}
     if request.method == 'POST':
         try:
@@ -124,9 +125,13 @@ def create_offer(request):
 
             offer_title = str(request.POST.get('offer_title'))
             offer_description = str(request.POST.get('offer_description'))
-            offer_price = int(request.POST.get('offer_price'))
-            expiry_date = request.POST.get('expiry_date')
+            year = str(request.POST.get('year'))
+            month = str(request.POST.get('month'))
+            date = str(request.POST.get('date'))
 
+            expiry_date = year + '-' + month + '-' + date
+            expiry_date = datetime.datetime.strptime(expiry_date, '%Y-%m-%d')
+            print(expiry_date)
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
 
             try:
@@ -149,8 +154,7 @@ def create_offer(request):
                 shop_id=shop_instance,
                 name=offer_title,
                 description=offer_description,
-                price=offer_price,
-                image='offer/' + image,
+                image=image,
                 expiry_date=expiry_date
             )
 
@@ -169,11 +173,11 @@ def create_offer(request):
 
 
 @csrf_exempt
-def my_shop_offers(request):
+def shop_offers(request):
     response = {}
     if request.method == 'GET':
         try:
-            shop_access_token = str(request.POST.get('shop_access_token'))
+            shop_access_token = str(request.GET.get('shop_access_token'))
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
 
@@ -182,17 +186,19 @@ def my_shop_offers(request):
             offer_data = OfferData.objects.filter(shop_id=shop_instance)
             offer_list = []
             for offer in offer_data:
-                today_date = datetime.date.today()
-                print(offer.expiry_date - today_date)
+                today_date = datetime.datetime.today().date()
+
+                print("Today: " + str(today_date))
+                print("Expiry: " + str(offer.expiry_date))
+
                 offer_list.append({
                     'offer_id': offer.id,
                     'offer_title': offer.name,
                     'offer_description': offer.description,
-                    'offer_image': offer.image,
-                    'offer_price': offer.price,
-                    'offer_expiry_date': offer.expiry_date,
-                    'active': offer.active,
-                    'offer_validity_days': offer.expiry_date - today_date
+                    'offer_image': request.scheme + '://' + request.get_host() + '/media/offer/' + str(offer.image),
+                    'offer_validity_days': (offer.expiry_date - today_date).days,
+                    'offer_expiry_date': str(offer.expiry_date),
+                    'active': offer.active
                 })
 
             response['success'] = True
@@ -226,10 +232,12 @@ def offer_edit(request):
             offer_id = str(request.POST.get('offer_id'))
             offer_title = str(request.POST.get('offer_title'))
             offer_description = str(request.POST.get('offer_description'))
-            offer_price = int(request.POST.get('offer_price'))
-            expiry_date = request.POST.get('expiry_date')
+            year = str(request.POST.get('year'))
+            month = str(request.POST.get('month'))
+            date = str(request.POST.get('date'))
 
-            shop_instance = ShopData.objects.get(mobile=shop_mobile)
+            expiry_date = year + '-' + month + '-' + date
+            expiry_date = datetime.datetime.strptime(expiry_date, '%Y-%m-%d')
 
             try:
                 image = request.FILES.get('offer_image').name
@@ -252,9 +260,9 @@ def offer_edit(request):
 
             offer_instance.name = offer_title
             offer_instance.description = offer_description,
-            offer_instance.price = offer_price,
             offer_instance.image = 'offer/' + image,
             offer_instance.expiry_date = expiry_date
+            offer_instance.save()
 
             response_json['success'] = True
             response_json['message'] = "Offer edited successfully"

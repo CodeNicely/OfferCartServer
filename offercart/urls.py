@@ -24,7 +24,7 @@ from contact_us.views import contact_us
 from developers.views import developers
 from myoffers.views import my_offers
 from notification.views import send_notification, send_shops
-from offer.views import send_offer, buy_offer, my_shop_offers
+from offer.views import send_offer, buy_offer, shop_offers, offer_add, offer_edit
 from otp.views import send_otp
 from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
@@ -60,7 +60,10 @@ urlpatterns = [
     url(r'^verify_shop_login/$', verify_shop_login),
     url(r'^my_shop_profile/$', my_shop_profile),
     url(r'^edit_shop_profile/$', edit_shop_profile),
-    url(r'^my_shop_offers/$', my_shop_offers),
+    url(r'^shop_offers/$', shop_offers),
+    url(r'^offer_add/$', offer_add),
+    url(r'^offer_edit/$', offer_edit),
+
 
 ]
 

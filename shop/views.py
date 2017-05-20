@@ -210,8 +210,9 @@ def verify_shop_otp(request):
 
             if int(shop_otp_instance.otp) == int(otp):
                 response['success'] = True
-                response['shop_access_token'] = str(access_token)
                 response['message'] = "Otp verified successfully"
+                response['shop_access_token'] = str(access_token)
+
             else:
                 response['success'] = False
                 response['message'] = "Otp doesn't match"
