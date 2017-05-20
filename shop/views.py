@@ -1,6 +1,7 @@
 from __future__ import print_function
 from __future__ import print_function
 
+import json
 import os
 import random
 
@@ -256,9 +257,6 @@ def verify_shop_login(request):
     return JsonResponse(response)
 
 
-import json
-
-
 @csrf_exempt
 def my_shop_profile(request):
     response = {}
@@ -344,5 +342,39 @@ def edit_shop_profile(request):
         response['success'] = False
         response['message'] = "Illegal request"
 
+    print(response)
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def change_password(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+
+            old_password = str(request.POST.get('old_password'))
+            new_password = str(request.POST.get('new_password'))
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=shop_mobile, password=old_password)
+                shop_instance.password = new_password
+                shop_instance.save()
+                response['success'] = True
+                response['message'] = "Sucessfully Changed"
+            except Exception as e:
+                print(str(e))
+                response['success'] = False
+                response['message'] = "Something went wrong " + str(e)
+
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
     print(response)
     return JsonResponse(response)
