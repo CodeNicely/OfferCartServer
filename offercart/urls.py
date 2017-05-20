@@ -24,11 +24,12 @@ from contact_us.views import contact_us
 from developers.views import developers
 from myoffers.views import my_offers
 from notification.views import send_notification, send_shops
-from offer.views import send_offer, buy_offer
+from offer.views import send_offer, buy_offer, shop_offers, offer_add, offer_edit
 from otp.views import send_otp
 from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
-from shop.views import shop, city_category, create_shop, verify_shop_otp, verify_shop_login
+from shop.views import shop, city_category, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
+    edit_shop_profile
 from splash_screen.views import splash_screen
 from welcome.views import welcome
 
@@ -57,9 +58,15 @@ urlpatterns = [
     url(r'^create_shop/$', create_shop),
     url(r'^verify_shop_otp/$', verify_shop_otp),
     url(r'^verify_shop_login/$', verify_shop_login),
+    url(r'^my_shop_profile/$', my_shop_profile),
+    url(r'^edit_shop_profile/$', edit_shop_profile),
+    url(r'^shop_offers/$', shop_offers),
+    url(r'^offer_add/$', offer_add),
+    url(r'^offer_edit/$', offer_edit),
 
-    # url(r'^splash_screen/$',version),
-]  # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+]
+
 from django.conf import settings
 from django.conf.urls.static import static
 
