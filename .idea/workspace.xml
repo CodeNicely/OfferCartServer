@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0dbb2036-d86e-45e2-97b8-ad5b9e4e8e99" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/offer/views.py" afterPath="$PROJECT_DIR$/offer/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/offercart/settings.py" afterPath="$PROJECT_DIR$/offercart/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/offercart/urls.py" afterPath="$PROJECT_DIR$/offercart/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/payment/views.py" afterPath="$PROJECT_DIR$/payment/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shop/views.py" afterPath="$PROJECT_DIR$/shop/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/subscription/admin.py" afterPath="$PROJECT_DIR$/subscription/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/subscription/models.py" afterPath="$PROJECT_DIR$/subscription/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/subscription/views.py" afterPath="$PROJECT_DIR$/subscription/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -76,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/offer/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
@@ -89,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/offercart/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="468">
-              <caret line="26" column="109" lean-forward="false" selection-start-line="26" selection-start-column="109" selection-end-line="26" selection-end-column="109" />
+              <caret line="26" column="17" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -192,13 +185,13 @@
         <option value="$PROJECT_DIR$/offer/admin.py" />
         <option value="$PROJECT_DIR$/offer/models.py" />
         <option value="$PROJECT_DIR$/payment/views.py" />
-        <option value="$PROJECT_DIR$/offercart/settings.py" />
         <option value="$PROJECT_DIR$/shop/views.py" />
         <option value="$PROJECT_DIR$/subscription/admin.py" />
         <option value="$PROJECT_DIR$/subscription/models.py" />
         <option value="$PROJECT_DIR$/offercart/urls.py" />
         <option value="$PROJECT_DIR$/subscription/views.py" />
         <option value="$PROJECT_DIR$/offer/views.py" />
+        <option value="$PROJECT_DIR$/offercart/settings.py" />
       </list>
     </option>
   </component>
@@ -781,14 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/offercart/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" column="109" lean-forward="false" selection-start-line="26" selection-start-column="109" selection-end-line="26" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/subscription/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -867,6 +852,14 @@
             <element signature="e#0#37#0" expanded="true" />
             <marker date="1495285783081" expanded="true" signature="7179:8479" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/offercart/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="26" column="17" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
