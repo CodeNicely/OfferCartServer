@@ -24,7 +24,7 @@ SECRET_KEY = '*iq*02wx*+earq5kj^bf4+@)syllfa0iz&p88!)x5-+ic9=rar'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.109','www.mpenavmo.com']
+ALLOWED_HOSTS = ['192.168.0.109','www.mpenavmo.com','app.vegworld.online']
 
 # Application definition
 
