@@ -16,7 +16,7 @@ def my_offers(request):
             for x, y in request.GET.items():
                 print x, ":", y
             access_token = request.GET.get('access_token')
-            json = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+            json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
             print json['mobile']
             response_json["success"] = True
             response_json["message"] = 'Successful'

@@ -22,7 +22,7 @@ def shop(request):
             for x, y in request.GET.items():
                 print(x, ":", y)
             access_token = request.GET.get('access_token')
-            json = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+            json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
             user_id = str(json['mobile'])
             category_id = str(request.GET.get("category_id"))
 
