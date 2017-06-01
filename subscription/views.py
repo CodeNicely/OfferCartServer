@@ -189,7 +189,7 @@ def add_subscription(request):
                 shop_subscription_instance.transaction_id = transaction_id
                 shop_subscription_instance.save()
 
-                amount = subscription_instance.subscription_price
+                amount = str(subscription_instance.subscription_price)
                 product_name = subscription_instance.subscription_title
 
                 merchant_id = 'INVERN85845033309930'
@@ -226,21 +226,21 @@ def add_subscription(request):
                 # hash_encoded = hashlib.sha512(server_hash_to_encode).hexdigest().lower()
                 # print(hash_encoded)
 
-                response['merchant_id'] = merchant_id
-                response['order_id'] = transaction_id
-                response['customer_id'] = shop_mobile
-                response['industry_type_id_id'] = industry_type_id
-                response['channel_id'] = channel_id
-                response['amount'] = amount
-                response['website'] = website
-                response['email'] = email
-                response['mobile'] = shop_mobile
-                response['callback_url'] = callback_url
-                response['checksum_hash'] = checksum
+                response["merchant_id"] = merchant_id
+                response["order_id"] = transaction_id
+                response["customer_id"] = shop_mobile
+                response["industry_type_id"] = industry_type_id
+                response["channel_id"] = channel_id
+                response["amount"] = amount
+                response["website"] = website
+                response["email"] = email
+                response["mobile"] = shop_mobile
+                response["callback_url"] = callback_url
+                response["checksum_hash"] = checksum
                 # response['name'] = name
 
-                response['success'] = True
-                response['message'] = "Successful"
+                response["success"] = True
+                response["message"] = "Successful"
 
             except Exception as e:
                 print(str(e))
