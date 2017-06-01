@@ -367,7 +367,7 @@ def change_password(request):
             except Exception as e:
                 print(str(e))
                 response['success'] = False
-                response['message'] = "Something went wrong " + str(e)
+                response['message'] = "Incorrect Old Password"
 
         except Exception as e:
             print(str(e))
