@@ -6,8 +6,9 @@ from shop.models import ShopData
 
 
 class SubscriptionData(models.Model):
-    subscription_name = models.CharField(max_length=255)
+    subscription_title = models.CharField(max_length=255)
     subscription_price = models.PositiveIntegerField()
+    subscription_days = models.IntegerField()
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -15,6 +16,7 @@ class SubscriptionData(models.Model):
 class ShopSubscriptionData(models.Model):
     shop_id = models.ForeignKey(ShopData)
     subscription_id = models.ForeignKey(SubscriptionData)
+    transaction_id = models.CharField(max_length=255, null=True, blank=True)
     payment_status = models.BooleanField(default=False)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)

@@ -221,6 +221,8 @@ def shop_offers(request):
 def offer_edit(request):
     response_json = {}
     if request.method == 'POST':
+        for x, y in request.GET.items():
+            print(x, ":", y)
         try:
             for x, y in request.GET.items():
                 print(x, ":", y)
@@ -229,7 +231,7 @@ def offer_edit(request):
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
 
-            offer_id = str(request.POST.get('offer_id'))
+            offer_id = int(request.POST.get('offer_id'))
             offer_title = str(request.POST.get('offer_title'))
             offer_description = str(request.POST.get('offer_description'))
             year = str(request.POST.get('year'))
@@ -254,7 +256,7 @@ def offer_edit(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-
+            print("259")
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
             offer_instance = OfferData.objects.get(shop_id=shop_instance, id=offer_id)
 
@@ -262,7 +264,7 @@ def offer_edit(request):
             offer_instance.description = offer_description,
             offer_instance.image = 'offer/' + image,
             offer_instance.expiry_date = expiry_date
-            offer_instance.save()
+            # offer_instance.save()
 
             response_json['success'] = True
             response_json['message'] = "Offer edited successfully"
@@ -276,3 +278,35 @@ def offer_edit(request):
         response_json['message'] = "Illegal request"
     print(response_json)
     return JsonResponse(response_json)
+
+
+@csrf_exempt
+def delete_offer(request):
+    response = {}
+    if request.method == 'POST':
+        for x, y in request.POST.items():
+            print(x, ":", y)
+
+        try:
+            # shop_access_token = str(request.POST.get('shop_access_token'))
+            # json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            # shop_mobile = str(json['mobile'])
+
+            offer_id = int(request.POST.get('offer_id'))
+
+            # shop_instance = ShopData.save(mobile=shop_mobile)
+            offer_instance = OfferData.objects.get(id=offer_id)
+
+            offer_instance.delete()
+            response['success'] = True
+            response['message'] = "Successfully Deleted"
+
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong : " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+    print(request)
+    return JsonResponse(response)
