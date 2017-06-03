@@ -254,17 +254,22 @@ def offer_edit(request):
                 fout.write(file_content)
                 fout.close()
             except Exception as e:
-                image = 'image'
+                image = 'image not found'
                 print(e)
             print("259")
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
             offer_instance = OfferData.objects.get(shop_id=shop_instance, id=offer_id)
-
             offer_instance.name = offer_title
-            offer_instance.description = offer_description,
-            offer_instance.image = 'offer/' + image,
+            offer_instance.description = offer_description
+            offer_instance.image = image
             offer_instance.expiry_date = expiry_date
-            # offer_instance.save()
+            print(offer_title)
+            print(offer_description)
+            print(image)
+            print(expiry_date)
+
+            offer_instance.save()
+            print("25")
 
             response_json['success'] = True
             response_json['message'] = "Offer edited successfully"
