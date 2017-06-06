@@ -7,6 +7,7 @@ from shop.models import ShopData
 
 class SubscriptionData(models.Model):
     subscription_title = models.CharField(max_length=255)
+    subscription_description = models.CharField(max_length=255,default="Subscription Details")
     subscription_price = models.PositiveIntegerField()
     subscription_days = models.IntegerField()
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)

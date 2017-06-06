@@ -126,7 +126,6 @@ def create_shop(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-            image = request.FILES['image']
 
             # print("Hashed password is:", make_password(password))
             print(name, mobile, type(image), image)
@@ -308,7 +307,7 @@ def edit_shop_profile(request):
             city = str(request.POST.get('city'))
 
             try:
-                image = request.FILES.get('image').name
+                image  = request.FILES.get('image').name
                 folder = 'media/' + 'shop/'
                 full_filename = os.path.join(folder, image)
                 print("full name", full_filename)
@@ -368,6 +367,74 @@ def change_password(request):
                 print(str(e))
                 response['success'] = False
                 response['message'] = "Incorrect Old Password"
+
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+    print(response)
+    return JsonResponse(response)
+
+@csrf_exempt
+def forgot_password(request):
+    response_json = {}
+    if request.method == 'POST':
+        try:
+            mobile = str(request.POST.get('mobile'))
+
+            otp = random.randint(1000, 9999)
+            msg = 'Welcome to Discount Store. You One Time Password is ' + str(otp)
+            send_sms(mobile, msg)
+
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=str(mobile))
+                shop_otp_instance = ShopOtpData.objects.get(shop_id=shop_instance)
+                print (shop_otp_instance.otp)
+                setattr(shop_otp_instance, 'otp', int(otp))
+                print (shop_otp_instance.otp)
+                shop_otp_instance.save()
+                print('old user')
+
+            except Exception as e:
+                ShopOtpData.objects.create(shop_id=shop_instance, otp=int(otp))
+                print("Otp data does not exist, Creating it")
+                print (e)
+            response_json['success'] = True
+            response_json['message'] = "Otp Sent Successfully"
+        except Exception as e:
+            response_json['success'] = False
+            response_json['message'] = 'Unable to send otp at this time'
+            print(e)
+        print(str(response_json))
+    else:
+        response_json['success'] = False
+        response_json['message'] = "Invalid request"
+    return JsonResponse(response_json)
+
+@csrf_exempt
+def forgot_change_password(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+            new_password = str(request.POST.get('new_password'))
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=shop_mobile)
+                shop_instance.password = new_password
+                shop_instance.save()
+                response['success'] = True
+                response['message'] = "Sucessfully Changed"
+            except Exception as e:
+                print(str(e))
+                response['success'] = False
+                response['message'] = "Something Went Wrong"+str(e)
 
         except Exception as e:
             print(str(e))

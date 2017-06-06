@@ -29,7 +29,7 @@ from otp.views import send_otp
 from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
 from shop.views import shop, city_category, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
-    edit_shop_profile, change_password
+    edit_shop_profile, change_password, forgot_password, forgot_change_password
 from splash_screen.views import splash_screen
 from subscription.views import add_subscription, request_subscription
 from welcome.views import welcome
@@ -67,6 +67,8 @@ urlpatterns = [
     url(r'^request_subscription/$', request_subscription),
     url(r'^add_subscription/$', add_subscription),
     url(r'^change_password/$', change_password),
+    url(r'^forgot_password/$', forgot_password),
+    url(r'^forgot_change_password/$', forgot_change_password),
     url(r'^delete_offer/$', delete_offer),
 
 

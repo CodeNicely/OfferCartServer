@@ -1,4 +1,7 @@
 from __future__ import print_function
+from django.shortcuts import render
+import os
+import random
 
 from datetime import timedelta
 
@@ -21,13 +24,14 @@ def request_subscription(request):
                     {
                         "subscription_id": subscription.id,
                         "subscription_title": subscription.subscription_title,
+                        "subscription_description": subscription.subscription_description,
                         "subscription_price": subscription.subscription_price,
+                        "subscription_period": subscription.subscription_days,
                     }
                 )
             response['success'] = True
             response['message'] = "Successful"
             response['subscription_list'] = subscription_list
-
         except Exception as e:
             response['success'] = False
             response['message'] = "Something went wrong " + str(e)
@@ -203,6 +207,9 @@ def add_subscription(request):
                 respons_dict['MID'] = str(merchant_id)  # Provided by Paytm
                 respons_dict['ORDER_ID'] = str(transaction_id)  # unique OrderId for every request
                 respons_dict['CUST_ID'] = str(shop_mobile)  # unique customer identifier
+
+
+
                 respons_dict['INDUSTRY_TYPE_ID'] = industry_type_id  # Provided by Paytm
                 respons_dict['CHANNEL_ID'] = channel_id  # Provided by Paytm
                 respons_dict['TXN_AMOUNT'] = str(amount)  # transaction amount

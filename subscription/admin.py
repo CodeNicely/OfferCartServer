@@ -4,7 +4,7 @@ from subscription.models import SubscriptionData, ShopSubscriptionData
 
 
 class SubscriptionDataAdmin(admin.ModelAdmin):
-    list_display = ["id", "subscription_title", "subscription_price", "modified", "created"]
+    list_display = ["id", "subscription_title", "subscription_description","subscription_price","subscription_days" ,"modified", "created"]
 
 
 admin.site.register(SubscriptionData, SubscriptionDataAdmin)
