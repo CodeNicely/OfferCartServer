@@ -24,13 +24,14 @@ def request_subscription(request):
                     {
                         "subscription_id": subscription.id,
                         "subscription_title": subscription.subscription_title,
+                        "subscription_description": subscription.subscription_description,
                         "subscription_price": subscription.subscription_price,
+                        "subscription_period": subscription.subscription_days,
                     }
                 )
             response['success'] = True
             response['message'] = "Successful"
             response['subscription_list'] = subscription_list
-
         except Exception as e:
             response['success'] = False
             response['message'] = "Something went wrong " + str(e)
