@@ -22,7 +22,7 @@ def shop(request):
             for x, y in request.GET.items():
                 print(x, ":", y)
             access_token = request.GET.get('access_token')
-            json = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+            json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
             user_id = str(json['mobile'])
             category_id = str(request.GET.get("category_id"))
 
@@ -126,7 +126,6 @@ def create_shop(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-            image = request.FILES['image']
 
             # print("Hashed password is:", make_password(password))
             print(name, mobile, type(image), image)
@@ -135,7 +134,7 @@ def create_shop(request):
                 category_instance = CategoryData.objects.get(name=category)
                 city_instance = CityData.objects.get(name=city)
 
-                if (ShopData.objects.filter(mobile=str(mobile)).count() > 0):
+                if ShopData.objects.filter(mobile=str(mobile)).count() > 0:
                     print("Shop already exist")
                     response_json['success'] = False
                     response_json['message'] = "Shop already exists"
@@ -170,7 +169,8 @@ def create_shop(request):
                             ShopOtpData.objects.create(shop_id=shop_instance, otp=int(otp))
 
                     except Exception as e:
-                        print(e)
+                        ShopOtpData.objects.create(shop_id=shop_instance, otp=int(otp))
+                        print("Otp data does not exist, Creating it")
 
                     response_json['success'] = True
                     response_json['message'] = "Otp Sent Successfully"
@@ -192,7 +192,7 @@ def create_shop(request):
 
 @csrf_exempt
 def verify_shop_otp(request):
-    response_json = {}
+    response = {}
     if request.method == 'POST':
         try:
 
@@ -206,20 +206,25 @@ def verify_shop_otp(request):
 
             access_token = jwt.encode({'mobile': str(mobile)}, '810810', algorithm='HS256')
 
-            if shop_otp_instance.otp == otp:
-                response_json['success'] = True
-                response_json['shop_access_token'] = str(access_token)
-                response_json['message'] = "Otp verified successfully"
+            print("Required" + str(shop_otp_instance.otp))
+
+            if int(shop_otp_instance.otp) == int(otp):
+                response['success'] = True
+                response['message'] = "Otp verified successfully"
+                response['shop_access_token'] = str(access_token)
+
             else:
-                response_json['success'] = False
-                response_json['message'] = "Otp doesn't match"
+                response['success'] = False
+                response['message'] = "Otp doesn't match"
         except Exception as e:
-            response_json['success'] = False
-            response_json['message'] = "Something went wrong " + str(e)
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
             print(e)
     else:
-        response_json['success'] = False
-        response_json['message'] = "Invalid request"
+        response['success'] = False
+        response['message'] = "Invalid request"
+    print(response)
+    return JsonResponse(response)
 
 
 @csrf_exempt
@@ -247,5 +252,196 @@ def verify_shop_login(request):
         response['success'] = False
         response['message'] = "Invalid request type"
     # response_data = json.dumps(response)
+    print(response)
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def my_shop_profile(request):
+    response = {}
+    if request.method == 'GET':
+        try:
+            shop_access_token = str(request.GET.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+            shop_instance = ShopData.objects.get(mobile=shop_mobile)
+
+            response['name'] = shop_instance.name
+            response['mobile'] = shop_instance.mobile
+            response['description'] = shop_instance.description
+            response['address'] = shop_instance.address
+            response['category'] = str(shop_instance.category_id)
+            response['city'] = str(shop_instance.city_id)
+            response['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(shop_instance.image)
+            response['success'] = True
+            response['message'] = "Successful"
+
+        except Exception as e:
+            response['success'] = False
+            response['message'] = "Something went wrong" + str(e)
+            print(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+    # response_json=json.dumps(response)
+    print(response)
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def edit_shop_profile(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            for x, y in request.POST.items():
+                print(x, ":", y)
+
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+            print("Shop mobile:" + str(shop_mobile))
+            name = str(request.POST.get('name'))
+            description = str(request.POST.get('description'))
+            address = str(request.POST.get('address'))
+            category = str(request.POST.get('category'))
+            city = str(request.POST.get('city'))
+
+            try:
+                image  = request.FILES.get('image').name
+                folder = 'media/' + 'shop/'
+                full_filename = os.path.join(folder, image)
+                print("full name", full_filename)
+                # fout = open(folder+image, 'wb+')
+                print("image=", image)
+                fout = open(folder + image, 'w')
+                file_content = request.FILES.get('image').read()
+                # for chunk in file_content.chunks():
+                fout.write(file_content)
+                fout.close()
+            except Exception as e:
+                image = 'image'
+                print(e)
+
+            shop_instance = ShopData.objects.get(mobile=shop_mobile)
+            shop_instance.name = name
+            shop_instance.description = description
+            shop_instance.address = address
+            shop_instance.category_id = CategoryData.objects.get(name=category)
+            shop_instance.city_id = CityData.objects.get(name=city)
+            shop_instance.image = image
+            shop_instance.save()
+            response['success'] = True
+            response['message'] = "Successful"
+
+        except Exception as e:
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+            print(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+
+    print(response)
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def change_password(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+
+            old_password = str(request.POST.get('old_password'))
+            new_password = str(request.POST.get('new_password'))
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=shop_mobile, password=old_password)
+                shop_instance.password = new_password
+                shop_instance.save()
+                response['success'] = True
+                response['message'] = "Sucessfully Changed"
+            except Exception as e:
+                print(str(e))
+                response['success'] = False
+                response['message'] = "Incorrect Old Password"
+
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+    print(response)
+    return JsonResponse(response)
+
+@csrf_exempt
+def forgot_password(request):
+    response_json = {}
+    if request.method == 'POST':
+        try:
+            mobile = str(request.POST.get('mobile'))
+
+            otp = random.randint(1000, 9999)
+            msg = 'Welcome to Discount Store. You One Time Password is ' + str(otp)
+            send_sms(mobile, msg)
+
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=str(mobile))
+                shop_otp_instance = ShopOtpData.objects.get(shop_id=shop_instance)
+                print (shop_otp_instance.otp)
+                setattr(shop_otp_instance, 'otp', int(otp))
+                print (shop_otp_instance.otp)
+                shop_otp_instance.save()
+                print('old user')
+
+            except Exception as e:
+                ShopOtpData.objects.create(shop_id=shop_instance, otp=int(otp))
+                print("Otp data does not exist, Creating it")
+                print (e)
+            response_json['success'] = True
+            response_json['message'] = "Otp Sent Successfully"
+        except Exception as e:
+            response_json['success'] = False
+            response_json['message'] = 'Unable to send otp at this time'
+            print(e)
+        print(str(response_json))
+    else:
+        response_json['success'] = False
+        response_json['message'] = "Invalid request"
+    return JsonResponse(response_json)
+
+@csrf_exempt
+def forgot_change_password(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+            new_password = str(request.POST.get('new_password'))
+
+            try:
+                shop_instance = ShopData.objects.get(mobile=shop_mobile)
+                shop_instance.password = new_password
+                shop_instance.save()
+                response['success'] = True
+                response['message'] = "Sucessfully Changed"
+            except Exception as e:
+                print(str(e))
+                response['success'] = False
+                response['message'] = "Something Went Wrong"+str(e)
+
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
     print(response)
     return JsonResponse(response)

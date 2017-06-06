@@ -31,7 +31,7 @@ def city(request):
             response_json = {}
             city_id = request.POST.get('city_id')
             access_token = request.POST.get('access_token')
-            json = jwt.decode(str(access_token), '999123', algorithms='HS256')
+            json = jwt.decode(str(access_token), '810810', algorithms='HS256')
             mobile = str(json['mobile'])
 
             user_instance = UserData.objects.get(mobile=mobile)

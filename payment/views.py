@@ -8,6 +8,7 @@ from __future__ import print_function
 from __future__ import print_function
 from __future__ import print_function
 from __future__ import print_function
+
 import hashlib
 import random
 
@@ -27,11 +28,12 @@ transaction_type['debit'] = "debit"
 
 @csrf_exempt
 def request_payment_hash(request):
+    response_json = {}
+
     if (request.method == 'POST'):
         for x, y in request.POST.items():
             print(x, ":", y)
         access_token = request.POST.get('access_token')
-        response_json = {}
 
         json = {}
 
@@ -80,7 +82,6 @@ def request_payment_hash(request):
 
                 response_json['success'] = False
                 response_json['message'] = str(e)
-
                 print(e)
 
         except Exception as e:

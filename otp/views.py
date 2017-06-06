@@ -77,8 +77,8 @@ def verify_otp(request):
             otp_list.save()
             response_json['access_token'] = str(access_token)
             print('Access Token Created')
-            json = jwt.decode(str(access_token), '999123', algorithms='HS256')
-            user = CityFcmData.objects.filter(user_id=str(json['mobile']))
+            # json = jwt.decode(str(access_token), '810910', algorithms='HS256')
+            user = CityFcmData.objects.filter(user_id=str(mobile))
             if user.exists():
                 for u in user:
                     u.delete()
