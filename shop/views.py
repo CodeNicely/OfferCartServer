@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from city.models import UserCityData
 from customs.sms import send_sms
 from .models import *
+from math import sin, cos, asin, sqrt, radians
+import numpy as np
 
 
 @csrf_exempt
@@ -35,18 +37,22 @@ def shop(request):
             response_json["message"] = 'Successful'
             response_json["shopDatas"] = []
             fields = ["name", "address"]
-            for o in ShopData.objects.filter(city_id=city_id, category_id=category_id):
 
+            for o in ShopData.objects.filter(city_id=city_id, category_id=category_id):
+                distance = get_distance(np.float32(latitude), np.float32(longitude),
+                                        np.float32(o.latitude), np.float32(o.longitude))
                 temp_json = {}
                 for f in fields:
                     print("f=", f)
                     temp_json[f] = str(getattr(o, str(f)))
+                temp_json['distance'] = distance
                 temp_json['shop_id'] = int(o.id)
                 temp_json['category_id'] = int(o.category_id.id)
                 temp_json['city_id'] = int(o.city_id.id)
 
                 temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(o.image)
                 response_json["shopDatas"].append(temp_json)
+            response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=True)
 
         except Exception as e:
             response_json = {"success": False, "message": "shop_data not found"}
@@ -152,6 +158,7 @@ def create_shop(request):
                         city_id=city_instance,
                         image=image
                     )
+
                     print('User Created')
 
                     otp = random.randint(1000, 9999)
@@ -308,7 +315,7 @@ def edit_shop_profile(request):
             city = str(request.POST.get('city'))
 
             try:
-                image  = request.FILES.get('image').name
+                image = request.FILES.get('image').name
                 folder = 'media/' + 'shop/'
                 full_filename = os.path.join(folder, image)
                 print("full name", full_filename)
@@ -379,6 +386,7 @@ def change_password(request):
     print(response)
     return JsonResponse(response)
 
+
 @csrf_exempt
 def forgot_password(request):
     response_json = {}
@@ -390,20 +398,19 @@ def forgot_password(request):
             msg = 'Welcome to Discount Store. You One Time Password is ' + str(otp)
             send_sms(mobile, msg)
 
-
             try:
                 shop_instance = ShopData.objects.get(mobile=str(mobile))
                 shop_otp_instance = ShopOtpData.objects.get(shop_id=shop_instance)
-                print (shop_otp_instance.otp)
+                print(shop_otp_instance.otp)
                 setattr(shop_otp_instance, 'otp', int(otp))
-                print (shop_otp_instance.otp)
+                print(shop_otp_instance.otp)
                 shop_otp_instance.save()
                 print('old user')
 
             except Exception as e:
                 ShopOtpData.objects.create(shop_id=shop_instance, otp=int(otp))
                 print("Otp data does not exist, Creating it")
-                print (e)
+                print(e)
             response_json['success'] = True
             response_json['message'] = "Otp Sent Successfully"
         except Exception as e:
@@ -415,6 +422,7 @@ def forgot_password(request):
         response_json['success'] = False
         response_json['message'] = "Invalid request"
     return JsonResponse(response_json)
+
 
 @csrf_exempt
 def forgot_change_password(request):
@@ -435,7 +443,7 @@ def forgot_change_password(request):
             except Exception as e:
                 print(str(e))
                 response['success'] = False
-                response['message'] = "Something Went Wrong"+str(e)
+                response['message'] = "Something Went Wrong" + str(e)
 
         except Exception as e:
             print(str(e))
@@ -446,3 +454,24 @@ def forgot_change_password(request):
         response['message'] = "Illegal request"
     print(response)
     return JsonResponse(response)
+
+
+def get_distance(lat1, lon1, lat2, lon2):
+    try:
+        """
+        Calculate the great circle distance between two points
+        on the earth (specified in decimal degrees)
+        """
+        # convert decimal degrees to radians
+        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+        # haversine formula
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+        c = 2 * asin(sqrt(a))
+        km = 6367 * c
+        # print "Km is ", km
+        return km
+    except Exception as e:
+        print(e)
+        return 100.0
