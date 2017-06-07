@@ -21,9 +21,10 @@ class ShopData(models.Model):
     category_id = models.ForeignKey(CategoryData, db_column="CategoryData.id")
     city_id = models.ForeignKey(CityData, db_column="CityData.id")
     image = models.ImageField(upload_to='shop/', default="/media/shop/default.png")
+    latitude = models.CharField(max_length=120, blank=True, null=True, default="0")
+    longitude = models.CharField(max_length=120, blank=True, null=True, default="0")
     verified = models.BooleanField(default=False)
     subscription_expiry_date = models.DateTimeField(default=datetime.date.today())
-
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
