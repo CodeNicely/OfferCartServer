@@ -25,8 +25,8 @@ def shop(request):
             json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
             user_id = str(json['mobile'])
             category_id = str(request.GET.get("category_id"))
-           # latitude = request.GET.get('latitude')
-            #longitude = request.GET.get('longitude')
+            latitude = request.GET.get('latitude')
+            longitude = request.GET.get('longitude')
             city_id = UserCityData.objects.get(user_id=user_id).city_id
 
             # print "City id",city_id
