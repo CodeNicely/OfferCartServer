@@ -4,7 +4,7 @@ from .models import *
 
 
 class OfferDataAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "active", "shop_id", "validity", "image",  "description", "created",
+    list_display = ["id", "name", "active", "shop_id", "expiry_date", "image",  "description", "created",
                     "modified"]
 
 

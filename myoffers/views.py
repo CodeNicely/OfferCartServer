@@ -29,14 +29,17 @@ def my_offers(request):
                 my_offer_details = {}
                 my_offer_details['offer_id'] = offer_details.id
                 my_offer_details['offer_name'] = offer_details.name
-                my_offer_details['offer_validity'] = offer_details.validity
+                my_offer_details['offer_validity'] = offer_details.expiry_date
                 my_offer_details['offer_description'] = offer_details.description
-                my_offer_details['offer_image'] = request.scheme + '://' + request.get_host() + '/media/' + str(
+                my_offer_details['offer_image'] = request.scheme + '://' + request.get_host() + '/media/offer/' + str(
                     offer_details.image)
-                shop_details = ShopData.objects.get(id=offer_details.shop_id)
+                print ('1')
+                #shop_otp_details = ShopOtpData.objects.get(shop_id=offer_details.shop_id)
+                print ('1')
+                shop_details = ShopData.objects.get(id=offer_details.shop_id.id)
+                print ('1')
                 my_offer_details['shop_name'] = shop_details.name
                 my_offer_details['shop_address'] = shop_details.address
-                my_offer_details['shop_distance'] = shop_details.distance
                 response_json["my_offer_list"].append(my_offer_details)
         except Exception as e:
             response_json["success"] = False

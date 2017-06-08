@@ -124,8 +124,7 @@ def get_offer(request):
             except Exception as e:
                 print(str(e))
             if response_json["success"]:
-                OfferBoughtData.objects.create(mobile=str(mobile), price=0, offer_id=offer_id,
-                                               avialable=True)
+                OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
                 response_json["success"] = True
                 response_json["message"] = 'Successful'
 
@@ -307,7 +306,12 @@ def offer_edit(request):
             print("259")
             offer_instance.name = offer_title
             offer_instance.description = offer_description
-            offer_instance.expiry_date = expiry_date
+            try:
+                offer_instance.expiry_date = expiry_date
+                print(expiry_date)
+                offer_instance.save()
+            except Exception as e:
+                print ("Validity Error--------------"+str(e))
             print(offer_title)
             print(offer_description)
             print(image)
