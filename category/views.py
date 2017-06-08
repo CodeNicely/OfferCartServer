@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import print_function
 from django.http import HttpResponse
 
 from .models import *
@@ -22,12 +24,12 @@ def category(request):
             response_json["categoryDatas"].append(temp_json)
         response_json['message'] = "Successful"
         response_json['success'] = True
-    except Exception, e:
-        print "error@category", e
+    except Exception as e:
+        print("error@category", e)
         response_json["success"] = False
         response_json["message"] = "category_data not found"
 
-    print str(response_json)
+    print(str(response_json))
     return HttpResponse(str(response_json))
 
 # Create your views here.
