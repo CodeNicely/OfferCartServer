@@ -38,7 +38,6 @@ def send_offer(request):
                                  "validity": str(o.validity), "expiry_date": str(o.expiry_date),
                                  "image": request.scheme + '://' + request.get_host() + '/media/offer/' + str(o.image),
                                  }
-
                     response_json["offer_list"].append(temp_json)
         except Exception as e:
             print("e@offer", e)
