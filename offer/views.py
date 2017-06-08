@@ -115,6 +115,7 @@ def get_offer(request):
             print (offer_id)
             print(json['mobile'])
             mobile = json['mobile']
+            response_json["success"]=True
             try:
                 offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
                 response_json["success"] = False
@@ -123,9 +124,8 @@ def get_offer(request):
             except Exception as e:
                 print(str(e))
             if response_json["success"]:
-                offer_code = code_generator()
                 OfferBoughtData.objects.create(mobile=str(mobile), price=0, offer_id=offer_id,
-                                               offer_code=offer_code, avialable=True)
+                                               avialable=True)
                 response_json["success"] = True
                 response_json["message"] = 'Successful'
 
