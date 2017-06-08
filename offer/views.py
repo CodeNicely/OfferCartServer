@@ -210,7 +210,7 @@ def shop_offers(request):
             print ((shop_instance.subscription_expiry_date).date())
             vaildity_days =((shop_instance.subscription_expiry_date).date()-today_date).days
             print (vaildity_days)
-            if (shop_instance.subscription_expiry_date).date() >= today_date+1:
+            if ((shop_instance.subscription_expiry_date).date()-today_date).days > 0:
                 response['subscription_description'] = str(vaildity_days) +" days subscription left"
                 response['subscription_button_description'] = "Manage Subscription"
             else:
