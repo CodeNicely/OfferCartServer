@@ -37,8 +37,8 @@ def my_offers(request):
                 shop_details = ShopData.objects.get(name=offer_details.shop_id)
                 my_offer_details['shop_name'] = shop_details.name
                 my_offer_details['shop_address'] = shop_details.address
+                my_offer_details['shop_distance'] = shop_details.distance
                 response_json["my_offer_list"].append(my_offer_details)
-
         except Exception as e:
             response_json["success"] = False
             response_json["message"] = "error in my offers"
