@@ -46,13 +46,13 @@ def shop(request):
                     print("f=", f)
                     temp_json[f] = str(getattr(o, str(f)))
                 temp_json['distance'] = distance
+                print("Distance=", distance)
                 temp_json['shop_id'] = int(o.id)
                 temp_json['category_id'] = int(o.category_id.id)
                 temp_json['city_id'] = int(o.city_id.id)
-
-                temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(o.image)
+                temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
                 response_json["shopDatas"].append(temp_json)
-            response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=True)
+            response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=False)
 
         except Exception as e:
             response_json = {"success": False, "message": "shop_data not found"}
@@ -117,6 +117,8 @@ def create_shop(request):
             address = str(request.POST.get('address'))
             category = str(request.POST.get('category'))
             city = str(request.POST.get('city'))
+            latitude = str(request.POST.get('latitude'))
+            longitude = str(request.POST.get('longitude'))
 
             try:
                 image = request.FILES.get('image').name
@@ -154,6 +156,8 @@ def create_shop(request):
                         password=str(password),
                         description=description,
                         address=address,
+                        latitude=latitude,
+                        longitude=longitude,
                         category_id=category_instance,
                         city_id=city_instance,
                         image=image
@@ -313,6 +317,8 @@ def edit_shop_profile(request):
             address = str(request.POST.get('address'))
             category = str(request.POST.get('category'))
             city = str(request.POST.get('city'))
+            latitude = str(request.POST.get('latitude'))
+            longitude = str(request.POST.get('longitude'))
 
             try:
                 image = request.FILES.get('image').name
@@ -334,6 +340,8 @@ def edit_shop_profile(request):
             shop_instance.name = name
             shop_instance.description = description
             shop_instance.address = address
+            shop_instance.latitude = latitude
+            shop_instance.longitude = longitude
             shop_instance.category_id = CategoryData.objects.get(name=category)
             shop_instance.city_id = CityData.objects.get(name=city)
             shop_instance.image = image

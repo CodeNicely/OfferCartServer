@@ -28,7 +28,8 @@ def send_offer(request):
             response_json["shop_id"] = int(shop_id)
             response_json["shop_name"] = str(shop_row.name)
             response_json["shop_description"] = str(shop_row.description)
-            response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/' + str(shop_row.image)
+            response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(
+                shop_row.image)
             response_json["shop_address"] = str(shop_row.address)
             response_json["offer_list"] = []
 
@@ -204,8 +205,17 @@ def shop_offers(request):
             response['success'] = True
             response['message'] = "Successful"
             response['shop_name'] = shop_instance.name
-            response['subscription_validity'] = 10
-
+            today_date = datetime.datetime.today().date()
+            print(today_date)
+            print ((shop_instance.subscription_expiry_date).date())
+            vaildity_days =((shop_instance.subscription_expiry_date).date()-today_date).days
+            print (vaildity_days)
+            if (shop_instance.subscription_expiry_date).date() >= today_date:
+                response['subscription_description'] = str(vaildity_days) +" days subscription left"
+                response['subscription_button_description'] = "Manage Subscription"
+            else:
+                response['subscription_description'] = "show your offers to world"
+                response['subscription_button_description'] = "Register Now"
             response['shop_offer_list'] = offer_list
         except Exception as e:
             response['success'] = False

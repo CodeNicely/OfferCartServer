@@ -71,8 +71,6 @@ urlpatterns = [
     url(r'^forgot_change_password/$', forgot_change_password),
     url(r'^delete_offer/$', delete_offer),
 
-
-
 ]
 
 from django.conf import settings
