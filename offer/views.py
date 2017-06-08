@@ -35,7 +35,7 @@ def send_offer(request):
             for o in OfferData.objects.filter(shop_id=int(shop_id)):
                 if o.active:
                     temp_json = {"offer_id": int(o.id), "name": str(o.name), "description": str(o.description),
-                                 "validity": str(o.validity), "expiry_date": str((o.expiry_date)),
+                                 "validity": str(o.validity), "expiry_date": str(o.expiry_date),
                                  "image": request.scheme + '://' + request.get_host() + '/media/offer/' + str(o.image),
                                  }
 

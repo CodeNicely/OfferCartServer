@@ -9,8 +9,8 @@ def about_us(request):
 		response_body={}
 		response_body['success']=True
 		response_body['message']="Successful"
-		response_body['title']="About Discount Store"
-		response_body['description']="Discount Store is a startup ,\n Discount store sells out Offers from Traditional shops. You will get a offer code in your mobile phone after buying a offer.\n Discount store uses Payumoney for Online Payment.\n\n Have a Nice Day:)"
-		response_body['image_url']=request.scheme+'://'+request.get_host()+'/media/about_us/discount_store_logo.png'
+		response_body['title']="About Brand Store"
+		response_body['description']="Brand Store is a startup ,\n Brand Store sells out Offers from Traditional shops. You will get a offer code in your mobile phone after registering for a offer.\n\n Have a Nice Day:)"
+		response_body['image_url']=request.scheme+'://'+request.get_host()+'/media/about_us/brand_store_logo-web.png'
 
 		return JsonResponse(response_body)
