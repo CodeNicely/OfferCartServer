@@ -27,7 +27,7 @@ def send_otp(request):
             print(mobile)
             print(email)
             otp = random.randint(1000, 9999)
-            msg = 'Welcome to Discount-Store. You One Time Password is ' + str(otp)
+            msg = 'Welcome to Brand-Store. You One Time Password is ' + str(otp)
             send_sms(mobile, msg)
             print('Otp Sent')
             try:

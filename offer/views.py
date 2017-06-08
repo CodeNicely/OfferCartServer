@@ -12,7 +12,6 @@ from customs.sms import send_sms
 from register.models import UserData
 from .models import *
 
-
 # Create your views here.
 @csrf_exempt
 def send_offer(request):
@@ -36,9 +35,10 @@ def send_offer(request):
             for o in OfferData.objects.filter(shop_id=int(shop_id)):
                 if o.active:
                     temp_json = {"offer_id": int(o.id), "name": str(o.name), "description": str(o.description),
-                                 "validity": str(o.validity),
+                                 "validity": str(o.validity), "expiry_date": str((o.expiry_date)),
                                  "image": request.scheme + '://' + request.get_host() + '/media/offer/' + str(o.image),
                                  }
+
                     response_json["offer_list"].append(temp_json)
         except Exception as e:
             print("e@offer", e)
@@ -60,7 +60,7 @@ def buy_offer(request):
                 print(x, ":", y)
             access_token = request.POST.get('access_token')
             offer_id = request.POST.get('offer_id')
-            json = jwt.decode(str(access_token), '999123', algorithms=['HS256'])
+            json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
             print(json['mobile'])
             mobile = json['mobile']
             response_json["success"] = True
@@ -76,7 +76,7 @@ def buy_offer(request):
                                  'some Money in your Wallet '
             else:
                 offer_code = code_generator()
-                OfferBoughtData.objects.create(mobile=str(mobile), price=price, offer_id=offer_id,
+                OfferBoughtData.objects.create(mobile=str(mobile), price=0, offer_id=offer_id,
                                                offer_code=offer_code, avialable=True)
                 user.wallet = wallet - price
                 user.save()
@@ -103,6 +103,42 @@ def buy_offer(request):
         response_json['message'] = "Get Out From Here"
     return JsonResponse(response_json)
 
+@csrf_exempt
+def get_offer(request):
+    response_json = {}
+    if request.method == 'POST':
+        try:
+            for x, y in request.POST.items():
+                print(x, ":", y)
+            access_token = request.POST.get('access_token')
+            offer_id = request.POST.get('offer_id')
+            json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
+            print (offer_id)
+            print(json['mobile'])
+            mobile = json['mobile']
+            try:
+                offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
+                response_json["success"] = False
+                print (response_json["success"])
+                response_json["message"] = 'You had already registered for the offer'
+            except Exception as e:
+                print(str(e))
+            if response_json["success"]:
+                offer_code = code_generator()
+                OfferBoughtData.objects.create(mobile=str(mobile), price=0, offer_id=offer_id,
+                                               offer_code=offer_code, avialable=True)
+                response_json["success"] = True
+                response_json["message"] = 'Successful'
+
+        except Exception as e:
+            response_json["success"] = False
+            response_json["message"] = "error in getoffers"
+            print(e)
+
+    else:
+        response_json['success'] = False
+        response_json['message'] = "Get Out From Here"
+    return JsonResponse(response_json)
 
 def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))

@@ -9,7 +9,7 @@ from city.models import CityData
 
 
 def get_uplaod_file_name(userpic, filename):
-    return u'photos/%s/%s_%s' % (str(userpic.user.id), str(time()).replace('.', '_'), filename)
+    return u'photos/%s/%s_%s' % (str(userpic.user.id), str(datetime.time()).replace('.', '_'), filename)
 
 
 class ShopData(models.Model):
