@@ -4,7 +4,7 @@ from .models import *
 
 
 class OfferDataAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "active", "shop_id", "validity", "image", "price", "description", "created",
+    list_display = ["id", "name", "active", "shop_id", "validity", "image",  "description", "created",
                     "modified"]
 
 
@@ -12,7 +12,7 @@ admin.site.register(OfferData, OfferDataAdmin)
 
 
 class OfferBoughtDataAdmin(admin.ModelAdmin):
-    list_display = ["id", "mobile", "offer_id", "avialable", "price", "created", "modified"]
+    list_display = ["id", "mobile", "offer_id", "created", "modified"]
 
 
 admin.site.register(OfferBoughtData, OfferBoughtDataAdmin)
