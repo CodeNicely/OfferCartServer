@@ -319,6 +319,7 @@ def edit_shop_profile(request):
             city = str(request.POST.get('city'))
             latitude = str(request.POST.get('latitude'))
             longitude = str(request.POST.get('longitude'))
+            shop_instance = ShopData.objects.get(mobile=shop_mobile)
 
             try:
                 image = request.FILES.get('image').name
@@ -327,6 +328,7 @@ def edit_shop_profile(request):
                 print("full name", full_filename)
                 # fout = open(folder+image, 'wb+')
                 print("image=", image)
+                shop_instance.image = image
                 fout = open(folder + image, 'w')
                 file_content = request.FILES.get('image').read()
                 # for chunk in file_content.chunks():
@@ -336,7 +338,6 @@ def edit_shop_profile(request):
                 image = 'image'
                 print(e)
 
-            shop_instance = ShopData.objects.get(mobile=shop_mobile)
             shop_instance.name = name
             shop_instance.description = description
             shop_instance.address = address
@@ -344,7 +345,8 @@ def edit_shop_profile(request):
             shop_instance.longitude = longitude
             shop_instance.category_id = CategoryData.objects.get(name=category)
             shop_instance.city_id = CityData.objects.get(name=city)
-            shop_instance.image = image
+            if image != None:
+                print("Image not null-------")
             shop_instance.save()
             response['success'] = True
             response['message'] = "Successful"

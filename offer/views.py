@@ -37,8 +37,8 @@ def send_offer(request):
                 if o.active:
                     temp_json = {"offer_id": int(o.id), "name": str(o.name), "description": str(o.description),
                                  "validity": str(o.validity),
-                                 "image": request.scheme + '://' + request.get_host() + '/media/' + str(o.image),
-                                 "price": int(o.price)}
+                                 "image": request.scheme + '://' + request.get_host() + '/media/offer/' + str(o.image),
+                                 }
                     response_json["offer_list"].append(temp_json)
         except Exception as e:
             print("e@offer", e)
@@ -250,6 +250,8 @@ def offer_edit(request):
 
             expiry_date = year + '-' + month + '-' + date
             expiry_date = datetime.datetime.strptime(expiry_date, '%Y-%m-%d')
+            shop_instance = ShopData.objects.get(mobile=shop_mobile)
+            offer_instance = OfferData.objects.get(shop_id=shop_instance, id=offer_id)
 
             try:
                 image = request.FILES.get('offer_image').name
@@ -258,6 +260,7 @@ def offer_edit(request):
                 print("full name", full_filename)
                 # fout = open(folder+image, 'wb+')
                 print("image=", image)
+                offer_instance.image = image
                 fout = open(folder + image, 'w')
                 file_content = request.FILES.get('offer_image').read()
                 # for chunk in file_content.chunks():
@@ -267,11 +270,8 @@ def offer_edit(request):
                 image = 'image not found'
                 print(e)
             print("259")
-            shop_instance = ShopData.objects.get(mobile=shop_mobile)
-            offer_instance = OfferData.objects.get(shop_id=shop_instance, id=offer_id)
             offer_instance.name = offer_title
             offer_instance.description = offer_description
-            offer_instance.image = image
             offer_instance.expiry_date = expiry_date
             print(offer_title)
             print(offer_description)
