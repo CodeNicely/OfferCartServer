@@ -42,7 +42,7 @@ def send_offer(request):
         except Exception as e:
             print("e@offer", e)
             response_json["success"] = False
-            response_json["message"] = " offer_data not  found"
+            response_json["message"] = " offer_data not found"
     else:
         response_json['success'] = False
         response_json['message'] = "not get method"

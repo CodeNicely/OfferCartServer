@@ -30,8 +30,7 @@ def my_offers(request):
                 my_offer_details['offer_id'] = offer_details.id
                 my_offer_details['offer_name'] = offer_details.name
                 my_offer_details['offer_validity'] = offer_details.validity
-                my_offer_details['offer_price'] = offer_details.price
-                my_offer_details['offer_code'] = o.offer_code
+                my_offer_details['offer_description'] = offer_details.description
                 my_offer_details['offer_image'] = request.scheme + '://' + request.get_host() + '/media/' + str(
                     offer_details.image)
                 shop_details = ShopData.objects.get(name=offer_details.shop_id)
