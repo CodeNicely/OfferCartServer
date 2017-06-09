@@ -6,7 +6,6 @@ from django.shortcuts import render_to_response, render
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from register.models import UserData
-from city.models import CityFcmData
 from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -22,36 +21,33 @@ def send_otp(request):
         try:
             name = str(request.POST.get('name'))
             mobile = str(request.POST.get('mobile'))
-            email = str(request.POST.get('email'))
             print(name)
             print(mobile)
-            print(email)
             otp = random.randint(1000, 9999)
             msg = 'Welcome to Brand-Store. You One Time Password is ' + str(otp)
             send_sms(mobile, msg)
             print('Otp Sent')
             try:
-                otp_list = OtpData.objects.get(mobile=str(mobile))
-                setattr(otp_list, 'otp', int(otp))
-                setattr(otp_list, 'flag', False)
-                otp_list.save()
-                print('old user')
+                # otp_list = OtpData.objects.create(mobile=str(mobile))
+                # setattr(otp_list, 'otp', int(otp))
+                # setattr(otp_list, 'flag', False)
+                # otp_list.save()
+                # print('old user')
                 user_list = UserData.objects.get(mobile=str(mobile))
                 setattr(user_list, 'name', name)
-                setattr(user_list, 'email', email)
                 setattr(user_list, 'city', "")
                 user_list.save()
                 print('User Details Updated')
-
+                OtpData.objects.create(mobile=str(mobile), otp=int(otp))
             except Exception as e:
                 OtpData.objects.create(mobile=str(mobile), otp=int(otp))
                 UserData.objects.create(
                     name=name,
-                    email=email,
                     mobile=str(mobile)
                 )
                 print('User Created')
                 print(e)
+
             response_json['success'] = True
             response_json['message'] = "Otp Sent Successfully"
             pass
@@ -78,7 +74,7 @@ def verify_otp(request):
             response_json['access_token'] = str(access_token)
             print('Access Token Created')
             # json = jwt.decode(str(access_token), '810910', algorithms='HS256')
-            user = CityFcmData.objects.filter(user_id=str(mobile))
+            user = OtpData.objects.filter(mobile=str(mobile))
             if user.exists():
                 for u in user:
                     u.delete()

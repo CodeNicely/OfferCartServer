@@ -5,7 +5,7 @@ from .models import *
 
 # Register your models here.
 class UserDataAdmin(admin.ModelAdmin):
-    list_display = ["name", "email", "mobile", "created", "modified"]
+    list_display = ["name", "mobile", "created", "modified"]
 
 
 admin.site.register(UserData, UserDataAdmin)

@@ -18,7 +18,7 @@ from django.contrib import admin
 
 from about_us.views import about_us
 from category.views import category
-from city.views import city
+from city.views import request_cities, get_city, request_states
 from city.views import update_fcm
 from contact_us.views import contact_us
 from developers.views import developers
@@ -28,8 +28,8 @@ from offer.views import send_offer, buy_offer, shop_offers, offer_add, offer_edi
 from otp.views import send_otp
 from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
-from shop.views import shop, city_category, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
-    edit_shop_profile, change_password, forgot_password, forgot_change_password
+from shop.views import shop, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
+    edit_shop_profile, change_password, forgot_password, forgot_change_password, state_category, delete_shop_data
 from splash_screen.views import splash_screen
 from subscription.views import add_subscription, request_subscription
 from welcome.views import welcome
@@ -41,7 +41,9 @@ urlpatterns = [
     url(r'^verify_otp/$', verify_otp),
     url(r'^wallet/$', wallet),
     url(r'^welcome/$', welcome),
-    url(r'^city/$', city),
+    url(r'^request_cities/$', request_cities),
+    url(r'^request_states/$', request_states),
+    url(r'^get_city/$', get_city),
     url(r'^category/$', category),
     url(r'^shop/$', shop),
     url(r'^offer/$', send_offer),
@@ -56,7 +58,7 @@ urlpatterns = [
     url(r'^send_notification/$', send_notification),
     url(r'^send_shops/$', send_shops),
     url(r'^update_fcm/$', update_fcm),
-    url(r'^city_category/$', city_category),
+    url(r'^state_category/$', state_category),
     url(r'^create_shop/$', create_shop),
     url(r'^verify_shop_otp/$', verify_shop_otp),
     url(r'^verify_shop_login/$', verify_shop_login),
@@ -71,7 +73,7 @@ urlpatterns = [
     url(r'^forgot_password/$', forgot_password),
     url(r'^forgot_change_password/$', forgot_change_password),
     url(r'^delete_offer/$', delete_offer),
-
+    url(r'^delete_shop_data/$', delete_shop_data),
 ]
 
 from django.conf import settings

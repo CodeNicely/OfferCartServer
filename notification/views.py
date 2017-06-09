@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from city.models import CityData
-from city.models import CityFcmData
+from register.models import UserData
 from shop.models import ShopData
 
 
@@ -26,7 +26,7 @@ def send_notification(request):
         cities = CityData.objects.values('id', 'name')
         shop_name = str(ShopData.objects.get(id=shop_id).name)
         print shop_name
-        for o in CityFcmData.objects.filter(city_id=city):
+        for o in UserData.objects.all():
             notify_users(o.fcm, message, shop_id, shop_name)
         return render(request, "notification.html", {"cities_data": cities})
 

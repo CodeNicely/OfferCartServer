@@ -9,7 +9,7 @@ import jwt
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from city.models import UserCityData
+from city.models import UserCityData, StateData
 from customs.sms import send_sms
 from .models import *
 from math import sin, cos, asin, sqrt, radians
@@ -73,16 +73,16 @@ def shop(request):
 # From here the methods are for Shop Admin module
 
 @csrf_exempt
-def city_category(request):
+def state_category(request):
     response_json = {}
     if request.method == 'GET':
         try:
-            response_json['city_list'] = []
-            for i in CityData.objects.all():
+            response_json['state_list'] = []
+            for i in StateData.objects.all():
                 temp_json = {}
                 temp_json['id'] = int(i.id)
                 temp_json['name'] = str(i.name)
-                response_json['city_list'].append(temp_json)
+                response_json['state_list'].append(temp_json)
             response_json['category_list'] = []
             for i in CategoryData.objects.all():
                 temp_json = {}
@@ -485,3 +485,6 @@ def get_distance(lat1, lon1, lat2, lon2):
     except Exception as e:
         print(e)
         return 100.0
+# ===============================================================================================
+def delete_shop_data(request):
+    CityData.objects.get(id =2).delete()
