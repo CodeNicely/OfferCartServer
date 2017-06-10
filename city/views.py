@@ -15,7 +15,7 @@ def request_states(request):
         try:
             response_json = {"success": True, "message": "Succesful", "state_data": []}
             print("debugged")
-            for o in StateData.objects.all():
+            for o in StateData.objects.order_by('name'):
                 temp_json = {}
                 print(o.name)
                 temp_json["state_id"] = o.id
@@ -38,10 +38,10 @@ def request_cities(request):
             state_id = request.GET.get('state_id')
             response_json = {"success": True, "city_data": []}
             print("debugged")
-            print (state_id)
+            print(state_id)
             state = StateData.objects.get(id=state_id)
-            print (state_id)
-            for o in CityData.objects.filter(state_name=state):
+            print(state_id)
+            for o in CityData.objects.filter(state_name=state).order_by('name'):
                 temp_json = {}
                 print(o.name)
                 temp_json["city_id"] = o.id
@@ -103,14 +103,7 @@ def update_fcm(request):
         user_id = str(json['mobile'])
         print(fcm)
         if fcm is not None:
-            user_instance = UserData.objects.get(mobile=user_id)
-            try:
-                city_fcm, created = UserData.objects.get_or_create(fcm=fcm, user_id=user_instance)
-                city_fcm.save()
-            except Exception as e:
-                print("Error in updating FCM", str(e))
-
-            data = UserData.objects.filter(user_id=user_id)
+            data = UserData.objects.filter(mobile=user_id)
             if data.count() > 0:
                 for d in data:
                     setattr(d, 'fcm', fcm)

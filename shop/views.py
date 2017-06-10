@@ -78,13 +78,13 @@ def state_category(request):
     if request.method == 'GET':
         try:
             response_json['state_list'] = []
-            for i in StateData.objects.all():
+            for i in StateData.objects.order_by('name'):
                 temp_json = {}
                 temp_json['id'] = int(i.id)
                 temp_json['name'] = str(i.name)
                 response_json['state_list'].append(temp_json)
             response_json['category_list'] = []
-            for i in CategoryData.objects.all():
+            for i in CategoryData.objects.order_by('name'):
                 temp_json = {}
                 temp_json['id'] = int(i.id)
                 temp_json['name'] = str(i.name)
