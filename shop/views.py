@@ -425,7 +425,7 @@ def forgot_password(request):
             response_json['message'] = "Otp Sent Successfully"
         except Exception as e:
             response_json['success'] = False
-            response_json['message'] = 'Unable to send otp at this time'
+            response_json['message'] = 'No shop exists with mobile number '+str(mobile)
             print(e)
         print(str(response_json))
     else:
