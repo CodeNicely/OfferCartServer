@@ -486,5 +486,17 @@ def get_distance(lat1, lon1, lat2, lon2):
         print(e)
         return 100.0
 # ===============================================================================================
+
+
 def delete_shop_data(request):
-    CityData.objects.get(id =2).delete()
+    return 0
+        # for x in cities:
+    #     try:
+    #         CityData.objects.get(name=x['name'])
+    #     except Exception as e:
+    #         shop_instance= StateData.objects.get(name= x['state'])
+    #         CityData.objects.create(
+    #             name= x['name'],
+    #             state_name= shop_instance
+    #         )
+    #
