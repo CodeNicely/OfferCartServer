@@ -128,7 +128,7 @@ def get_offer(request):
             if response_json["success"]:
                 OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
                 try:
-                    offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
+                    offer_details = OfferData.objects.get(id=int(offer_id))
                     shop_details = ShopData.objects.get(name=offer_details.shop_id)
                     msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
                         offer_details.name) + ' "" for Shop ' + str(
