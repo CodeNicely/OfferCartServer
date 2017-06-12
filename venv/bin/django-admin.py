@@ -1,4 +1,4 @@
-#!/root/OfferCartServer/venv/bin/python
+#!/root/brand_store_server/prod/OfferCartServer/venv/bin/python
 from django.core import management
 
 if __name__ == "__main__":
