@@ -130,7 +130,7 @@ def get_offer(request):
                 try:
                     print ('offer data')
                     offer_details = OfferData.objects.get(id=int(offer_id))
-                    shop_details = ShopData.objects.get(name=offer_details.shop_id)
+                    shop_details = ShopData.objects.get(id=offer_details.shop_id)
                     msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
                         offer_details.name) + ' "" for Shop ' + str(
                         shop_details.name) + '. To Redeem the offer Please show this Message and Code During ' \
