@@ -1,25 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 import requests
+from django.views import static
+
 from .models import *
+
+
 # Create your views here.
 def welcome(request):
-	try:
-		response_json={}
-		response_json["success"]=True
-		response_json["slider_data"]=[]
-		for o in  WelcomeData.objects.all():
-			temp_json={}
-			temp_json["image_url"]=request.scheme+'://'+request.get_host()+'/media/'+str(o.image_url)
-			temp_json["message"]=str(o.message)
-			response_json['slider_data'].append(temp_json)
-	except Exception,e:
-		print e
-		response_json["success"]=False
-		response_json["message"]='url not sent'
-		
-	print str(response_json)
-	return HttpResponse(str(response_json))
+    try:
+        response_json = {}
+        response_json["success"] = True
+        response_json["slider_data"] = []
+        for o in WelcomeData.objects.all():
+            temp_json = {}
+            temp_json["image_url"] = request.scheme + '://' + request.get_host() + '/media/' + str(o.image_url)
+            temp_json["message"] = str(o.message)
+            response_json['slider_data'].append(temp_json)
+    except Exception, e:
+        print e
+        response_json["success"] = False
+        response_json["message"] = 'url not sent'
+
+    print str(response_json)
+    return HttpResponse(str(response_json))
+
 
 # def run_url(request):
 # 	#try:
@@ -30,3 +35,9 @@ def welcome(request):
 
 # 	return HttpResponse(result)
 
+# ===========================================                ==============================================
+
+def privacy_policy(request):
+    # return HttpResponse('static/index.html')
+    #return render_to_response('../static/index.html')
+    return render(request,'index.html',{})

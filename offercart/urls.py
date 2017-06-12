@@ -32,7 +32,7 @@ from shop.views import shop, create_shop, verify_shop_otp, verify_shop_login, my
     edit_shop_profile, change_password, forgot_password, forgot_change_password, state_category, delete_shop_data
 from splash_screen.views import splash_screen
 from subscription.views import add_subscription, request_subscription
-from welcome.views import welcome
+from welcome.views import welcome, privacy_policy
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -74,6 +74,7 @@ urlpatterns = [
     url(r'^forgot_change_password/$', forgot_change_password),
     url(r'^delete_offer/$', delete_offer),
     url(r'^delete_shop_data/$', delete_shop_data),
+    url(r'^privacy_policy/$', privacy_policy),
 ]
 
 from django.conf import settings

@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from city.choices import STATE_CHOICES
 from register.models import UserData
 
 
