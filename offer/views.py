@@ -135,6 +135,7 @@ def get_offer(request):
                         shop_details.name) + '. To Redeem the offer Please show this Message and Code During ' \
                                              'Billing.%0A ' \
                                              '%0AThanks Team Brand Store '
+                    print (msg)
                     send_sms(mobile, msg)
                 except Exception as e:
                     print(e)
