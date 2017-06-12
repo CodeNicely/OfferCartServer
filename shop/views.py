@@ -146,7 +146,7 @@ def create_shop(request):
                 if ShopData.objects.filter(mobile=str(mobile)).count() > 0:
                     print("Shop already exist")
                     response_json['success'] = False
-                    response_json['message'] = "Shop already exists"
+                    response_json['message'] = "Mobile Number already Registered.\nPlease try again with a different mobile number"
                 else:
                     print("New shop")
 
@@ -166,7 +166,7 @@ def create_shop(request):
                     print('User Created')
 
                     otp = random.randint(1000, 9999)
-                    msg = 'Welcome to Discount Store. You One Time Password is ' + str(otp)
+                    msg = 'Welcome to Brand Store. You One Time Password is ' + str(otp)
                     send_sms(mobile, msg)
 
                     try:
