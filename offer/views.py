@@ -12,6 +12,7 @@ from customs.sms import send_sms
 from register.models import UserData
 from .models import *
 
+
 # Create your views here.
 @csrf_exempt
 def send_offer(request):
@@ -102,6 +103,7 @@ def buy_offer(request):
         response_json['message'] = "Get Out From Here"
     return JsonResponse(response_json)
 
+
 @csrf_exempt
 def get_offer(request):
     response_json = {}
@@ -112,19 +114,30 @@ def get_offer(request):
             access_token = request.POST.get('access_token')
             offer_id = request.POST.get('offer_id')
             json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
-            print (offer_id)
+            print(offer_id)
             print(json['mobile'])
             mobile = json['mobile']
-            response_json["success"]=True
+            response_json["success"] = True
             try:
                 offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
                 response_json["success"] = False
-                print (response_json["success"])
+                print(response_json["success"])
                 response_json["message"] = 'You had already registered for the offer'
             except Exception as e:
                 print(str(e))
             if response_json["success"]:
                 OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
+                try:
+                    offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
+                    shop_details = ShopData.objects.get(name=offer_details.shop_id)
+                    msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
+                        offer_details.name) + ' "" for Shop ' + str(
+                        shop_details.name) + '. To Redeem the offer Please show this Message and Code During ' \
+                                             'Billing.%0A ' \
+                                             '%0AThanks Team Brand Store '
+                    send_sms(mobile, msg)
+                except Exception as e:
+                    print(e)
                 response_json["success"] = True
                 response_json["message"] = 'Successful'
 
@@ -137,6 +150,7 @@ def get_offer(request):
         response_json['success'] = False
         response_json['message'] = "Get Out From Here"
     return JsonResponse(response_json)
+
 
 def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -241,11 +255,11 @@ def shop_offers(request):
             response['shop_name'] = shop_instance.name
             today_date = datetime.datetime.today().date()
             print(today_date)
-            print ((shop_instance.subscription_expiry_date).date())
-            vaildity_days =((shop_instance.subscription_expiry_date).date()-today_date).days
-            print (vaildity_days)
-            if ((shop_instance.subscription_expiry_date).date()-today_date).days > 0:
-                response['subscription_description'] = str(vaildity_days) +" days subscription left"
+            print((shop_instance.subscription_expiry_date).date())
+            vaildity_days = ((shop_instance.subscription_expiry_date).date() - today_date).days
+            print(vaildity_days)
+            if ((shop_instance.subscription_expiry_date).date() - today_date).days > 0:
+                response['subscription_description'] = str(vaildity_days) + " days subscription left"
                 response['subscription_button_description'] = "Manage Subscription"
             else:
                 response['subscription_description'] = "show your offers to world"
@@ -311,7 +325,7 @@ def offer_edit(request):
                 print(expiry_date)
                 offer_instance.save()
             except Exception as e:
-                print ("Validity Error--------------"+str(e))
+                print("Validity Error--------------" + str(e))
             print(offer_title)
             print(offer_description)
             print(image)

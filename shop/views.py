@@ -210,7 +210,6 @@ def verify_shop_otp(request):
 
             mobile = str(request.POST.get('mobile'))
             otp = str(request.POST.get('otp'))
-
             print("Mobile" + str(mobile))
             print("otp:" + str(otp))
             shop_instance = ShopData.objects.get(mobile=str(mobile))
