@@ -78,6 +78,7 @@ def verify_otp(request):
             if user.exists():
                 for u in user:
                     u.delete()
+
             response_json['success'] = True
             response_json['message'] = 'Successful'
         else:

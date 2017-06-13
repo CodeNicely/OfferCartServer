@@ -143,9 +143,39 @@ def create_shop(request):
                 city_instance = CityData.objects.get(name=city)
 
                 if ShopData.objects.filter(mobile=str(mobile)).count() > 0:
-                    print("Shop already exist")
-                    response_json['success'] = False
-                    response_json['message'] = "Mobile Number already Registered.\nPlease try again with a different mobile number"
+                    shop_instance = ShopData.objects.get(mobile=mobile)
+                    if shop_instance.otp_verified:
+                        print("Shop already exist")
+                        response_json['success'] = False
+                        response_json[
+                            'message'] = "Mobile Number already Registered.\nPlease try again with a different mobile number"
+                    else:
+                        shop_instance.name = name
+                        shop_instance.mobile = mobile
+                        shop_instance.password = password
+                        shop_instance.description = description
+                        shop_instance.address = address
+                        shop_instance.latitude = latitude
+                        shop_instance.longitude = longitude
+                        shop_instance.category_id = category_instance
+                        shop_instance.city_id = city_instance
+                        shop_instance.image = image
+                        shop_instance.save()
+
+                        otp = random.randint(1000, 9999)
+                        msg = 'Welcome to Brand Store. Your One Time Password is ' + str(otp)
+                        send_sms(mobile, msg)
+
+                        otp_list = ShopOtpData.objects.get(shop_id=shop_instance)
+                        setattr(otp_list, 'otp', int(otp))
+                        setattr(otp_list, 'flag', False)
+                        otp_list.save()
+
+                        print("Shop Registering again without otp verification")
+                        response_json['success'] = True
+                        response_json['message'] = "Otp Sent Successfully"
+
+
                 else:
                     print("New shop")
 
@@ -220,6 +250,7 @@ def verify_shop_otp(request):
 
             if int(shop_otp_instance.otp) == int(otp):
                 shop_instance.otp_verified = True
+                shop_instance.save()
                 response['success'] = True
                 response['message'] = "Otp verified successfully"
                 response['shop_access_token'] = str(access_token)
@@ -246,7 +277,7 @@ def verify_shop_login(request):
             mobile = str(request.POST.get('mobile'))
             password = str(request.POST.get('password'))
             access_token = jwt.encode({'mobile': str(mobile)}, '810810', algorithm='HS256')
-            if ShopData.objects.filter(mobile=mobile, password=password).count() == 1  :
+            if ShopData.objects.filter(mobile=mobile, password=password).count() == 1:
                 shop_instance = ShopData.objects.get(mobile=mobile, password=password)
                 if shop_instance.otp_verified:
                     response['success'] = True
@@ -427,7 +458,7 @@ def forgot_password(request):
             response_json['message'] = "Otp Sent Successfully"
         except Exception as e:
             response_json['success'] = False
-            response_json['message'] = 'No shop exists with mobile number '+str(mobile)
+            response_json['message'] = 'No shop exists with mobile number ' + str(mobile)
             print(e)
         print(str(response_json))
     else:
@@ -487,12 +518,14 @@ def get_distance(lat1, lon1, lat2, lon2):
     except Exception as e:
         print(e)
         return 100.0
+
+
 # ===============================================================================================
 
 
 def delete_shop_data(request):
     return 0
-        # for x in cities:
+    # for x in cities:
     #     try:
     #         CityData.objects.get(name=x['name'])
     #     except Exception as e:
