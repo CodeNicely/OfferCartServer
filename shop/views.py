@@ -55,12 +55,9 @@ def shop(request):
                     temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
                     response_json["shopDatas"].append(temp_json)
             response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=False)
-
         except Exception as e:
             response_json = {"success": False, "message": "shop_data not found"}
-
             print("e@shop=", e)
-
         print(str(response_json))
     else:
         response_json['success'] = False
