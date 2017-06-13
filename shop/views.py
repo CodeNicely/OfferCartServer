@@ -39,19 +39,21 @@ def shop(request):
             fields = ["name", "address"]
 
             for o in ShopData.objects.filter(city_id=city_id, category_id=category_id):
-                distance = get_distance(np.float32(latitude), np.float32(longitude),
-                                        np.float32(o.latitude), np.float32(o.longitude))
-                temp_json = {}
-                for f in fields:
-                    print("f=", f)
-                    temp_json[f] = str(getattr(o, str(f)))
-                temp_json['distance'] = distance
-                print("Distance=", distance)
-                temp_json['shop_id'] = int(o.id)
-                temp_json['category_id'] = int(o.category_id.id)
-                temp_json['city_id'] = int(o.city_id.id)
-                temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
-                response_json["shopDatas"].append(temp_json)
+                today_date = datetime.datetime.today().date()
+                if (o.subscription_expiry_date - today_date).days > 0 and o.verified:
+                    distance = get_distance(np.float32(latitude), np.float32(longitude),
+                                            np.float32(o.latitude), np.float32(o.longitude))
+                    temp_json = {}
+                    for f in fields:
+                        print("f=", f)
+                        temp_json[f] = str(getattr(o, str(f)))
+                    temp_json['distance'] = distance
+                    print("Distance=", distance)
+                    temp_json['shop_id'] = int(o.id)
+                    temp_json['category_id'] = int(o.category_id.id)
+                    temp_json['city_id'] = int(o.city_id.id)
+                    temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
+                    response_json["shopDatas"].append(temp_json)
             response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=False)
 
         except Exception as e:
@@ -220,6 +222,7 @@ def verify_shop_otp(request):
             print("Required" + str(shop_otp_instance.otp))
 
             if int(shop_otp_instance.otp) == int(otp):
+                shop_instance.otp_verified = True
                 response['success'] = True
                 response['message'] = "Otp verified successfully"
                 response['shop_access_token'] = str(access_token)
@@ -245,13 +248,16 @@ def verify_shop_login(request):
         try:
             mobile = str(request.POST.get('mobile'))
             password = str(request.POST.get('password'))
-
             access_token = jwt.encode({'mobile': str(mobile)}, '810810', algorithm='HS256')
-
-            if ShopData.objects.filter(mobile=mobile, password=password).count() == 1:
-                response['success'] = True
-                response['message'] = "Successful"
-                response['shop_access_token'] = str(access_token)
+            if ShopData.objects.filter(mobile=mobile, password=password).count() == 1  :
+                shop_instance = ShopData.objects.get(mobile=mobile, password=password)
+                if shop_instance.otp_verified:
+                    response['success'] = True
+                    response['message'] = "Successful"
+                    response['shop_access_token'] = str(access_token)
+                else:
+                    response['success'] = False
+                    response['message'] = "Invalid mobile or password"
             else:
                 response['success'] = False
                 response['message'] = "Invalid mobile or password"
