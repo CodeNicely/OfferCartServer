@@ -34,6 +34,8 @@ def category(request):
                              "description": str(category_instance.description)}
                 if temp_json in response_json["categoryDatas"]:
                     pass
+                elif not o.verified:
+                    pass
                 else:
                     response_json["categoryDatas"].append(temp_json)
             except Exception as e:
