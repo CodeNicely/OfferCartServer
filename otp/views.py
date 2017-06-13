@@ -1,12 +1,7 @@
 from __future__ import print_function
-from django.shortcuts import render
 import random
-import requests
-from django.shortcuts import render_to_response, render
-from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from register.models import UserData
-from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import jwt
@@ -38,7 +33,16 @@ def send_otp(request):
                 setattr(user_list, 'city', "")
                 user_list.save()
                 print('User Details Updated')
-                OtpData.objects.create(mobile=str(mobile), otp=int(otp))
+                try:
+                    otp_instance = OtpData.objects.get(mobile=str(mobile))
+                    otp_instance.otp = otp
+                    otp_instance.save()
+                except Exception as e:
+                    print (e)
+                    OtpData.objects.create(mobile=str(mobile), otp=int(otp))
+
+
+
             except Exception as e:
                 OtpData.objects.create(mobile=str(mobile), otp=int(otp))
                 UserData.objects.create(
