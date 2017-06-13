@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from customs.sms import send_sms
 from register.models import UserData
 from .models import *
+import datetime
 
 
 # Create your views here.
@@ -34,7 +35,8 @@ def send_offer(request):
             response_json["offer_list"] = []
 
             for o in OfferData.objects.filter(shop_id=int(shop_id)):
-                if o.active:
+                today_date = datetime.datetime.today().date()
+                if (o.expiry_date - today_date).days > 0:
                     temp_json = {"offer_id": int(o.id), "name": str(o.name), "description": str(o.description),
                                  "validity": str(o.validity), "expiry_date": str(o.expiry_date),
                                  "image": request.scheme + '://' + request.get_host() + '/media/offer/' + str(o.image),
@@ -159,7 +161,6 @@ def code_generator(size=6, chars=string.ascii_uppercase + string.digits):
 
 
 ####################### Shop Admin Modules #############################
-import datetime
 
 
 @csrf_exempt

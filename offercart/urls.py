@@ -36,7 +36,7 @@ from welcome.views import welcome, privacy_policy
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^version/$', splash_screen),  # completed
+    url(r'^version/$', splash_screen),
     url(r'^send_otp/$', send_otp),
     url(r'^verify_otp/$', verify_otp),
     url(r'^wallet/$', wallet),
