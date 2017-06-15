@@ -42,7 +42,7 @@ def shop(request):
             for o in ShopData.objects.filter(city_id=city_id, category_id=category_id):
                 # today_date = datetime.datetime.today().date()
                 today_date = datetime.date.today()
-                if (o.subscription_expiry_date - today_date).days > 0 and o.verified:
+                if (o.subscription_expiry_date.date() - today_date).days > 0 and o.verified:
                     distance = get_distance(np.float32(latitude), np.float32(longitude),
                                             np.float32(o.latitude), np.float32(o.longitude))
                     temp_json = {}
