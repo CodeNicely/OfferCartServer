@@ -8,6 +8,7 @@ import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from customs.models import KeysData
 from customs.sms import send_sms
 from register.models import UserData
 from .models import *
@@ -130,7 +131,7 @@ def get_offer(request):
             if response_json["success"]:
                 OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
                 try:
-                    print ('offer data')
+                    print('offer data')
                     offer_details = OfferData.objects.get(id=int(offer_id))
                     shop_details = offer_details.shop_id
                     msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
@@ -138,7 +139,7 @@ def get_offer(request):
                         shop_details.name) + '. To Redeem the offer Please show this Message during ' \
                                              'Billing.%0A ' \
                                              '%0AThanks Team Brand Store '
-                    print (msg)
+                    print(msg)
                     send_sms(mobile, msg)
                 except Exception as e:
                     print(e)
@@ -258,14 +259,14 @@ def shop_offers(request):
             response['shop_name'] = shop_instance.name
             today_date = datetime.datetime.today().date()
             print(today_date)
-            print((shop_instance.subscription_expiry_date).date())
-            vaildity_days = ((shop_instance.subscription_expiry_date).date() - today_date).days
+            print(shop_instance.subscription_expiry_date.date())
+            vaildity_days = (shop_instance.subscription_expiry_date.date() - today_date).days
             print(vaildity_days)
-            if ((shop_instance.subscription_expiry_date).date() - today_date).days > 0:
+            if (shop_instance.subscription_expiry_date.date() - today_date).days > 0:
                 response['subscription_description'] = str(vaildity_days) + " days subscription left"
                 response['subscription_button_description'] = "Manage Subscription"
             else:
-                response['subscription_description'] = "show your offers to world"
+                response['subscription_description'] = KeysData.objects.get(key='subscription_description').value
                 response['subscription_button_description'] = "Register Now"
             response['shop_offer_list'] = offer_list
         except Exception as e:
