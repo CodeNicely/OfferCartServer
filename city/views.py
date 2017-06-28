@@ -75,11 +75,11 @@ def get_city(request):
                 user_city.save()
             except Exception as e:
                 print("Exception", e)
-                city_fcm, created = UserCityData.objects.get_or_create(
+                created = UserCityData.objects.create(
                     city_id=city_instance,
                     user_id=user_instance
                 )
-                city_fcm.save()
+                created.save()
             response_json['success'] = True
             response_json['message'] = 'Successful'
         except Exception as e:
