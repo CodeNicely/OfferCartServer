@@ -267,9 +267,10 @@ def add_subscription_razorpay(request):
             try:
                 if success:
                     shop_subscription_instance.payment_status = True
-                    shop_subscription_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
+                    shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
                         days=subscription_data.subscription_days)
                     shop_subscription_instance.save()
+                    shop_instance.save()
                 else:
                     shop_subscription_instance.payment_status = False
                 shop_subscription_instance.save()
