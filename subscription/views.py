@@ -259,10 +259,9 @@ def add_subscription_razorpay(request):
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
-            print ("error1")
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
-            print ("error3")
-            subscription_data = SubscriptionData.objects.get(subscription_id=shop_subscription_instance)
+            print ("error1")
+            subscription_data = SubscriptionData.objects.get(id=shop_subscription_instance.subscription_id)
             print ("error4")
 
             try:
