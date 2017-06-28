@@ -259,7 +259,6 @@ def add_subscription(request):
             print ("error1")
             success = request.POST.get("success")
             print ("error1")
-
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             print ("error1")
             shop_mobile = str(json['mobile'])
