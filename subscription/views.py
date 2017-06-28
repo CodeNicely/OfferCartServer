@@ -1,10 +1,5 @@
 from __future__ import print_function
-from django.shortcuts import render
-import os
-import random
-
 from datetime import timedelta
-
 import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
