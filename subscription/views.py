@@ -262,7 +262,7 @@ def add_subscription_razorpay(request):
             print ("error1")
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
             print ("error3")
-            subscription_data = SubscriptionData.objects.get(transaction_id=transaction_id)
+            subscription_data = SubscriptionData.objects.get(id=transaction_id)
             print ("error4")
 
             try:
