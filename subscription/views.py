@@ -259,10 +259,13 @@ def add_subscription(request):
 
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
-
+            print ("error1")
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
+            print ("error2")
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
+            print ("error3")
             subscription_data = SubscriptionData.objects.get(transaction_id=transaction_id)
+            print ("error4")
 
             try:
                 if success:
@@ -278,10 +281,12 @@ def add_subscription(request):
 
             except Exception as e:
                 print(str(e))
+                print("error5")
                 response['success'] = False
                 response['message'] = "Something went wrong " + str(e)
         except Exception as e:
             print(str(e))
+            print("error6")
             response['success'] = False
             response['message'] = "Something went wrong " + str(e)
 
