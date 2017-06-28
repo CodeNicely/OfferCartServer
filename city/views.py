@@ -83,7 +83,7 @@ def get_city(request):
             response_json['success'] = True
             response_json['message'] = 'Successful'
         except Exception as e:
-            response_json["success"] = False
+            response_json["success"] = True
             response_json["message"] = "City data not found"
             print("error@city post", e)
         print(str(response_json))
