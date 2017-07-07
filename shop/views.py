@@ -163,7 +163,6 @@ def create_shop(request):
                         shop_instance.city_id = city_instance
                         shop_instance.image = image
                         shop_instance.save()
-
                         otp = random.randint(1000, 9999)
                         msg = 'Welcome to Brand Store. Your One Time Password is ' + str(otp)
                         send_sms(mobile, msg)

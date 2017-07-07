@@ -4,6 +4,7 @@ import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from customs.sms import send_sms
 from .models import *
 
 
@@ -202,8 +203,6 @@ def add_subscription_razorpay(request):
                 respons_dict['ORDER_ID'] = str(transaction_id)  # unique OrderId for every request
                 respons_dict['CUST_ID'] = str(shop_mobile)  # unique customer identifier
 
-
-
                 respons_dict['INDUSTRY_TYPE_ID'] = industry_type_id  # Provided by Paytm
                 respons_dict['CHANNEL_ID'] = channel_id  # Provided by Paytm
                 respons_dict['TXN_AMOUNT'] = str(amount)  # transaction amount
@@ -255,17 +254,26 @@ def add_subscription_razorpay(request):
             shop_access_token = request.POST.get("shop_access_token")
             transaction_id = request.POST.get("transaction_id")
             success = request.POST.get("success")
-            print (shop_access_token)
+            print(shop_access_token)
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
-            print ("error1")
+            print("error1")
             subscription_data = shop_subscription_instance.subscription_id
-            print ("error4")
+            print("error4")
 
             try:
                 if success:
+                    try:
+                        msg = 'Thank you for using Brand Store. You have successfully bought the Subscription Plan ' \
+                              'for a period of  ' + str(subscription_data.subscription_days) + ' days '\
+                              '. Thanks Team Brand Store '
+                        send_sms(shop_mobile, msg)
+                        send_sms('8770776846', msg)
+                        # send_sms('8519072717', msg)
+                    except Exception as e:
+                        print(e)
                     shop_subscription_instance.payment_status = True
                     shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
                         days=subscription_data.subscription_days)
@@ -275,7 +283,7 @@ def add_subscription_razorpay(request):
                     shop_subscription_instance.payment_status = False
                 shop_subscription_instance.save()
                 response['success'] = True
-                response['message'] = "Successful"
+                response['message'] = "Payment Failed.Please try again"
 
             except Exception as e:
                 print(str(e))
@@ -293,7 +301,6 @@ def add_subscription_razorpay(request):
         response['message'] = "Illegal Request"
     print(response)
     return JsonResponse(response)
-
 
 
 @csrf_exempt
@@ -349,8 +356,6 @@ def add_subscription(request):
                 respons_dict['ORDER_ID'] = str(transaction_id)  # unique OrderId for every request
                 respons_dict['CUST_ID'] = str(shop_mobile)  # unique customer identifier
 
-
-
                 respons_dict['INDUSTRY_TYPE_ID'] = industry_type_id  # Provided by Paytm
                 respons_dict['CHANNEL_ID'] = channel_id  # Provided by Paytm
                 respons_dict['TXN_AMOUNT'] = str(amount)  # transaction amount
@@ -402,15 +407,15 @@ def add_subscription(request):
             shop_access_token = request.POST.get("shop_access_token")
             transaction_id = request.POST.get("transaction_id")
             success = request.POST.get("success")
-            print (shop_access_token)
+            print(shop_access_token)
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
-            print ("error1")
+            print("error1")
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
-            print ("error3")
+            print("error3")
             subscription_data = SubscriptionData.objects.get(transaction_id=transaction_id)
-            print ("error4")
+            print("error4")
 
             try:
                 if success:
