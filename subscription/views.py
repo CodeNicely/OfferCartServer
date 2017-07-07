@@ -265,20 +265,23 @@ def add_subscription_razorpay(request):
 
             try:
                 if success:
-                    try:
-                        msg = 'Thank you for using Brand Store. You have successfully bought the Subscription Plan ' \
-                              'for a period of  ' + str(subscription_data.subscription_days) + ' days '\
-                              '. Thanks Team Brand Store '
-                        send_sms(shop_mobile, msg)
-                        send_sms('8770776846', msg)
-                        # send_sms('8519072717', msg)
-                    except Exception as e:
-                        print(e)
                     shop_subscription_instance.payment_status = True
                     shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
                         days=subscription_data.subscription_days)
                     shop_subscription_instance.save()
                     shop_instance.save()
+                    try:
+                        print("error4")
+                        msg = 'Thank you for using Brand Store. You have successfully bought the Subscription Plan ' \
+                              'for a period of  ' + str(subscription_data.subscription_days) + ' days '\
+                              '. Thanks Team Brand Store '
+                        print("error4")
+                        send_sms(shop_mobile, msg)
+                        send_sms('8770776846', msg)
+                        print("error4")
+                        # send_sms('8519072717', msg)
+                    except Exception as e:
+                        print(e)
                 else:
                     shop_subscription_instance.payment_status = False
                 shop_subscription_instance.save()
