@@ -8,7 +8,6 @@ from customs.sms import send_sms
 from .models import *
 import json
 
-
 # Create your views here.
 @csrf_exempt
 def request_subscription(request):
@@ -164,8 +163,8 @@ def add_subscription_razorpay(request):
 
             print("Shop Access Token : " + shop_access_token)
 
-            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
-            shop_mobile = str(json['mobile'])
+            json1 = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json1['mobile'])
 
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
             subscription_instance = SubscriptionData.objects.get(id=subscription_id)
