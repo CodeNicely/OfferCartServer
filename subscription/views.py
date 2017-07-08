@@ -283,6 +283,9 @@ def add_subscription_razorpay(request):
                         # send_sms('8519072717', msg)
                     except Exception as e:
                         print(e)
+                    response['success'] = True
+                    response['message'] = "Payment Successfully made"
+
                 else:
                     shop_subscription_instance.payment_status = False
                     shop_subscription_instance.save()
