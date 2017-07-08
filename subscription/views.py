@@ -262,9 +262,10 @@ def add_subscription_razorpay(request):
             print("error1")
             subscription_data = shop_subscription_instance.subscription_id
             print("error4")
+            print(json.loads(success))
 
             try:
-                if success:
+                if json.loads(success):
                     shop_subscription_instance.payment_status = True
                     shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
                         days=subscription_data.subscription_days)
@@ -284,9 +285,9 @@ def add_subscription_razorpay(request):
                         print(e)
                 else:
                     shop_subscription_instance.payment_status = False
-                shop_subscription_instance.save()
-                response['success'] = True
-                response['message'] = "Payment Failed.Please try again"
+                    shop_subscription_instance.save()
+                    response['success'] = True
+                    response['message'] = "Payment Failed.Please try again"
 
             except Exception as e:
                 print(str(e))
