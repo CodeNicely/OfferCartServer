@@ -16,8 +16,11 @@ def category(request):
         access_token = request.GET.get('access_token')
         json = jwt.decode(str(access_token), '810810', algorithms=['HS256'])
         mobile = str(json['mobile'])
+        print('1')
         user_instance = UserData.objects.get(mobile=mobile)
+        print('1')
         user_city_instance = UserCityData.objects.get(user_id=user_instance)
+        print('1')
         city_instance = user_city_instance.city_id
         # city_instance = CityData.objects.get(id=user_city_instance.city_id)
         print('1')
