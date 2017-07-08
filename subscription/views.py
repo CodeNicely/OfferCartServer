@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from customs.sms import send_sms
 from .models import *
+import json
 
 
 # Create your views here.
@@ -254,15 +255,15 @@ def add_subscription_razorpay(request):
             shop_access_token = request.POST.get("shop_access_token")
             transaction_id = request.POST.get("transaction_id")
             success = request.POST.get("success")
+            print(json.loads(success))
             print(shop_access_token)
-            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
-            shop_mobile = str(json['mobile'])
+            json1 = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json1['mobile'])
             shop_instance = ShopData.objects.get(mobile=shop_mobile)
             shop_subscription_instance = ShopSubscriptionData.objects.get(shop_id=shop_instance, id=transaction_id)
             print("error1")
             subscription_data = shop_subscription_instance.subscription_id
             print("error4")
-            print(json.loads(success))
 
             try:
                 if json.loads(success):
