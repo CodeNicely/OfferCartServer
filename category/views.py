@@ -18,8 +18,8 @@ def category(request):
         mobile = str(json['mobile'])
         user_instance = UserData.objects.get(mobile=mobile)
         user_city_instance = UserCityData.objects.get(user_id=user_instance)
-        # city_id = user_city_instance.city_id
-        city_instance = CityData.objects.get(name=user_city_instance.city_id)
+        city_instance = user_city_instance.city_id
+        # city_instance = CityData.objects.get(id=user_city_instance.city_id)
         print('1')
         print(city_instance.name)
 
