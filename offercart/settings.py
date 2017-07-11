@@ -24,7 +24,7 @@ SECRET_KEY = '*iq*02wx*+earq5kj^bf4+@)syllfa0iz&p88!)x5-+ic9=rar'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.109','139.59.78.127','www.mpenavmo.com','app.vegworld.online','46.101.103.44']
+ALLOWED_HOSTS = ['192.168.0.109', '139.59.78.127', 'www.mpenavmo.com', 'app.vegworld.online', '46.101.103.44']
 
 # Application definition
 
@@ -94,19 +94,16 @@ DATABASES = {
     }
 }
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'brandstoredb',
         'USER': 'brand_store_admin',
         'PASSWORD': 'cnadmin@999#',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
-
-
 
 # DATABASES = {
 #     'default': {
@@ -165,5 +162,5 @@ MEDIA_ROOT = "media/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-   os.path.join(BASE_DIR, 'static'),)
+    os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
