@@ -54,7 +54,8 @@ def shop(request):
                     temp_json['shop_id'] = int(o.id)
                     temp_json['category_id'] = int(o.category_id.id)
                     temp_json['city_id'] = int(o.city_id.id)
-                    temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
+                    # temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(o.image)
+                    temp_json['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(o.image)
                     response_json["shopDatas"].append(temp_json)
             response_json["shopDatas"] = sorted(response_json["shopDatas"], key=lambda x: x['distance'], reverse=False)
         except Exception as e:
@@ -136,7 +137,7 @@ def create_shop(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-
+            image = 'shop/' + image
             # print("Hashed password is:", make_password(password))
             print(name, mobile, type(image), image)
 
@@ -318,7 +319,9 @@ def my_shop_profile(request):
             response['address'] = shop_instance.address
             response['category'] = str(shop_instance.category_id)
             response['city'] = str(shop_instance.city_id)
-            response['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(shop_instance.image)
+            # response['image'] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(
+            # shop_instance.image)
+            response['image'] = request.scheme + '://' + request.get_host() + '/media/' + str(shop_instance.image)
             response['success'] = True
             response['message'] = "Successful"
 
@@ -371,7 +374,7 @@ def edit_shop_profile(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-
+            image = 'shop/' + image
             shop_instance.name = name
             shop_instance.description = description
             shop_instance.address = address
@@ -525,7 +528,13 @@ def get_distance(lat1, lon1, lat2, lon2):
 
 
 def delete_shop_data(request):
+    shop_instance = ShopData.objects.all()
+    for i in shop_instance:
+        i.image = 'shop/' + str(i.image)
+        i.save()
     return 0
+
+
     # for x in cities:
     #     try:
     #         CityData.objects.get(name=x['name'])
