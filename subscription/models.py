@@ -16,7 +16,7 @@ class SubscriptionData(models.Model):
 
 class ShopSubscriptionData(models.Model):
     shop_id = models.ForeignKey(ShopData)
-    subscription_id = models.ForeignKey(SubscriptionData, db_column="SubscriptionData.subscription_title")
+    subscription_id = models.ForeignKey(SubscriptionData, db_column="SubscriptionData.id")
     transaction_id = models.CharField(max_length=255, null=True, blank=True)
     payment_status = models.BooleanField(default=False)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
