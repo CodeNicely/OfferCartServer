@@ -365,6 +365,7 @@ def edit_shop_profile(request):
                 print("full name", full_filename)
                 # fout = open(folder+image, 'wb+')
                 print("image=", image)
+                image = 'shop/' + image
                 shop_instance.image = image
                 fout = open(folder + image, 'w')
                 file_content = request.FILES.get('image').read()
@@ -374,7 +375,6 @@ def edit_shop_profile(request):
             except Exception as e:
                 image = 'image'
                 print(e)
-            image = 'shop/' + image
             shop_instance.name = name
             shop_instance.description = description
             shop_instance.address = address
