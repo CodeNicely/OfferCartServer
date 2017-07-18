@@ -360,7 +360,7 @@ def edit_shop_profile(request):
 
             try:
                 image = request.FILES.get('image').name
-                folder = 'media/' + 'shop/'
+                folder = 'media/'
                 full_filename = os.path.join(folder, image)
                 print("full name", full_filename)
                 # fout = open(folder+image, 'wb+')
