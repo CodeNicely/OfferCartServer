@@ -25,7 +25,9 @@ def my_offers(request):
 
             response_json["my_offer_list"] = []
             for o in OfferBoughtData.objects.filter(mobile=str(json['mobile'])):
-                offer_details = OfferData.objects.get(id=o.offer_id)
+
+                # offer_details = OfferData.objects.get(id=o.offer_id)
+                offer_details = o.offer_id
                 my_offer_details = {}
                 my_offer_details['offer_id'] = offer_details.id
                 my_offer_details['offer_name'] = offer_details.name
