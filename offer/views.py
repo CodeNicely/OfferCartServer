@@ -124,14 +124,16 @@ def get_offer(request):
             mobile = json['mobile']
             response_json["success"] = True
             try:
-                offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
+                offer_instance = OfferData.objects.get(id=int(offer_id))
+                offer_details = OfferBoughtData.objects.get(offer_id=offer_instance, mobile=mobile)
                 response_json["success"] = False
                 print(response_json["success"])
                 response_json["message"] = 'You had already registered for the offer'
             except Exception as e:
                 print(str(e))
             if response_json["success"]:
-                OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
+                offer_instance = OfferData.objects.get(id=int(offer_id))
+                OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_instance)
                 try:
                     print('offer data')
                     offer_details = OfferData.objects.get(id=int(offer_id))
