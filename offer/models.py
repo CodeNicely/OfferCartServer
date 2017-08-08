@@ -26,6 +26,6 @@ class OfferData(models.Model):
 
 class OfferBoughtData(models.Model):
     mobile = models.CharField(max_length=120, blank=True, null=True)
-    offer_id = models.IntegerField(default=-1)
+    offer_id = models.ForeignKey(OfferData, db_column="OfferData.id")
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)

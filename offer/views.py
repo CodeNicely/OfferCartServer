@@ -30,7 +30,9 @@ def send_offer(request):
             response_json["shop_id"] = int(shop_id)
             response_json["shop_name"] = str(shop_row.name)
             response_json["shop_description"] = str(shop_row.description)
-            response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(
+            # response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(
+            #     shop_row.image)
+            response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/' + str(
                 shop_row.image)
             response_json["shop_address"] = str(shop_row.address)
             response_json["offer_list"] = []
@@ -122,14 +124,16 @@ def get_offer(request):
             mobile = json['mobile']
             response_json["success"] = True
             try:
-                offer_details = OfferBoughtData.objects.get(offer_id=int(offer_id), mobile=mobile)
+                offer_instance = OfferData.objects.get(id=int(offer_id))
+                offer_details = OfferBoughtData.objects.get(offer_id=offer_instance, mobile=mobile)
                 response_json["success"] = False
                 print(response_json["success"])
                 response_json["message"] = 'You had already registered for the offer'
             except Exception as e:
                 print(str(e))
             if response_json["success"]:
-                OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_id)
+                offer_instance = OfferData.objects.get(id=int(offer_id))
+                OfferBoughtData.objects.create(mobile=str(mobile), offer_id=offer_instance)
                 try:
                     print('offer data')
                     offer_details = OfferData.objects.get(id=int(offer_id))

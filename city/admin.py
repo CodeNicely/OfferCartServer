@@ -13,7 +13,7 @@ admin.site.register(CityData, CityDataAdmin)
 
 # Register your models here.
 class StateDataAdmin(admin.ModelAdmin):
-    list_display = [ "name", "created", "modified"]
+    list_display = ["name", "created", "modified"]
 
 
 admin.site.register(StateData, StateDataAdmin)

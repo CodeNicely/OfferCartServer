@@ -66,24 +66,24 @@ def get_city(request):
             access_token = request.POST.get('access_token')
             json = jwt.decode(str(access_token), '810810', algorithms='HS256')
             mobile = str(json['mobile'])
+            print (mobile)
             user_instance = UserData.objects.get(mobile=mobile)
             city_instance = CityData.objects.get(id=city_id)
-
             try:
-                user_city = UserCityData.objects.get(user_id=mobile)
+                user_city = UserCityData.objects.get(user_id=user_instance)
                 user_city.city_id = city_instance
                 user_city.save()
             except Exception as e:
                 print("Exception", e)
-                city_fcm, created = UserCityData.objects.get_or_create(
+                created = UserCityData.objects.create(
                     city_id=city_instance,
                     user_id=user_instance
                 )
-                city_fcm.save()
+                created.save()
             response_json['success'] = True
             response_json['message'] = 'Successful'
         except Exception as e:
-            response_json["success"] = False
+            response_json["success"] = True
             response_json["message"] = "City data not found"
             print("error@city post", e)
         print(str(response_json))
