@@ -87,7 +87,7 @@ def buy_offer(request):
                 user.save()
                 shop_details = ShopData.objects.get(name=offer_details.shop_id)
                 try:
-                    msg = ' Thank you for using Discount Store. You have successfully bought the Offer " ' + str(
+                    msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
                         offer_details.name) + ' "" for Shop ' + str(shop_details.name) + '. Your Offer Code is  ' + str(
                         offer_code) + '. To Redeem the offer Please show this Message and Code During Billing.%0A ' \
                                       '%0AThanks Team Discount Store '
@@ -138,8 +138,8 @@ def get_offer(request):
                     print('offer data')
                     offer_details = OfferData.objects.get(id=int(offer_id))
                     shop_details = offer_details.shop_id
-                    msg = ' Thank you for using Brand Store. You have successfully bought the Offer " ' + str(
-                        offer_details.name) + ' " for Shop ' + str(
+                    msg = ' Thank you for using Brand Store. You have successfully bought the Offer ' + str(
+                        offer_details.name) + ' for Shop ' + str(
                         shop_details.name) + '. To Redeem the offer Please show this Message during ' \
                                              'Billing.%0A ' \
                                              '%0AThanks Team Brand Store '
