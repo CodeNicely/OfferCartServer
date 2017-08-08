@@ -1,6 +1,6 @@
 import requests
 from .models import KeysData
-def send_sms(mobile,msg,sender="BSTORE"):
+def send_sms(mobile,msg,sender="CodeNy"):
 	authkey=str(KeysData.objects.get(key="msg91").value)
 	url='http://api.msg91.com/api/sendhttp.php?authkey='+authkey+'&mobiles='
 	url+=mobile
