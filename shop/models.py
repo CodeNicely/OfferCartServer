@@ -23,7 +23,7 @@ class ShopData(models.Model):
     image = models.ImageField(upload_to='shop/', default="/media/shop/default.png")
     latitude = models.CharField(max_length=120, blank=True, null=True, default="0")
     longitude = models.CharField(max_length=120, blank=True, null=True, default="0")
-    verified = models.BooleanField(default=False)
+    verified = models.BooleanField(default=True)
     otp_verified = models.BooleanField(default=False)
     subscription_expiry_date = models.DateTimeField(default=datetime.date.today())
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
