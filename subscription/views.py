@@ -1,5 +1,5 @@
 from __future__ import print_function
-from datetime import timedelta, datetime
+from datetime import timedelta
 import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from customs.sms import send_sms
 from .models import *
 import json
+import datetime
 
 # Create your views here.
 @csrf_exempt
