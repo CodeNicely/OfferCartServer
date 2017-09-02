@@ -269,11 +269,13 @@ def add_subscription_razorpay(request):
                     shop_subscription_instance.payment_status = True
                     today_date = datetime.date.today()
                     if (shop_instance.subscription_expiry_date - today_date).days > 0:
+                        print ("Less than today")
                         shop_instance.subscription_expiry_date = today_date + timedelta(
                             days=subscription_data.subscription_days)
                         shop_subscription_instance.save()
                         shop_instance.save()
                     else:
+                        print ("More than today")
                         shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
                             days=subscription_data.subscription_days)
                         shop_subscription_instance.save()
