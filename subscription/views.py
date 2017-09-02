@@ -1,5 +1,5 @@
 from __future__ import print_function
-from datetime import timedelta
+from datetime import timedelta, datetime
 import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -267,10 +267,17 @@ def add_subscription_razorpay(request):
             try:
                 if json.loads(success):
                     shop_subscription_instance.payment_status = True
-                    shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
-                        days=subscription_data.subscription_days)
-                    shop_subscription_instance.save()
-                    shop_instance.save()
+                    today_date = datetime.date.today()
+                    if (shop_instance.subscription_expiry_date - today_date).days > 0:
+                        shop_instance.subscription_expiry_date = today_date + timedelta(
+                            days=subscription_data.subscription_days)
+                        shop_subscription_instance.save()
+                        shop_instance.save()
+                    else:
+                        shop_instance.subscription_expiry_date = shop_instance.subscription_expiry_date + timedelta(
+                            days=subscription_data.subscription_days)
+                        shop_subscription_instance.save()
+                        shop_instance.save()
                     try:
                         print("error4")
                         msg = 'Thank you for using Brand Store. You have successfully bought the Subscription Plan ' \
