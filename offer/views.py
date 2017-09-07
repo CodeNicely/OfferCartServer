@@ -30,6 +30,8 @@ def send_offer(request):
             response_json["shop_id"] = int(shop_id)
             response_json["shop_name"] = str(shop_row.name)
             response_json["shop_description"] = str(shop_row.description)
+            response_json["shop_latitude"] = str(shop_row.latitude)
+            response_json["shop_longitude"] = str(shop_row.longitude)
             # response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/shop/' + str(
             #     shop_row.image)
             response_json["shop_image"] = request.scheme + '://' + request.get_host() + '/media/' + str(

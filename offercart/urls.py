@@ -75,7 +75,6 @@ urlpatterns = [
     url(r'^delete_offer/$', delete_offer),
     url(r'^delete_shop_data/$', delete_shop_data),
     url(r'^privacy_policy/$', privacy_policy),
-
 ]
 
 from django.conf import settings
