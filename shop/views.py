@@ -406,8 +406,10 @@ def get_shop_location(request):
     if request.method == 'GET':
         try:
             shop_access_token = str(request.GET.get('shop_access_token'))
+            print (shop_access_token)
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
+            print (shop_mobile)
             try:
                 shop_instance = ShopData.objects.get(mobile=shop_mobile)
                 response['latitude'] = shop_instance.latitude
