@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 from about_us.views import about_us
 from category.views import category
@@ -29,7 +31,8 @@ from otp.views import send_otp
 from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
 from shop.views import shop, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
-    edit_shop_profile, change_password, forgot_password, forgot_change_password, state_category, delete_shop_data
+    edit_shop_profile, change_password, forgot_password, forgot_change_password, state_category, delete_shop_data, \
+    change_shop_location
 from splash_screen.views import splash_screen
 from subscription.views import add_subscription, request_subscription, add_subscription_razorpay
 from welcome.views import welcome, privacy_policy
@@ -69,6 +72,7 @@ urlpatterns = [
     url(r'^offer_edit/$', offer_edit),
     url(r'^request_subscription/$', request_subscription),
     url(r'^add_subscription/$', add_subscription_razorpay),
+    url(r'^change_shop_location/$', change_shop_location),
     url(r'^change_password/$', change_password),
     url(r'^forgot_password/$', forgot_password),
     url(r'^forgot_change_password/$', forgot_change_password),
@@ -77,8 +81,6 @@ urlpatterns = [
     url(r'^privacy_policy/$', privacy_policy),
 ]
 
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
