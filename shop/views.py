@@ -405,7 +405,7 @@ def get_shop_location(request):
     response = {}
     if request.method == 'GET':
         try:
-            shop_access_token = str(request.POST.get('shop_access_token'))
+            shop_access_token = str(request.GET.get('shop_access_token'))
             json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
             shop_mobile = str(json['mobile'])
             try:
