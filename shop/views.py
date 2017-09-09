@@ -401,6 +401,35 @@ def edit_shop_profile(request):
 
 
 @csrf_exempt
+def get_shop_location(request):
+    response = {}
+    if request.method == 'GET':
+        try:
+            shop_access_token = str(request.POST.get('shop_access_token'))
+            json = jwt.decode(str(shop_access_token), '810810', algorithms=['HS256'])
+            shop_mobile = str(json['mobile'])
+            try:
+                shop_instance = ShopData.objects.get(mobile=shop_mobile)
+                response['latitude'] = shop_instance.latitude
+                response['longitude'] = shop_instance.longitude
+                response['success'] = True
+                response['message'] = "Location successfully Recieved"
+            except Exception as e:
+                print(str(e))
+                response['success'] = False
+                response['message'] = "No such shop found." + str(e)
+        except Exception as e:
+            print(str(e))
+            response['success'] = False
+            response['message'] = "Something went wrong " + str(e)
+    else:
+        response['success'] = False
+        response['message'] = "Illegal request"
+    print(response)
+    return JsonResponse(response)
+
+
+@csrf_exempt
 def change_shop_location(request):
     response = {}
     if request.method == 'GET':

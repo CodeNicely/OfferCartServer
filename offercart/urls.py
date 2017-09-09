@@ -32,7 +32,7 @@ from otp.views import verify_otp
 from payment.views import request_payment_hash, update_payment_status, wallet
 from shop.views import shop, create_shop, verify_shop_otp, verify_shop_login, my_shop_profile, \
     edit_shop_profile, change_password, forgot_password, forgot_change_password, state_category, delete_shop_data, \
-    change_shop_location
+    change_shop_location, get_shop_location
 from splash_screen.views import splash_screen
 from subscription.views import add_subscription, request_subscription, add_subscription_razorpay
 from welcome.views import welcome, privacy_policy
@@ -72,6 +72,7 @@ urlpatterns = [
     url(r'^offer_edit/$', offer_edit),
     url(r'^request_subscription/$', request_subscription),
     url(r'^add_subscription/$', add_subscription_razorpay),
+    url(r'^get_shop_location/$', get_shop_location),
     url(r'^change_shop_location/$', change_shop_location),
     url(r'^change_password/$', change_password),
     url(r'^forgot_password/$', forgot_password),
